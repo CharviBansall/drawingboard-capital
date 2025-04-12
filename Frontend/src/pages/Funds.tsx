@@ -110,7 +110,7 @@ export default function Funds() {
   });
 
   return (
-    <div className="h-full flex-grow bg-gray-50 items-center justify-center flex w-screen">
+    <div className="h-full flex-grow bg-gray-100 items-center justify-center flex w-screen">
       <div className="w-10/12 bg-white h-fit rounded-md border overflow-hidden shadow-md flex flex-col">
         <div className="w-full h-fit flex items-center justify-between flex-row p-2">
           <div className="flex flex-row w-fit gap-1 items-center">
