@@ -16,15 +16,16 @@ import { Tables } from "@/lib/types-supabase";
 export default function Funds() {
   const [globalFilter, setGlobalFilter] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
-  const [funds, setFunds] = useState<Tables<"fund">[]>([]);
+  const [funds, setFunds] = useState<Tables<"funds">[]>([]);
   async function getFunds() {
-    const { data, error } = await supabase.from("fund").select(`
+    const { data, error } = await supabase.from("funds").select(`
         *,
-        fund_manager:fund_manager_id(name)
+        fund_managers:fund_manager_id(name)
       `);
     if (error) {
       console.error(error);
     } else {
+      console.log(data);
       setFunds(data);
     }
   }
@@ -37,14 +38,14 @@ export default function Funds() {
     return funds.filter((fund) => fund.fund_type === typeFilter);
   }, [funds, typeFilter]);
 
-  const columns: ColumnDef<Tables<"fund">>[] = useMemo(
+  const columns: ColumnDef<Tables<"funds">>[] = useMemo(
     () => [
       {
         accessorKey: "name",
         header: "Fund Name",
       },
       {
-        accessorKey: "fund_manager",
+        accessorKey: "fund_managers",
         header: "Manager",
         cell: (info) => (info.getValue() as { name: string }).name,
       },
@@ -58,18 +59,18 @@ export default function Funds() {
           </div>
         ),
       },
-      {
-        accessorKey: "objective",
-        header: "Objective",
-        cell: (info) =>
-          info.getValue()
-            ? new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "USD",
-                maximumFractionDigits: 0,
-              }).format(info.getValue() as number)
-            : "N/A",
-      },
+      // {
+      //   accessorKey: "objective",
+      //   header: "Objective",
+      //   cell: (info) =>
+      //     info.getValue()
+      //       ? new Intl.NumberFormat("en-US", {
+      //           style: "currency",
+      //           currency: "USD",
+      //           maximumFractionDigits: 0,
+      //         }).format(info.getValue() as number)
+      //       : "N/A",
+      // },
       {
         accessorKey: "strategy",
         header: "Strategy",
