@@ -71,7 +71,7 @@ export default function Funds() {
       //         }).format(info.getValue() as number)
       //       : "N/A",
       // },
-      // Empty
+      // E
       {
         accessorKey: "strategy",
         header: "Strategy",
