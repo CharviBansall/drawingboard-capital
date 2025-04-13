@@ -105,28 +105,18 @@ export function SignUp() {
   async function linkedInSignUp() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "linkedin_oidc",
-      options: {
-        redirectTo: "https://www.drawingboardcapital.com",
-        queryParams: {
-          //We use this to track our MVP users to delete from the DB when we launch
-          stage: "MVP",
-        },
-      },
     });
 
     if (error) {
       console.log(error);
       return;
     }
-
-    // Redirect to signin page after successful signup
-    window.location.href = "/";
   }
 
   return (
     <div className="fixed inset-0 overflow-hidden flex">
       {/* Left half with form */}
-      <div className="w-1/2 h-full overflow-hidden flex flex-col gap-12 items-center justify-center p-8">
+      <div className="w-1/2 h-full overflow-hidden flex flex-col items-center justify-center p-8">
         <InteractiveGridPattern
           className="w-full h-full scale-110"
           width={60}
@@ -135,9 +125,10 @@ export function SignUp() {
           squaresClassName="hover:bg-gray-100 skew-3"
         />
         <div className="flex z-10 flex-col gap-1">
-          <span className="text-black text-4xl font-bold">
-            Drawingboard Capital
-          </span>
+          <img
+            src="https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/brand-assets//Main%20dark.svg"
+            className="h-2/5 aspect-auto"
+          />
           <span className="text-muted-foreground tracking-wide text-2xl font-light">
             Your bridge to the Indian Alternatives Market
           </span>

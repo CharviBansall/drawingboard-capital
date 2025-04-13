@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Toggle } from "@/components/ui/toggle";
 import { Eye, EyeOff } from "lucide-react";
-import { SiGoogle } from "react-icons/si";
+import { SiLinkedin } from "react-icons/si";
 import { useState } from "react";
 import { Link } from "react-router";
 import supabase from "@/lib/supabase";
@@ -29,11 +29,22 @@ export function SignIn() {
     window.location.href = "/";
   }
 
+  async function linkedInSignIn() {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "linkedin_oidc",
+    });
+
+    if (error) {
+      console.log(error);
+      return;
+    }
+  }
+
   return (
     <div className="fixed inset-0 overflow-hidden flex">
       {/* Left half with form */}
 
-      <div className="w-1/2 h-full overflow-hidden flex flex-col gap-12 items-center justify-center p-8">
+      <div className="w-1/2 h-full overflow-hidden flex flex-col items-center justify-center p-8">
         <InteractiveGridPattern
           className="w-full h-full scale-110"
           width={60}
@@ -42,9 +53,10 @@ export function SignIn() {
           squaresClassName="hover:bg-gray-100 skew-3"
         />
         <div className="flex z-10 flex-col gap-1">
-          <span className="text-black text-4xl font-bold">
-            Drawingboard Capital
-          </span>
+          <img
+            src="https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/brand-assets//Main%20dark.svg"
+            className="h-2/5 aspect-auto"
+          />
           <span className="text-muted-foreground tracking-wide text-2xl font-light">
             Welcome back! Sign in to continue.
           </span>
@@ -102,9 +114,13 @@ export function SignIn() {
             <span className="text-muted-foreground text-sm">OR</span>
             <Separator />
           </div>
-          <Button className="w-full" variant={"outline"}>
-            <SiGoogle />
-            Continue with Google
+          <Button
+            className="w-full"
+            variant={"outline"}
+            onClick={linkedInSignIn}
+          >
+            <SiLinkedin />
+            Continue with LinkedIn
           </Button>
           <p className="text-sm text-muted-foreground">
             Don't have an account?{" "}
