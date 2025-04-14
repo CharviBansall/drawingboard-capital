@@ -25,7 +25,7 @@ export function SignIn() {
       console.log(error);
       return;
     }
-    // Redirect to home page after successful login
+    // Redirect to home page after successful login.
     window.location.href = "/";
   }
 
