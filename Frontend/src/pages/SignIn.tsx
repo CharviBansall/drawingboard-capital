@@ -50,7 +50,7 @@ export function SignIn() {
           width={60}
           height={60}
           squares={[50, 50]}
-          squaresClassName="hover:bg-gray-100 skew-3"
+          squaresClassName="skew-3 hover:fill-[#031a2d]"
         />
         <div className="flex z-10 flex-col gap-1">
           <img

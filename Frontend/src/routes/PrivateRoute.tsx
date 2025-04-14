@@ -1,17 +1,20 @@
 // src/components/routing/PrivateRoute.tsx
 import { Navigate, Outlet } from "react-router";
-import { useAuth } from "@/store/AuthContext";
+import { useAuth } from "@/hooks/useAuth";
 
 export function PrivateRoute() {
-  const { user, loading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
 
-  if (loading)
+  if (authLoading)
     return (
       <div className="flex justify-center items-center h-screen">
         Loading...
       </div>
     );
-  if (!user) return <Navigate to="/signup" replace />;
+
+  if (!user) {
+    return <Navigate to="/signup" replace />;
+  }
 
   return <Outlet />;
 }

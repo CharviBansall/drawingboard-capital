@@ -9,21 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      asset_managers: {
-        Row: {
-          created_at: string
-          id: string
-        }
-        Insert: {
-          created_at?: string
-          id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-        }
-        Relationships: []
-      }
       fund_documents: {
         Row: {
           created_at: string
@@ -151,6 +136,189 @@ export type Database = {
           },
         ]
       }
+      highlights: {
+        Row: {
+          fund_id: string | null
+          highlight: string | null
+          id: string
+        }
+        Insert: {
+          fund_id?: string | null
+          highlight?: string | null
+          id?: string
+        }
+        Update: {
+          fund_id?: string | null
+          highlight?: string | null
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "highlights_fund_id_fkey"
+            columns: ["fund_id"]
+            isOneToOne: false
+            referencedRelation: "funds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      how_it_works: {
+        Row: {
+          content: string | null
+          fund_id: string | null
+          id: string
+          title: string | null
+        }
+        Insert: {
+          content?: string | null
+          fund_id?: string | null
+          id?: string
+          title?: string | null
+        }
+        Update: {
+          content?: string | null
+          fund_id?: string | null
+          id?: string
+          title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "how_it_works_fund_id_fkey"
+            columns: ["fund_id"]
+            isOneToOne: false
+            referencedRelation: "funds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      insights: {
+        Row: {
+          fund_id: string
+          id: string
+          image_url: string | null
+          link: string | null
+          summary: string | null
+          title: string | null
+        }
+        Insert: {
+          fund_id: string
+          id?: string
+          image_url?: string | null
+          link?: string | null
+          summary?: string | null
+          title?: string | null
+        }
+        Update: {
+          fund_id?: string
+          id?: string
+          image_url?: string | null
+          link?: string | null
+          summary?: string | null
+          title?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "insights_fund_id_fkey"
+            columns: ["fund_id"]
+            isOneToOne: false
+            referencedRelation: "funds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      investment_objectives: {
+        Row: {
+          fund_id: string | null
+          id: string
+          objective: string | null
+        }
+        Insert: {
+          fund_id?: string | null
+          id?: string
+          objective?: string | null
+        }
+        Update: {
+          fund_id?: string | null
+          id?: string
+          objective?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "investment_objectives_fund_id_fkey"
+            columns: ["fund_id"]
+            isOneToOne: false
+            referencedRelation: "funds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pipeline_investments: {
+        Row: {
+          category: string | null
+          fund_id: string | null
+          fund_name: string | null
+          geography: string | null
+          id: string
+          status: string | null
+        }
+        Insert: {
+          category?: string | null
+          fund_id?: string | null
+          fund_name?: string | null
+          geography?: string | null
+          id?: string
+          status?: string | null
+        }
+        Update: {
+          category?: string | null
+          fund_id?: string | null
+          fund_name?: string | null
+          geography?: string | null
+          id?: string
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pipeline_investments_fund_id_fkey"
+            columns: ["fund_id"]
+            isOneToOne: false
+            referencedRelation: "funds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      portfolio_diversification: {
+        Row: {
+          category: string | null
+          fund_id: string | null
+          id: string
+          label: string | null
+          percentage: number | null
+        }
+        Insert: {
+          category?: string | null
+          fund_id?: string | null
+          id?: string
+          label?: string | null
+          percentage?: number | null
+        }
+        Update: {
+          category?: string | null
+          fund_id?: string | null
+          id?: string
+          label?: string | null
+          percentage?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_diversification_fund_id_fkey"
+            columns: ["fund_id"]
+            isOneToOne: false
+            referencedRelation: "funds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       portfolio_funds: {
         Row: {
           amount: number | null
@@ -208,6 +376,27 @@ export type Database = {
           created_at?: string
           id?: string
           name?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string | null
+          id: string
+          onboarded: boolean | null
+          stage: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id: string
+          onboarded?: boolean | null
+          stage?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          onboarded?: boolean | null
+          stage?: string | null
         }
         Relationships: []
       }

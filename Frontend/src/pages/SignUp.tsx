@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import supabase from "@/lib/supabase";
 import validator from "validator";
+import { BlurFade } from "@/components/magicui/blur-fade";
 
 export function SignUp() {
   const [email, setEmail] = useState("");
@@ -82,21 +83,12 @@ export function SignUp() {
       const { error } = await supabase.auth.signUp({
         email,
         password,
-        options: {
-          data: {
-            //We use this to track our MVP users to delete from the DB when we launch
-            stage: "MVP",
-          },
-        },
       });
 
       if (error) {
         console.log(error);
         return;
       }
-
-      // Redirect to signin page after successful signup
-      window.location.href = "/";
     } catch (error: any) {
       console.error("Unexpected error during signup:", error.message);
     }
@@ -105,6 +97,9 @@ export function SignUp() {
   async function linkedInSignUp() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "linkedin_oidc",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
     });
 
     if (error) {
@@ -122,14 +117,14 @@ export function SignUp() {
           width={60}
           height={60}
           squares={[50, 50]}
-          squaresClassName="hover:bg-gray-100 skew-3"
+          squaresClassName="hover:fill-[#031a2d] skew-3"
         />
         <div className="flex z-10 flex-col gap-1">
           <img
             src="https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/brand-assets//Main%20dark.svg"
             className="h-2/5 aspect-auto"
           />
-          <span className="text-muted-foreground tracking-wide text-2xl font-light">
+          <span className=" tracking-tight text-2xl text-muted-foreground font-light">
             Your bridge to the Indian Alternatives Market
           </span>
         </div>
@@ -192,7 +187,7 @@ export function SignUp() {
             <p className="text-red-500 text-sm">{errors.password}</p>
           )}
           <Button type="submit" className="w-full" variant={"default"}>
-            Sign Up
+            Join the Platform
           </Button>
           <div className="w-full flex gap-3 flex-row items-center justify-center">
             <Separator />
@@ -219,12 +214,22 @@ export function SignUp() {
         </form>
       </div>
       {/* Right half with image */}
-      <div className="w-1/2 grayscale h-full">
-        <img
-          src="https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/mvp-assets//sid-saxena-tsXADt9ldio-unsplash.jpg"
-          alt="Drawingboard Capital"
-          className="w-full h-full object-cover"
-        />
+      <div className="relative w-1/2 grayscale h-full">
+        <div className=" w-full h-full p-1 bg-black overflow-hidden">
+          <BlurFade
+            className="h-full w-full p-1 overflow-hidden"
+            delay={0.25}
+            inView
+          >
+            <video
+              src="https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/mvp-assets//8361011-hd_1920_1080_24fps.mp4"
+              className="w-full h-full object-cover rounded-lg"
+              autoPlay
+              muted
+              loop
+            />
+          </BlurFade>
+        </div>
       </div>
     </div>
   );
