@@ -119,7 +119,7 @@ export function SignUp() {
           squares={[50, 50]}
           squaresClassName="hover:fill-[#031a2d] skew-3"
         />
-        <div className="flex z-10 flex-col gap-1">
+        <div className="flex z-10 pt-12 flex-col gap-1">
           <img
             src="https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/brand-assets//Main%20dark.svg"
             className="h-2/5 aspect-auto"

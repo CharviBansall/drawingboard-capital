@@ -56,12 +56,12 @@ export function SignIn() {
           squares={[50, 50]}
           squaresClassName="skew-3 hover:fill-[#031a2d]"
         />
-        <div className="flex z-10 flex-col gap-1">
+        <div className="flex z-10 pt-12 flex-col gap-1">
           <img
             src="https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/brand-assets//Main%20dark.svg"
             className="h-2/5 aspect-auto"
           />
-          <span className="text-muted-foreground tracking-wide text-2xl font-light">
+          <span className="text-muted-foreground tracking-tight text-2xl font-light">
             Welcome back! Sign in to continue.
           </span>
         </div>
