@@ -46,8 +46,8 @@ export default function Funds() {
         "Focuses on early-stage import/export tech with scalable supply chain solutions.",
       tags: ["Global", "VentureCapital"],
       metrics: [
-        { label: "Target Deals", value: "8-12" },
-        { label: "Target Fund Size", value: "$60 Million" },
+        { label: "Portfolio Fund Targets", value: "8-12" },
+        { label: "Strategy Focus", value: "FinTech, Manufacturing" },
         { label: "Deals Sourced", value: "75+" },
         { label: "Min. investment", value: "$100,000" },
       ],

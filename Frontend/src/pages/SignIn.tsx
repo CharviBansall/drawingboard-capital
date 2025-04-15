@@ -9,6 +9,7 @@ import { SiLinkedin } from "react-icons/si";
 import { useState } from "react";
 import { Link } from "react-router";
 import supabase from "@/lib/supabase";
+import { BlurFade } from "@/components/magicui/blur-fade";
 
 export function SignIn() {
   const [email, setEmail] = useState("");
@@ -32,6 +33,9 @@ export function SignIn() {
   async function linkedInSignIn() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "linkedin_oidc",
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
     });
 
     if (error) {
@@ -133,13 +137,23 @@ export function SignIn() {
           </p>
         </form>
       </div>
-      {/* Right half with image */}
-      <div className="w-1/2 grayscale h-full">
-        <img
-          src="https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/mvp-assets//sid-saxena-tsXADt9ldio-unsplash.jpg"
-          alt="Drawingboard Capital"
-          className="w-full h-full object-cover"
-        />
+      {/* Right half with video */}
+      <div className="relative w-1/2 grayscale h-full">
+        <div className=" w-full h-full p-1 bg-black overflow-hidden">
+          <BlurFade
+            className="h-full w-full p-1 overflow-hidden"
+            delay={0.25}
+            inView
+          >
+            <video
+              src="https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/mvp-assets//8361011-hd_1920_1080_24fps.mp4"
+              className="w-full h-full object-cover rounded-lg"
+              autoPlay
+              muted
+              loop
+            />
+          </BlurFade>
+        </div>
       </div>
     </div>
   );
