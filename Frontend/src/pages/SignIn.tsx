@@ -27,7 +27,6 @@ export function SignIn() {
       return;
     }
     // Redirect to home page after successful login.
-    // Empty
     window.location.href = "/";
   }
 
