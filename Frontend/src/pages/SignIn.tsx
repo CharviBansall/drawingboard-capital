@@ -137,7 +137,7 @@ export function SignIn() {
           </p>
         </form>
       </div>
-      {/* Right half with video */}
+      {/* Right half with video. */}
       <div className="relative w-1/2 grayscale h-full">
         <div className=" w-full h-full p-1 bg-black overflow-hidden">
           <BlurFade
