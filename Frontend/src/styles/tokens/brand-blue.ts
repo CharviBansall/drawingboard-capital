@@ -26,11 +26,6 @@ export const blue = {
   blueA10: "#001d31e7",
   blueA11: "#00375ebf",
   blueA12: "#001c2df8",
-
-  blueContrast: "#ffffff",
-  blueSurface: "#eefaffcc",
-  blueIndicator: "#011a2b",
-  blueTrack: "#011a2b",
 };
 
 export const blueDark = {
@@ -59,9 +54,4 @@ export const blueDark = {
   blueA10: "#87cdffa3",
   blueA11: "#a1d7ffda",
   blueA12: "#b7e7ff",
-
-  blueContrast: "#ffffff",
-  blueSurface: "#00254780",
-  blueIndicator: "#6895b6",
-  blueTrack: "#6895b6",
 };
