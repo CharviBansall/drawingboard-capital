@@ -73,7 +73,7 @@ Frontend/
 
 - Use `@/` to import from the `src` directory (e.g. `import Button from "@/components/Button"`).
 - Storybook is configured to support Vite and path aliases.
-- For custom configuration, edit `vite.config.ts` and `.storybook/main.ts`.
+- For custom configuration, edit `vite.config.ts` and `.storybook/main.ts`..
 
 ---
 
