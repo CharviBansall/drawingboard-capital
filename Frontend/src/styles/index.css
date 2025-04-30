@@ -1,61 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap");
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@layer base {
+  outline: none;
+}
+
 @theme {
   /* Light mode blue variables */
-  --blue-1: #f8fdff;
-  --blue-2: #f1fbff;
-  --blue-3: #e4f3fe;
-  --blue-4: #d8ebfa;
-  --blue-5: #cde5f7;
-  --blue-6: #c1def5;
-  --blue-7: #afd4f0;
-  --blue-8: #94c2e5;
-  --blue-9: #011a2b;
-  --blue-10: #183244;
-  --blue-11: #406986;
-  --blue-12: #072233;
+  --color-blue-1: #f8fdff;
+  --color-blue-2: #f1fbff;
+  --color-blue-3: #e4f3fe;
+  --color-blue-4: #d8ebfa;
+  --color-blue-5: #cde5f7;
+  --color-blue-6: #c1def5;
+  --color-blue-7: #afd4f0;
+  --color-blue-8: #94c2e5;
+  --color-blue-9: #011a2b;
+  --color-blue-10: #183244;
+  --color-blue-11: #406986;
+  --color-blue-12: #072233;
 
   /* Light mode blue alpha variables */
-  --blue-a1: #00b7ff07;
-  --blue-a2: #00b7ff0e;
-  --blue-a3: #008ef61b;
-  --blue-a4: #007ddf27;
-  --blue-a5: #007bd732;
-  --blue-a6: #0078d63e;
-  --blue-a7: #0076d050;
-  --blue-a8: #016ec26b;
-  --blue-a9: #00192afe;
-  --blue-a10: #001d31e7;
-  --blue-a11: #00375ebf;
-  --blue-a12: #001c2df8;
+  --color-blue-a1: #00b7ff07;
+  --color-blue-a2: #00b7ff0e;
+  --color-blue-a3: #008ef61b;
+  --color-blue-a4: #007ddf27;
+  --color-blue-a5: #007bd732;
+  --color-blue-a6: #0078d63e;
+  --color-blue-a7: #0076d050;
+  --color-blue-a8: #016ec26b;
+  --color-blue-a9: #00192afe;
+  --color-blue-a10: #001d31e7;
+  --color-blue-a11: #00375ebf;
+  --color-blue-a12: #001c2df8;
 
   /* Dark mode blue variables */
-  --blue-1-dark: #001321;
-  --blue-2-dark: #011b2c;
-  --blue-3-dark: #002a46;
-  --blue-4-dark: #053552;
-  --blue-5-dark: #15425f;
-  --blue-6-dark: #24506e;
-  --blue-7-dark: #356180;
-  --blue-8-dark: #487494;
-  --blue-9-dark: #6895b6;
-  --blue-10-dark: #5c89a9;
-  --blue-11-dark: #8cbadc;
-  --blue-12-dark: #b7e7ff;
+  --color-blue-1-dark: #001321;
+  --color-blue-2-dark: #011b2c;
+  --color-blue-3-dark: #002a46;
+  --color-blue-4-dark: #053552;
+  --color-blue-5-dark: #15425f;
+  --color-blue-6-dark: #24506e;
+  --color-blue-7-dark: #356180;
+  --color-blue-8-dark: #487494;
+  --color-blue-9-dark: #6895b6;
+  --color-blue-10-dark: #5c89a9;
+  --color-blue-11-dark: #8cbadc;
+  --color-blue-12-dark: #b7e7ff;
 
   /* Dark mode blue alpha variables */
-  --blue-a1-dark: #002ef412;
-  --blue-a2-dark: #0069ff1d;
-  --blue-a3-dark: #0081ff39;
-  --blue-a4-dark: #0095fe46;
-  --blue-a5-dark: #1ea6fe54;
-  --blue-a6-dark: #42b2ff64;
-  --blue-a7-dark: #5fbdff77;
-  --blue-a8-dark: #74c4fe8d;
-  --blue-a9-dark: #8fd0ffb1;
-  --blue-a10-dark: #87cdffa3;
-  --blue-a11-dark: #a1d7ffda;
-  --blue-a12-dark: #b7e7ff;
+  --color-blue-a1-dark: #002ef412;
+  --color-blue-a2-dark: #0069ff1d;
+  --color-blue-a3-dark: #0081ff39;
+  --color-blue-a4-dark: #0095fe46;
+  --color-blue-a5-dark: #1ea6fe54;
+  --color-blue-a6-dark: #42b2ff64;
+  --color-blue-a7-dark: #5fbdff77;
+  --color-blue-a8-dark: #74c4fe8d;
+  --color-blue-a9-dark: #8fd0ffb1;
+  --color-blue-a10-dark: #87cdffa3;
+  --color-blue-a11-dark: #a1d7ffda;
+  --color-blue-a12-dark: #b7e7ff;
+
+  /* Fonts */
+  --font-geist: "Geist", sans-serif;
+  --font-ebgaramond: "EB Garamond", serif;
 }

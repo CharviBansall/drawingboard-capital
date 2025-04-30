@@ -11,10 +11,10 @@ const Button = ({
   children,
   ...props
 }: ButtonProps) => {
-  const baseStyles = `flex items-center justify-center gap-1 font-medium cursor-pointer transition-all duration-200 ease-in-out`;
+  const baseStyles = `flex items-center justify-center gap-1 cursor-pointer rounded-sm transition-all duration-200 ease-in-out`;
 
   const kindStyles = {
-    primary: "bg-blue-12 text-blue-200 hover:bg-blue-900",
+    primary: "bg-blue-12 text-blue-1 hover:bg-blue-900",
     secondary: "bg-blue-300 text-blue-900 hover:bg-blue-400",
     ghost: "bg-transparent text-slate-900 hover:bg-slate-200",
     destructive: "bg-red-800 text-red-200 hover:bg-red-900",

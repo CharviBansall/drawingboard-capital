@@ -21,12 +21,13 @@ export function DarkModeProvider({ children }: { children: React.ReactNode }) {
       setIsDark(true);
     } else if (storedTheme === "light") {
       setIsDark(false);
-    } else {
-      const prefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      setIsDark(prefersDark);
     }
+    // else {
+    //   const prefersDark = window.matchMedia(
+    //     "(prefers-color-scheme: dark)"
+    //   ).matches;
+    //   setIsDark(prefersDark);
+    // }
 
     hasMounted.current = true;
   }, []);
