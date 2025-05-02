@@ -1,17 +1,17 @@
-import { useForm } from "../../node_modules/react-hook-form/dist";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import supabase from "@/lib/supabase";
-import Button from "@/ui/Button/Button";
-import { Link, useNavigate } from "react-router";
-import { useAuth } from "@/hooks/useAuth";
-import { useEffect } from "react";
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import supabase from '@/lib/supabase';
+import Button from '@/ui/Button/Button';
+import { Link, useNavigate } from 'react-router';
+import { useAuth } from '@/hooks/useAuth';
+import { useEffect } from 'react';
 
 const signUpSchema = z.object({
-  email: z.string().email({ message: "Invalid email address" }),
+  email: z.string().email({ message: 'Invalid email address' }),
   password: z
     .string()
-    .min(6, { message: "Password must be at least 6 characters" }),
+    .min(6, { message: 'Password must be at least 6 characters' }),
 });
 type SignUpForm = z.infer<typeof signUpSchema>;
 
@@ -28,7 +28,7 @@ export default function SignUp() {
 
   useEffect(() => {
     if (session) {
-      navigate("/home");
+      navigate('/home');
     }
   }, [session]);
 
@@ -38,9 +38,9 @@ export default function SignUp() {
       password: data.password,
     });
     if (error) {
-      console.error("Error signing up:", error.message);
+      console.error('Error signing up:', error.message);
     } else {
-      navigate("/home");
+      navigate('/home');
     }
   }
 
@@ -53,7 +53,7 @@ export default function SignUp() {
         type="email"
         className="border rounded-md p-2"
         placeholder="Email"
-        {...register("email")}
+        {...register('email')}
         disabled={isSubmitting}
       />
       {errors.email && (
@@ -63,7 +63,7 @@ export default function SignUp() {
         type="password"
         className="border rounded-md p-2"
         placeholder="Password"
-        {...register("password")}
+        {...register('password')}
         disabled={isSubmitting}
       />
       {errors.password && (
@@ -73,11 +73,11 @@ export default function SignUp() {
         Signup
       </Button>
       <span>
-        Already have an account?{" "}
+        Already have an account?{' '}
         <Link to="/signin">
-          {" "}
+          {' '}
           <span className="text-blue-600">Sign in</span>
-        </Link>{" "}
+        </Link>{' '}
       </span>
     </form>
   );

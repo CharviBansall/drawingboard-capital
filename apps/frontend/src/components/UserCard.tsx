@@ -1,10 +1,10 @@
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { useState } from "react";
-import { Avatar } from "../ui/Avatar/Avatar";
-import { CaretDown, Gear, SignOut } from "@phosphor-icons/react";
-import { useProfile } from "@/hooks/useProfile";
-import supabase from "@/lib/supabase";
-import { useNavigate } from "react-router";
+import { DropdownMenu } from 'radix-ui';
+import { useState } from 'react';
+import { Avatar } from '../ui/Avatar/Avatar';
+import { CaretDown, Gear, SignOut } from '@phosphor-icons/react';
+import { useProfile } from '@/hooks/useProfile';
+import supabase from '@/lib/supabase';
+import { useNavigate } from 'react-router';
 
 export default function UserCard() {
   const [open, setOpen] = useState(false);
@@ -12,18 +12,18 @@ export default function UserCard() {
   const navigate = useNavigate();
   if (!profile) return null;
 
-  const firstName = profile.first_name ?? "";
-  const lastName = profile.last_name ?? "";
+  const firstName = profile.first_name ?? '';
+  const lastName = profile.last_name ?? '';
   const fullName = `${firstName} ${lastName}`.trim();
-  const initials = (firstName[0] ?? "") + (lastName[0] ?? "");
-  const companyName = profile.company?.company_name ?? "";
+  const initials = (firstName[0] ?? '') + (lastName[0] ?? '');
+  const companyName = profile.company?.company_name ?? '';
 
   async function handleLogout() {
     const { error } = await supabase.auth.signOut();
     if (error) {
-      console.error("Error signing out:", error);
+      console.error('Error signing out:', error);
     } else {
-      navigate("/signin");
+      navigate('/signin');
     }
   }
 
@@ -32,10 +32,10 @@ export default function UserCard() {
       <DropdownMenu.Trigger asChild>
         <div
           className={
-            "flex h-fit w-full cursor-default flex-row items-center justify-center gap-3 rounded-md p-2 transition-all " +
+            'flex h-fit w-full cursor-default flex-row items-center justify-center gap-3 rounded-md p-2 transition-all ' +
             (open
-              ? "bg-slate-200 dark:bg-slate-800"
-              : "hover:bg-slate-200 dark:hover:bg-slate-800")
+              ? 'bg-slate-200 dark:bg-slate-800'
+              : 'hover:bg-slate-200 dark:hover:bg-slate-800')
           }
         >
           <Avatar initials={initials} />
@@ -47,7 +47,7 @@ export default function UserCard() {
           </div>
           <div
             className={
-              "transition-transform duration-200 " + (open ? "rotate-180" : "")
+              'transition-transform duration-200 ' + (open ? 'rotate-180' : '')
             }
           >
             <CaretDown />
