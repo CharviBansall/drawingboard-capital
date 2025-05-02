@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm } from "../../node_modules/react-hook-form/dist";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import supabase from "@/lib/supabase";
@@ -7,21 +7,21 @@ import { Link, useNavigate } from "react-router";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect } from "react";
 
-const signUpSchema = z.object({
+const signInSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
   password: z
     .string()
     .min(6, { message: "Password must be at least 6 characters" }),
 });
-type SignUpForm = z.infer<typeof signUpSchema>;
+type SignInForm = z.infer<typeof signInSchema>;
 
-export default function SignUp() {
+export default function SignIn() {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<SignUpForm>({
-    resolver: zodResolver(signUpSchema),
+  } = useForm<SignInForm>({
+    resolver: zodResolver(signInSchema),
   });
   const navigate = useNavigate();
   const { session } = useAuth();
@@ -32,13 +32,13 @@ export default function SignUp() {
     }
   }, [session]);
 
-  async function signUpWithEmail(data: SignUpForm) {
-    const { error } = await supabase.auth.signUp({
+  async function signInWithEmail(data: SignInForm) {
+    const { error } = await supabase.auth.signInWithPassword({
       email: data.email,
       password: data.password,
     });
     if (error) {
-      console.error("Error signing up:", error.message);
+      console.error("Error signing in:", error.message);
     } else {
       navigate("/home");
     }
@@ -46,7 +46,7 @@ export default function SignUp() {
 
   return (
     <form
-      onSubmit={handleSubmit(signUpWithEmail)}
+      onSubmit={handleSubmit(signInWithEmail)}
       className="min-h-screen min-w-screen flex flex-col items-center justify-center gap-2"
     >
       <input
@@ -70,15 +70,12 @@ export default function SignUp() {
         <span className="text-red-500 text-xs">{errors.password.message}</span>
       )}
       <Button type="submit" disabled={isSubmitting}>
-        Signup
+        Sign In
       </Button>
-      <span>
-        Already have an account?{" "}
-        <Link to="/signin">
-          {" "}
-          <span className="text-blue-600">Sign in</span>
-        </Link>{" "}
-      </span>
+      Don't have an account?{" "}
+      <Link to="/signup">
+        <span className="text-blue-600">Sign up</span>
+      </Link>
     </form>
   );
 }
