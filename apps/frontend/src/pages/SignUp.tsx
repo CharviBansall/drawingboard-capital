@@ -9,9 +9,6 @@ import { useEffect } from 'react';
 
 const signUpSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
-  password: z
-    .string()
-    .min(6, { message: 'Password must be at least 6 characters' }),
 });
 type SignUpForm = z.infer<typeof signUpSchema>;
 
@@ -32,21 +29,24 @@ export default function SignUp() {
     }
   }, [session]);
 
-  async function signUpWithEmail(data: SignUpForm) {
-    const { error } = await supabase.auth.signUp({
+  async function signUpWithMagicLink(data: SignUpForm) {
+    const baseUrl = import.meta.env.VITE_BASE_URL;
+    const { data: responseData, error } = await supabase.auth.signInWithOtp({
       email: data.email,
-      password: data.password,
+      options: {
+        emailRedirectTo: `${baseUrl}/auth/callback`,
+      },
     });
     if (error) {
       console.error('Error signing up:', error.message);
-    } else {
-      navigate('/home');
+    } else if (responseData) {
+      navigate(`/otp?email=${encodeURIComponent(data.email)}`);
     }
   }
 
   return (
     <form
-      onSubmit={handleSubmit(signUpWithEmail)}
+      onSubmit={handleSubmit(signUpWithMagicLink)}
       className="min-h-screen min-w-screen flex flex-col items-center justify-center gap-2"
     >
       <input
@@ -59,23 +59,12 @@ export default function SignUp() {
       {errors.email && (
         <span className="text-red-500 text-xs">{errors.email.message}</span>
       )}
-      <input
-        type="password"
-        className="border rounded-md p-2"
-        placeholder="Password"
-        {...register('password')}
-        disabled={isSubmitting}
-      />
-      {errors.password && (
-        <span className="text-red-500 text-xs">{errors.password.message}</span>
-      )}
       <Button type="submit" disabled={isSubmitting}>
-        Signup
+        Sign up with magic link
       </Button>
       <span>
         Already have an account?{' '}
         <Link to="/signin">
-          {' '}
           <span className="text-blue-600">Sign in</span>
         </Link>{' '}
       </span>
