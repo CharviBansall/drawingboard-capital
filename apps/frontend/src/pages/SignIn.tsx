@@ -1,81 +1,94 @@
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigate } from 'react-router';
+import { useState } from 'react';
+import Input from '@/components/Input';
 import supabase from '@/lib/supabase';
-import Button from '@/ui/Button/Button';
-import { Link, useNavigate } from 'react-router';
-import { useAuth } from '@/hooks/useAuth';
-import { useEffect } from 'react';
+import { BeatLoader } from 'react-spinners';
 
-const signInSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address' }),
-  password: z
-    .string()
-    .min(6, { message: 'Password must be at least 6 characters' }),
-});
-type SignInForm = z.infer<typeof signInSchema>;
-
-export default function SignIn() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<SignInForm>({
-    resolver: zodResolver(signInSchema),
-  });
+export default function SignInPage() {
+  const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { session } = useAuth();
+  const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (session) {
-      navigate('/home');
+  async function SignIn() {
+    if (!email) {
+      setError('Email is required');
+      return;
     }
-  }, [session]);
-
-  async function signInWithEmail(data: SignInForm) {
-    const { error } = await supabase.auth.signInWithPassword({
-      email: data.email,
-      password: data.password,
+    setIsLoading(true);
+    const baseUrl = import.meta.env.VITE_BASE_URL;
+    const { data: responseData, error } = await supabase.auth.signInWithOtp({
+      email: email,
+      options: {
+        emailRedirectTo: `${baseUrl}/auth/callback`,
+        shouldCreateUser: false,
+      },
     });
     if (error) {
-      console.error('Error signing in:', error.message);
-    } else {
-      navigate('/home');
+      setError(error.message);
+    } else if (responseData) {
+      return navigate(`/otp?email=${encodeURIComponent(email)}`);
     }
+    setIsLoading(false);
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(signInWithEmail)}
-      className="min-h-screen min-w-screen flex flex-col items-center justify-center gap-2"
-    >
-      <input
-        type="email"
-        className="border rounded-md p-2"
-        placeholder="Email"
-        {...register('email')}
-        disabled={isSubmitting}
-      />
-      {errors.email && (
-        <span className="text-red-500 text-xs">{errors.email.message}</span>
-      )}
-      <input
-        type="password"
-        className="border rounded-md p-2"
-        placeholder="Password"
-        {...register('password')}
-        disabled={isSubmitting}
-      />
-      {errors.password && (
-        <span className="text-red-500 text-xs">{errors.password.message}</span>
-      )}
-      <Button type="submit" disabled={isSubmitting}>
-        Sign In
-      </Button>
-      Don't have an account?{' '}
-      <Link to="/signup">
-        <span className="text-blue-600">Sign up</span>
-      </Link>
-    </form>
+    <div className="min-h-screen min-w-screen flex flex-row ">
+      <div className="w-1/2 bg-blue-12 flex relative text-white flex-col items-center justify-center">
+        <img
+          src="https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/brand-assets/svg/WhiteLogoNoWordmark.svg"
+          className="h-16 aspect-auto absolute top-12 left-12"
+        />
+        <div className="flex flex-col gap-4 w-96">
+          <h1 className="text-2xl font-medium">Sign in</h1>
+          <p className="text-slate-400">
+            Welcome back to DrawingBoard Capital.
+          </p>
+          {error && <p className="text-red-400">{error || ''}</p>}
+          <Input
+            props={{
+              label: 'Email',
+              type: 'email',
+              placeholder: 'warren@example.com',
+              value: email,
+              onChange: (e) => setEmail(e.target.value),
+              autoFocus: true,
+            }}
+          />
+          <button
+            onClick={SignIn}
+            disabled={!email || isLoading}
+            className="w-full bg-white disabled:text-slate-700 disabled:cursor-not-allowed
+            disabled:bg-slate-400
+            text-blue-12 font-medium p-2 hover:bg-slate-200 transition-all cursor-pointer rounded-md"
+          >
+            {isLoading ? (
+              <BeatLoader
+                className="text-blue-12"
+                size={7}
+                speedMultiplier={0.5}
+              />
+            ) : (
+              'Continue'
+            )}
+          </button>
+          <div className="flex flex-row gap-2 items-center">
+            <p className="text-slate-400">Don't have an account?</p>
+            <a
+              href="/signup"
+              className={`text-white hover:underline transition-all`}
+            >
+              Sign up instead.
+            </a>
+          </div>
+        </div>
+      </div>
+      <div className="w-1/2">
+        <img
+          src="https://picsum.photos/2000"
+          className="w-full h-full object-cover"
+        />
+      </div>
+    </div>
   );
 }

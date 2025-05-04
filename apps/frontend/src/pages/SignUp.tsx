@@ -1,73 +1,127 @@
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigate } from 'react-router';
+import { useState } from 'react';
+import Input from '@/components/Input';
 import supabase from '@/lib/supabase';
-import Button from '@/ui/Button/Button';
-import { Link, useNavigate } from 'react-router';
-import { useAuth } from '@/hooks/useAuth';
-import { useEffect } from 'react';
+import Confirmation from '@/components/Confirmation';
+import { BeatLoader } from 'react-spinners';
 
-const signUpSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address' }),
-});
-type SignUpForm = z.infer<typeof signUpSchema>;
-
-export default function SignUp() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<SignUpForm>({
-    resolver: zodResolver(signUpSchema),
-  });
+export default function SignUpPage() {
+  const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { session } = useAuth();
+  const [email, setEmail] = useState('');
+  const [termsChecked, setTermsChecked] = useState(false);
+  const [demoChecked, setDemoChecked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (session) {
-      navigate('/home');
+  async function SignUp() {
+    if (!email) {
+      setError('Email is required');
+      return;
     }
-  }, [session]);
-
-  async function signUpWithMagicLink(data: SignUpForm) {
+    setIsLoading(true);
     const baseUrl = import.meta.env.VITE_BASE_URL;
     const { data: responseData, error } = await supabase.auth.signInWithOtp({
-      email: data.email,
+      email: email,
       options: {
         emailRedirectTo: `${baseUrl}/auth/callback`,
+        shouldCreateUser: true,
       },
     });
     if (error) {
-      console.error('Error signing up:', error.message);
+      setError(error.message);
     } else if (responseData) {
-      navigate(`/otp?email=${encodeURIComponent(data.email)}`);
+      return navigate(`/otp?email=${encodeURIComponent(email)}`);
     }
+    setIsLoading(false);
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(signUpWithMagicLink)}
-      className="min-h-screen min-w-screen flex flex-col items-center justify-center gap-2"
-    >
-      <input
-        type="email"
-        className="border rounded-md p-2"
-        placeholder="Email"
-        {...register('email')}
-        disabled={isSubmitting}
-      />
-      {errors.email && (
-        <span className="text-red-500 text-xs">{errors.email.message}</span>
-      )}
-      <Button type="submit" disabled={isSubmitting}>
-        Sign up with magic link
-      </Button>
-      <span>
-        Already have an account?{' '}
-        <Link to="/signin">
-          <span className="text-blue-600">Sign in</span>
-        </Link>{' '}
-      </span>
-    </form>
+    <div className="min-h-screen min-w-screen flex flex-row ">
+      <div className="w-1/2 bg-blue-12 flex relative text-white flex-col items-center justify-center">
+        <img
+          src="https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/brand-assets/svg/WhiteLogoNoWordmark.svg"
+          className="h-16 aspect-auto absolute top-12 left-12"
+        />
+        <div className="flex flex-col gap-4 w-96">
+          <h1 className="text-2xl font-medium">Sign up</h1>
+          <p className="text-slate-400">
+            DrawingBoard Capital is currently in early access. Sign up to be one
+            of the first to try it out and help us shape the future.
+          </p>
+          {error && <p className="text-red-400">{error || ''}</p>}
+          <Input
+            props={{
+              label: 'Email',
+              type: 'email',
+              placeholder: 'warren@example.com',
+              value: email,
+              onChange: (e) => setEmail(e.target.value),
+              autoFocus: true,
+            }}
+          />
+          <Confirmation
+            id="terms"
+            label={
+              <span className="text-slate-400">
+                I agree to the{' '}
+                <a href="#" className="text-white">
+                  DrawingBoard Terms and Conditions.
+                </a>
+              </span>
+            }
+            checked={termsChecked}
+            onCheckedChange={setTermsChecked}
+            required
+          />
+          <Confirmation
+            id="demo"
+            label={
+              <span className="text-slate-400">
+                I acknowledge that this is a demonstration environment. All data
+                presented is fictitious and should not be construed as
+                investment advice, an offer, or a solicitation to buy or sell
+                any security.
+              </span>
+            }
+            checked={demoChecked}
+            onCheckedChange={setDemoChecked}
+            required
+          />
+
+          <button
+            onClick={SignUp}
+            disabled={!email || !termsChecked || !demoChecked || isLoading}
+            className="w-full bg-white disabled:text-slate-700 disabled:cursor-not-allowed
+            disabled:bg-slate-400
+            text-blue-12 font-medium p-2 hover:bg-slate-200 transition-all cursor-pointer rounded-md"
+          >
+            {isLoading ? (
+              <BeatLoader
+                className="text-blue-12"
+                size={7}
+                speedMultiplier={0.5}
+              />
+            ) : (
+              'Continue'
+            )}
+          </button>
+          <div className="flex flex-row gap-2 items-center">
+            <p className="text-slate-400">Already have an account?</p>
+            <a
+              href="/signin"
+              className={`text-white hover:underline transition-all`}
+            >
+              Sign in instead.
+            </a>
+          </div>
+        </div>
+      </div>
+      <div className="w-1/2">
+        <img
+          src="https://picsum.photos/2000"
+          className="w-full h-full object-cover"
+        />
+      </div>
+    </div>
   );
 }

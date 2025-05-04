@@ -97,7 +97,11 @@ export default function OtpPage() {
 
   return (
     <div className="min-h-screen min-w-screen flex flex-row ">
-      <div className="w-1/2 bg-blue-12 flex text-white flex-col items-center justify-center">
+      <div className="w-1/2 bg-blue-12 flex relative text-white flex-col items-center justify-center">
+        <img
+          src="https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/brand-assets/svg/WhiteLogoNoWordmark.svg"
+          className="h-16 aspect-auto absolute top-12 left-12"
+        />
         <div className="flex flex-col w-96">
           <button
             onClick={() => navigate('/signup')}
