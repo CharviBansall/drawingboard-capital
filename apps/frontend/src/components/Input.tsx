@@ -3,6 +3,7 @@ import React from 'react';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
+  className?: string;
 }
 
 export default function Input({ props }: { props: InputProps }) {
@@ -12,7 +13,9 @@ export default function Input({ props }: { props: InputProps }) {
     isFocused || (typeof props.value === 'string' && props.value.length > 0);
 
   return (
-    <div className="relative bg-blue-9 text-white border border-slate-700 focus-within:border-slate-500 rounded-md p-2 h-14">
+    <div
+      className={`relative bg-blue-9 text-white border border-slate-700 focus-within:border-slate-500 rounded-md p-2 h-14 ${props.className}`}
+    >
       <Label.Root
         className={`absolute transition-all duration-200 ${
           isActive

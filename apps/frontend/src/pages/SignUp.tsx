@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Input from '@/components/Input';
 import supabase from '@/lib/supabase';
 import Confirmation from '@/components/Confirmation';
-import { BeatLoader } from 'react-spinners';
+import Button from '@/components/Button';
 
 export default function SignUpPage() {
   const [error, setError] = useState('');
@@ -88,23 +88,13 @@ export default function SignUpPage() {
             required
           />
 
-          <button
-            onClick={SignUp}
-            disabled={!email || !termsChecked || !demoChecked || isLoading}
-            className="w-full bg-white disabled:text-slate-700 disabled:cursor-not-allowed
-            disabled:bg-slate-400
-            text-blue-12 font-medium p-2 hover:bg-slate-200 transition-all cursor-pointer rounded-md"
-          >
-            {isLoading ? (
-              <BeatLoader
-                className="text-blue-12"
-                size={7}
-                speedMultiplier={0.5}
-              />
-            ) : (
-              'Continue'
-            )}
-          </button>
+          <Button
+  isLoading={isLoading}
+  disabled={!email || !termsChecked || !demoChecked || isLoading}
+  onClick={SignUp}
+>
+  Continue
+</Button>
           <div className="flex flex-row gap-2 items-center">
             <p className="text-slate-400">Already have an account?</p>
             <a

@@ -1,0 +1,70 @@
+import { Briefcase, Building, User } from 'lucide-react';
+import { OnboardingState, useOnboardingState } from './OnboardingState';
+import { useNavigate } from 'react-router';
+
+export default function OnboardingInvestorType() {
+  const navigate = useNavigate();
+  const investorTypes = [
+    {
+      name: 'Institutional Investor',
+
+      value: 'institutional' as OnboardingState['investorType'],
+      icon: Building,
+    },
+    {
+      name: 'Accredited Investor',
+
+      value: 'individual' as OnboardingState['investorType'],
+      icon: User,
+    },
+    {
+      name: 'Financial Advisor',
+
+      value: 'intermediary' as OnboardingState['investorType'],
+      icon: Briefcase,
+    },
+  ];
+  const [_onboardingState, setOnboardingState] = useOnboardingState();
+  return (
+    <div className="min-h-screen min-w-screen flex flex-row ">
+      <div className="w-1/2 bg-blue-12 flex relative text-white flex-col items-center justify-center">
+        <img
+          src="https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/brand-assets/svg/WhiteLogoNoWordmark.svg"
+          className="h-16 aspect-auto absolute top-12 left-12"
+        />
+        <div className="flex flex-col gap-4 w-96">
+          <h1 className="text-2xl font-medium">
+            What type of investor are you?
+          </h1>
+          <div className="grid grid-rows-3 gap-3 mb-12">
+            {investorTypes.map((item) => {
+              return (
+                <div
+                  key={item.value}
+                  className={`bg-blue-3 hover:bg-blue-4 transition-all rounded-md text-blue-12 
+                  p-4 cursor-pointer flex flex-col items-center gap-2 justify-between`}
+                  onClick={() => {
+                    setOnboardingState((prev) => ({
+                      ...prev,
+                      investorType: item.value,
+                    }));
+                    navigate('/onboarding/form');
+                  }}
+                >
+                  <item.icon size={23} />
+                  <p className="font-medium text-sm">{item.name}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+      <div className="w-1/2">
+        <img
+          src="https://picsum.photos/2000"
+          className="w-full h-full object-cover"
+        />
+      </div>
+    </div>
+  );
+}

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import Input from '@/components/Input';
 import supabase from '@/lib/supabase';
-import { BeatLoader } from 'react-spinners';
+import Button from '@/components/Button';
 
 export default function SignInPage() {
   const [error, setError] = useState('');
@@ -55,23 +55,13 @@ export default function SignInPage() {
               autoFocus: true,
             }}
           />
-          <button
-            onClick={SignIn}
-            disabled={!email || isLoading}
-            className="w-full bg-white disabled:text-slate-700 disabled:cursor-not-allowed
-            disabled:bg-slate-400
-            text-blue-12 font-medium p-2 hover:bg-slate-200 transition-all cursor-pointer rounded-md"
-          >
-            {isLoading ? (
-              <BeatLoader
-                className="text-blue-12"
-                size={7}
-                speedMultiplier={0.5}
-              />
-            ) : (
-              'Continue'
-            )}
-          </button>
+          <Button
+  isLoading={isLoading}
+  disabled={!email || isLoading}
+  onClick={SignIn}
+>
+  Continue
+</Button>
           <div className="flex flex-row gap-2 items-center">
             <p className="text-slate-400">Don't have an account?</p>
             <a

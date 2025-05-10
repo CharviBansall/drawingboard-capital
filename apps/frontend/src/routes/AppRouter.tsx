@@ -11,12 +11,29 @@ import PrivateCredit from '../pages/PrivateCredit';
 import MarketInsights from '../pages/MarketInsights';
 import FundReports from '../pages/FundReports';
 import ManagerProfiles from '../pages/ManagerProfiles';
+
+const componentMap = {
+  Home,
+  Portfolio,
+  CapitalCalls,
+  Funds,
+  Fund,
+  Secondaries,
+  CoInvestments,
+  PrivateCredit,
+  MarketInsights,
+  FundReports,
+  ManagerProfiles,
+};
 import SignUp from '../pages/SignUp';
 import SignIn from '../pages/SignIn';
 import AuthCallback from '../pages/AuthCallback';
-import Onboarding from '../pages/Onboarding';
-import OnboardingConfirmation from '../pages/OnboardingConfirmation';
 import OtpPage from '@/pages/OTP';
+import { routes } from './routes';
+import React from 'react';
+import OnboardingWrapper from '@/pages/Onboarding/OnboardingWrapper';
+import OnboardingInvestorType from '@/pages/Onboarding/OnboardingInvestorType';
+import OnboardingForm from '@/pages/Onboarding/OnboardingForm';
 
 export function AppRouter() {
   return (
@@ -26,24 +43,25 @@ export function AppRouter() {
       <Route path="/signup" element={<SignUp />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/auth/callback" element={<AuthCallback />} />
-      <Route path="/onboarding" element={<Onboarding />} />
-      <Route
-        path="/onboarding-confirmation"
-        element={<OnboardingConfirmation />}
-      />
       <Route path="/otp" element={<OtpPage />} />
+      {/* Onboarding Routes */}
+      <Route path="onboarding" element={<OnboardingWrapper />}>
+        <Route index element={<OnboardingInvestorType />} />
+        <Route path="form" element={<OnboardingForm />} />
+      </Route>
+      {/* Private routes */}
       <Route element={<Layout />}>
-        <Route path="/home" element={<Home />} />
-        <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/capital-calls" element={<CapitalCalls />} />
-        <Route path="/funds" element={<Funds />} />
-        <Route path="/funds/:slug" element={<Fund />} />
-        <Route path="/secondaries" element={<Secondaries />} />
-        <Route path="/co-investments" element={<CoInvestments />} />
-        <Route path="/private-credit" element={<PrivateCredit />} />
-        <Route path="/market-insights" element={<MarketInsights />} />
-        <Route path="/fund-reports" element={<FundReports />} />
-        <Route path="/manager-profiles" element={<ManagerProfiles />} />
+        {routes.flatMap((section) =>
+          section.items.map((item) => (
+            <Route
+              key={item.path}
+              path={item.path}
+              element={React.createElement(
+                componentMap[item.element as keyof typeof componentMap],
+              )}
+            />
+          )),
+        )}
       </Route>
     </Routes>
   );

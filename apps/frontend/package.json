@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "update-types": "npx supabase gen types --lang=typescript --project-id \"dszguymnctetiaycvfaq\" > src/lib/types-supabase.ts"
+    "update-types": "supabase gen types --lang=typescript --project-id \"dszguymnctetiaycvfaq\" > src/lib/types-supabase.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
