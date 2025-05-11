@@ -12,8 +12,8 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({
   children,
   imageUrl,
   altText = 'Decorative image',
-  logoUrl = "https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/brand-assets/svg/WhiteLogoNoWordmark.svg",
-  logoAltText = "Brand Logo",
+  logoUrl = 'https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/brand-assets/svg/WhiteLogoNoWordmark.svg',
+  logoAltText = 'Brand Logo',
 }) => {
   return (
     <div className="min-h-screen min-w-screen flex flex-row">
@@ -27,7 +27,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({
         )}
         {children}
       </div>
-      <div className="w-1/2 flex items-center justify-center">
+      <div className="w-1/2 flex items-center max-h-screen justify-center">
         <img
           src={imageUrl}
           alt={altText}
