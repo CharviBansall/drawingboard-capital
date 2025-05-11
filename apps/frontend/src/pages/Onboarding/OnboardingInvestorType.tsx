@@ -1,7 +1,7 @@
 import { Briefcase, Building, User } from 'lucide-react';
-import { OnboardingState, useOnboardingState } from './OnboardingState'; 
+import { OnboardingState, useOnboardingState } from './OnboardingState';
 import { useNavigate } from 'react-router';
-import AuthLayout from '@/components/AuthLayout';
+import AuthLayout from '@/layout/AuthLayout';
 
 export default function OnboardingInvestorType() {
   const navigate = useNavigate();
@@ -27,10 +27,11 @@ export default function OnboardingInvestorType() {
   ];
   const [, setOnboardingState] = useOnboardingState();
 
-  const staticImageUrl = "https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/mvp-assets/office-images/dave-goudreau-Fa7Zv28vxa4-unsplash.jpg";
+  const staticImageUrl =
+    'https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/mvp-assets/office-images/dave-goudreau-Fa7Zv28vxa4-unsplash.jpg';
 
   return (
-    <AuthLayout imageUrl={staticImageUrl} altText="Abstract city scape">
+    <AuthLayout imageUrl={staticImageUrl}>
       <div className="flex flex-col items-center justify-center h-full p-8">
         {/* Removed logo img tag, assuming AuthLayout or another parent handles branding if needed */}
         <div className="flex flex-col gap-4 w-96">
@@ -53,7 +54,9 @@ export default function OnboardingInvestorType() {
                   }}
                 >
                   <item.icon size={28} className="mb-2" />
-                  <p className="font-medium text-sm text-blue-12">{item.name}</p>
+                  <p className="font-medium text-sm text-blue-12">
+                    {item.name}
+                  </p>
                 </div>
               );
             })}

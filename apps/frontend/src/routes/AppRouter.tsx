@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router';
-import { Layout } from '@/layout/Layout';
+import { AppLayout } from '@/layout/AppLayout';
 import Home from '@/pages/Home';
 import Portfolio from '../pages/Portfolio';
 import CapitalCalls from '../pages/CapitalCalls';
@@ -50,7 +50,8 @@ export function AppRouter() {
         <Route path="form" element={<OnboardingForm />} />
       </Route>
       {/* Private routes */}
-      <Route element={<Layout />}>
+
+      <Route element={<AppLayout />}>
         {internalRoutes.flatMap((section) =>
           section.items.map((item) => (
             <Route

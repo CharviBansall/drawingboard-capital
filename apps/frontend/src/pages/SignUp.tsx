@@ -4,10 +4,11 @@ import Input from '@/components/Input';
 import supabase from '@/lib/supabase';
 import Confirmation from '@/components/Confirmation';
 import Button from '@/components/Button';
-import AuthLayout from '@/components/AuthLayout';
+import AuthLayout from '@/layout/AuthLayout';
 
 export default function SignUpPage() {
-  const staticImageUrl = "https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/mvp-assets/office-images/dave-goudreau-Fa7Zv28vxa4-unsplash.jpg";
+  const staticImageUrl =
+    'https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/mvp-assets/office-images/dave-goudreau-Fa7Zv28vxa4-unsplash.jpg';
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -38,15 +39,19 @@ export default function SignUpPage() {
   }
 
   return (
-    <AuthLayout imageUrl={staticImageUrl} altText="Office background image">
+    <AuthLayout imageUrl={staticImageUrl}>
       <div className="flex flex-col items-center justify-center h-full p-8">
         <div className="flex flex-col gap-4 w-96">
-          <h1 className="text-2xl font-medium text-white text-center mb-6">Sign up</h1>
+          <h1 className="text-2xl font-medium text-white text-center mb-6">
+            Sign up
+          </h1>
           <p className="text-slate-400 text-center">
             DrawingBoard Capital is currently in early access. Sign up to be one
             of the first to try it out and help us shape the future.
           </p>
-          {error && <p className="text-red-400 mt-2 text-center">{error || ''}</p>}
+          {error && (
+            <p className="text-red-400 mt-2 text-center">{error || ''}</p>
+          )}
           <Input
             props={{
               label: 'Email',

@@ -3,7 +3,7 @@ import { useRequireOnboarding } from '@/hooks/useRequireOnboarding';
 import { Outlet } from 'react-router';
 import Sidebar from './Sidebar';
 
-export function Layout() {
+export function AppLayout() {
   const { loading: authLoading } = useRequireAuth();
   const { loading: onboardingLoading } = useRequireOnboarding();
 
