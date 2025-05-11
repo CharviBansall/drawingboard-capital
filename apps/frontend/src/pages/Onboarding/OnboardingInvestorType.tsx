@@ -25,7 +25,7 @@ export default function OnboardingInvestorType() {
       icon: Briefcase,
     },
   ];
-  const [, setOnboardingState] = useOnboardingState();
+  const [_onboardingState, setOnboardingState] = useOnboardingState();
 
   const staticImageUrl =
     'https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/mvp-assets/office-images/dave-goudreau-Fa7Zv28vxa4-unsplash.jpg';
@@ -33,9 +33,8 @@ export default function OnboardingInvestorType() {
   return (
     <AuthLayout imageUrl={staticImageUrl}>
       <div className="flex flex-col items-center justify-center h-full p-8">
-        {/* Removed logo img tag, assuming AuthLayout or another parent handles branding if needed */}
         <div className="flex flex-col gap-4 w-96">
-          <h1 className="text-2xl font-medium text-white text-center mb-6">
+          <h1 className="text-2xl font-medium text-white text-center">
             What type of investor are you?
           </h1>
           <div className="grid grid-rows-3 gap-3 mb-12">
