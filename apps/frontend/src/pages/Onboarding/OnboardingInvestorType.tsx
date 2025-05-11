@@ -1,6 +1,7 @@
 import { Briefcase, Building, User } from 'lucide-react';
 import { OnboardingState, useOnboardingState } from './OnboardingState';
 import { useNavigate } from 'react-router';
+import AuthLayout from '@/layout/AuthLayout';
 
 export default function OnboardingInvestorType() {
   const navigate = useNavigate();
@@ -25,15 +26,15 @@ export default function OnboardingInvestorType() {
     },
   ];
   const [_onboardingState, setOnboardingState] = useOnboardingState();
+
+  const staticImageUrl =
+    'https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/mvp-assets/office-images/dave-goudreau-Fa7Zv28vxa4-unsplash.jpg';
+
   return (
-    <div className="min-h-screen min-w-screen flex flex-row ">
-      <div className="w-1/2 bg-blue-12 flex relative text-white flex-col items-center justify-center">
-        <img
-          src="https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/brand-assets/svg/WhiteLogoNoWordmark.svg"
-          className="h-16 aspect-auto absolute top-12 left-12"
-        />
+    <AuthLayout imageUrl={staticImageUrl}>
+      <div className="flex flex-col items-center justify-center h-full p-8">
         <div className="flex flex-col gap-4 w-96">
-          <h1 className="text-2xl font-medium">
+          <h1 className="text-2xl font-medium text-white text-center">
             What type of investor are you?
           </h1>
           <div className="grid grid-rows-3 gap-3 mb-12">
@@ -42,7 +43,7 @@ export default function OnboardingInvestorType() {
                 <div
                   key={item.value}
                   className={`bg-blue-3 hover:bg-blue-4 transition-all rounded-md text-blue-12 
-                  p-4 cursor-pointer flex flex-col items-center gap-2 justify-between`}
+                  p-4 cursor-pointer flex flex-col items-center gap-2 justify-between text-center`}
                   onClick={() => {
                     setOnboardingState((prev) => ({
                       ...prev,
@@ -51,20 +52,16 @@ export default function OnboardingInvestorType() {
                     navigate('/onboarding/form');
                   }}
                 >
-                  <item.icon size={23} />
-                  <p className="font-medium text-sm">{item.name}</p>
+                  <item.icon size={28} className="mb-2" />
+                  <p className="font-medium text-sm text-blue-12">
+                    {item.name}
+                  </p>
                 </div>
               );
             })}
           </div>
         </div>
       </div>
-      <div className="w-1/2">
-        <img
-          src="https://picsum.photos/2000"
-          className="w-full h-full object-cover"
-        />
-      </div>
-    </div>
+    </AuthLayout>
   );
 }

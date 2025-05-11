@@ -3,8 +3,11 @@ import { unstable_OneTimePasswordField as OneTimePasswordField } from 'radix-ui'
 import { useLocation, useNavigate } from 'react-router';
 import supabase from '@/lib/supabase';
 import { useState, useEffect } from 'react';
+import AuthLayout from '@/layout/AuthLayout';
 
 export default function OtpPage() {
+  const staticImageUrl =
+    'https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/mvp-assets/office-images/dave-goudreau-Fa7Zv28vxa4-unsplash.jpg';
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const email = params.get('email');
@@ -96,30 +99,28 @@ export default function OtpPage() {
   );
 
   return (
-    <div className="min-h-screen min-w-screen flex flex-row ">
-      <div className="w-1/2 bg-blue-12 flex relative text-white flex-col items-center justify-center">
-        <img
-          src="https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/brand-assets/svg/WhiteLogoNoWordmark.svg"
-          className="h-16 aspect-auto absolute top-12 left-12"
-        />
+    <AuthLayout imageUrl={staticImageUrl}>
+      <div className="flex flex-col items-center justify-center h-full p-8">
         <div className="flex flex-col w-96">
           <button
-            onClick={() => navigate('/signup')}
-            className="w-fit mb-4 cursor-pointer text-slate-400 hover:text-white transition-all flex items-center flex-row gap-2"
+            onClick={() => navigate('/signup')} // Or perhaps back to signin? Consider UX.
+            className="w-fit mb-4 cursor-pointer text-slate-400 hover:text-white transition-all flex items-center flex-row gap-2 self-start"
           >
             <ArrowLeft />
             Back
           </button>
-          <h1 className="text-2xl font-medium">Email verification</h1>
-          <p className="text-slate-400">
+          <h1 className="text-2xl font-medium text-white text-center mb-2">
+            Email verification
+          </h1>
+          <p className="text-slate-400 text-center">
             Enter the verification code or click on the link we sent to {email}.
           </p>
-          <p className="text-red-400 mt-4">{error || ''}</p>
+          <p className="text-red-400 mt-4 text-center">{error || ''}</p>
           <OTPField />
           <button
             onClick={resendOTP}
             disabled={isResendDisabled}
-            className={`w-fit mb-4 flex items-center flex-row gap-2 ${
+            className={`w-fit mb-4 flex items-center flex-row gap-2 self-center ${
               isResendDisabled
                 ? 'text-slate-600 cursor-not-allowed'
                 : 'cursor-pointer text-slate-400 hover:text-white transition-all'
@@ -131,12 +132,6 @@ export default function OtpPage() {
           </button>
         </div>
       </div>
-      <div className="w-1/2">
-        <img
-          src="https://picsum.photos/2000"
-          className="w-full h-full object-cover"
-        />
-      </div>
-    </div>
+    </AuthLayout>
   );
 }

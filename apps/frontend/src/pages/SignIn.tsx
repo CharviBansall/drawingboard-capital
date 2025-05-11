@@ -3,8 +3,11 @@ import { useState } from 'react';
 import Input from '@/components/Input';
 import supabase from '@/lib/supabase';
 import Button from '@/components/Button';
+import AuthLayout from '@/layout/AuthLayout';
 
 export default function SignInPage() {
+  const staticImageUrl =
+    'https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/mvp-assets/office-images/dave-goudreau-Fa7Zv28vxa4-unsplash.jpg';
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -33,18 +36,18 @@ export default function SignInPage() {
   }
 
   return (
-    <div className="min-h-screen min-w-screen flex flex-row ">
-      <div className="w-1/2 bg-blue-12 flex relative text-white flex-col items-center justify-center">
-        <img
-          src="https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/brand-assets/svg/WhiteLogoNoWordmark.svg"
-          className="h-16 aspect-auto absolute top-12 left-12"
-        />
+    <AuthLayout imageUrl={staticImageUrl}>
+      <div className="flex flex-col items-center justify-center h-full p-8">
         <div className="flex flex-col gap-4 w-96">
-          <h1 className="text-2xl font-medium">Sign in</h1>
-          <p className="text-slate-400">
+          <h1 className="text-2xl font-medium text-white text-center">
+            Sign in
+          </h1>
+          <p className="text-slate-400 text-center">
             Welcome back to DrawingBoard Capital.
           </p>
-          {error && <p className="text-red-400">{error || ''}</p>}
+          {error && (
+            <p className="text-red-400 mt-2 text-center">{error || ''}</p>
+          )}
           <Input
             props={{
               label: 'Email',
@@ -56,13 +59,13 @@ export default function SignInPage() {
             }}
           />
           <Button
-  isLoading={isLoading}
-  disabled={!email || isLoading}
-  onClick={SignIn}
->
-  Continue
-</Button>
-          <div className="flex flex-row gap-2 items-center">
+            isLoading={isLoading}
+            disabled={!email || isLoading}
+            onClick={SignIn}
+          >
+            Continue
+          </Button>
+          <div className="flex flex-row gap-2 items-center justify-center mt-4">
             <p className="text-slate-400">Don't have an account?</p>
             <a
               href="/signup"
@@ -73,12 +76,6 @@ export default function SignInPage() {
           </div>
         </div>
       </div>
-      <div className="w-1/2">
-        <img
-          src="https://picsum.photos/2000"
-          className="w-full h-full object-cover"
-        />
-      </div>
-    </div>
+    </AuthLayout>
   );
 }

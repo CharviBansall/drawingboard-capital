@@ -4,15 +4,17 @@ import { useEffect } from 'react';
 import OnboardingFormInstitution from './OnboardingFormInstitution';
 import OnboardingFormIndividual from './OnboardingFormIndividual';
 import OnboardingFormIntermediary from './OnboardingFormIntermediary';
+import AuthLayout from '../../layout/AuthLayout';
 
 export default function OnboardingForm() {
   const [onboardingState, _setOnboardingState] = useOnboardingState();
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!onboardingState.investorType) {
       navigate('/onboarding');
     }
-  }, [onboardingState.investorType]);
+  }, [onboardingState.investorType, navigate]);
 
   let FormComponent = null;
   if (onboardingState.investorType === 'institutional') {
@@ -23,21 +25,8 @@ export default function OnboardingForm() {
     FormComponent = <OnboardingFormIntermediary />;
   }
 
-  return (
-    <div className="min-h-screen min-w-screen flex flex-row ">
-      <div className="w-1/2 bg-blue-12 flex relative text-white flex-col items-center justify-center">
-        <img
-          src="https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/brand-assets/svg/WhiteLogoNoWordmark.svg"
-          className="h-16 aspect-auto absolute top-12 left-12"
-        />
-        {FormComponent}
-      </div>
-      <div className="w-1/2 flex items-center justify-center">
-        <img
-          src="https://picsum.photos/2000"
-          className="w-full h-full object-cover"
-        />
-      </div>
-    </div>
-  );
+  const staticImageUrl =
+    'https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/mvp-assets/office-images/dave-goudreau-Fa7Zv28vxa4-unsplash.jpg';
+
+  return <AuthLayout imageUrl={staticImageUrl}>{FormComponent}</AuthLayout>;
 }
