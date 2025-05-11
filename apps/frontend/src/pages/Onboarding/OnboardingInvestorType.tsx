@@ -52,7 +52,7 @@ export default function OnboardingInvestorType() {
                     navigate('/onboarding/form');
                   }}
                 >
-                  <item.icon size={28} className="mb-2" /> {/* Increased icon size and added margin */}
+                  <item.icon size={28} className="mb-2" />
                   <p className="font-medium text-sm text-blue-12">{item.name}</p>
                 </div>
               );
