@@ -42,7 +42,7 @@ export default function SignUpPage() {
     <AuthLayout imageUrl={staticImageUrl}>
       <div className="flex flex-col items-center justify-center h-full p-8">
         <div className="flex flex-col gap-4 w-96">
-          <h1 className="text-2xl font-medium text-white text-center mb-6">
+          <h1 className="text-2xl font-medium text-white text-center">
             Sign up
           </h1>
           <p className="text-slate-400 text-center">
