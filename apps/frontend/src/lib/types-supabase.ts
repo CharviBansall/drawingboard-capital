@@ -7,6 +7,31 @@ export type Json =
   | Json[];
 
 export type Database = {
+  graphql_public: {
+    Tables: {
+      [_ in never]: never;
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      graphql: {
+        Args: {
+          operationName?: string;
+          query?: string;
+          variables?: Json;
+          extensions?: Json;
+        };
+        Returns: Json;
+      };
+    };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
   public: {
     Tables: {
       companies: {
@@ -151,22 +176,64 @@ export type Database = {
       };
       funds: {
         Row: {
+          asset_class: string | null;
+          country: string | null;
           details: Json | null;
           firm_id: number | null;
+          fund_currency: string | null;
           fund_id: number;
+          fund_legal_structure: string | null;
+          fund_size_usd_mn: number | null;
+          fund_structure: string | null;
+          geographic_focus: string | null;
+          lifespan_years: number | null;
           name: string | null;
+          offer_co_investment_opportunities_to_lps: boolean | null;
+          private_wealth: boolean | null;
+          region: string | null;
+          status: string | null;
+          strategy: string | null;
+          vintage_inception_year: number | null;
         };
         Insert: {
+          asset_class?: string | null;
+          country?: string | null;
           details?: Json | null;
           firm_id?: number | null;
+          fund_currency?: string | null;
           fund_id: number;
+          fund_legal_structure?: string | null;
+          fund_size_usd_mn?: number | null;
+          fund_structure?: string | null;
+          geographic_focus?: string | null;
+          lifespan_years?: number | null;
           name?: string | null;
+          offer_co_investment_opportunities_to_lps?: boolean | null;
+          private_wealth?: boolean | null;
+          region?: string | null;
+          status?: string | null;
+          strategy?: string | null;
+          vintage_inception_year?: number | null;
         };
         Update: {
+          asset_class?: string | null;
+          country?: string | null;
           details?: Json | null;
           firm_id?: number | null;
+          fund_currency?: string | null;
           fund_id?: number;
+          fund_legal_structure?: string | null;
+          fund_size_usd_mn?: number | null;
+          fund_structure?: string | null;
+          geographic_focus?: string | null;
+          lifespan_years?: number | null;
           name?: string | null;
+          offer_co_investment_opportunities_to_lps?: boolean | null;
+          private_wealth?: boolean | null;
+          region?: string | null;
+          status?: string | null;
+          strategy?: string | null;
+          vintage_inception_year?: number | null;
         };
         Relationships: [
           {
@@ -355,6 +422,9 @@ export type CompositeTypes<
     : never;
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {
       eligibility_enum: [
