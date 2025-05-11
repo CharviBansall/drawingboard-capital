@@ -50,9 +50,8 @@ export function AppRouter() {
         <Route path="form" element={<OnboardingForm />} />
       </Route>
       {/* Private routes */}
-
       <Route element={<AppLayout />}>
-        {internalRoutes.flatMap((section) =>
+        {internal.flatMap((section) =>
           section.items.map((item) => (
             <Route
               key={item.path}
