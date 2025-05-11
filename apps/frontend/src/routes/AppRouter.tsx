@@ -29,7 +29,7 @@ import SignUp from '../pages/SignUp';
 import SignIn from '../pages/SignIn';
 import AuthCallback from '../pages/AuthCallback';
 import OtpPage from '@/pages/OTP';
-import { routes } from './routes';
+import { internalRoutes } from './internalRoutes';
 import React from 'react';
 import OnboardingWrapper from '@/pages/Onboarding/OnboardingWrapper';
 import OnboardingInvestorType from '@/pages/Onboarding/OnboardingInvestorType';
@@ -51,7 +51,7 @@ export function AppRouter() {
       </Route>
       {/* Private routes */}
       <Route element={<AppLayout />}>
-        {routes.flatMap((section) =>
+        {internal.flatMap((section) =>
           section.items.map((item) => (
             <Route
               key={item.path}

@@ -1,7 +1,13 @@
 import Input from '@/components/Input';
 import Button from '@/components/Button';
+import PhoneInput from '@/components/PhoneInput';
+import { useState } from 'react';
 
 export default function OnboardingFormIntermediary() {
+  const [phoneNumber, setPhoneNumber] = useState<any>();
+  async function onSubmit() {
+    console.log(phoneNumber);
+  }
   return (
     <form className="flex flex-col gap-4 w-96">
       <h2 className="text-xl font-medium">
@@ -30,13 +36,9 @@ export default function OnboardingFormIntermediary() {
           }}
         />
         <div className="col-span-2">
-          <Input
-            props={{
-              label: 'Phone Number',
-              type: 'text',
-              onChange: () => {},
-              placeholder: 'Berkshire Hathaway',
-            }}
+          <PhoneInput
+            onChange={(value) => setPhoneNumber(value)}
+            value={phoneNumber}
           />
         </div>
         <div className="col-span-2">

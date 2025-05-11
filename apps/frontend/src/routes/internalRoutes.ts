@@ -12,7 +12,7 @@ import {
   UserList,
 } from '@phosphor-icons/react';
 
-export const routes = [
+export const internalRoutes = [
   {
     section: 'Base',
     items: [
