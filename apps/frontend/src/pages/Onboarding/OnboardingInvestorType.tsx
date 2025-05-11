@@ -1,5 +1,5 @@
 import { Briefcase, Building, User } from 'lucide-react';
-import { OnboardingState, useOnboardingState } from './OnboardingState'; // Assuming OnboardingState is in the same directory
+import { OnboardingState, useOnboardingState } from './OnboardingState'; 
 import { useNavigate } from 'react-router';
 import AuthLayout from '@/components/AuthLayout';
 
