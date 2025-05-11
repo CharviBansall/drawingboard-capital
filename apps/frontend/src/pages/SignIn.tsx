@@ -3,10 +3,11 @@ import { useState } from 'react';
 import Input from '@/components/Input';
 import supabase from '@/lib/supabase';
 import Button from '@/components/Button';
-import AuthLayout from '@/components/AuthLayout';
+import AuthLayout from '@/layout/AuthLayout';
 
 export default function SignInPage() {
-  const staticImageUrl = "https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/mvp-assets/office-images/dave-goudreau-Fa7Zv28vxa4-unsplash.jpg";
+  const staticImageUrl =
+    'https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/mvp-assets/office-images/dave-goudreau-Fa7Zv28vxa4-unsplash.jpg';
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -35,14 +36,18 @@ export default function SignInPage() {
   }
 
   return (
-    <AuthLayout imageUrl={staticImageUrl} altText="Office background image">
+    <AuthLayout imageUrl={staticImageUrl}>
       <div className="flex flex-col items-center justify-center h-full p-8">
         <div className="flex flex-col gap-4 w-96">
-          <h1 className="text-2xl font-medium text-white text-center mb-6">Sign in</h1>
+          <h1 className="text-2xl font-medium text-white text-center mb-6">
+            Sign in
+          </h1>
           <p className="text-slate-400 text-center">
             Welcome back to DrawingBoard Capital.
           </p>
-          {error && <p className="text-red-400 mt-2 text-center">{error || ''}</p>}
+          {error && (
+            <p className="text-red-400 mt-2 text-center">{error || ''}</p>
+          )}
           <Input
             props={{
               label: 'Email',

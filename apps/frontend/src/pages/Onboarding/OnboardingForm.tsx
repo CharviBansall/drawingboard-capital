@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import OnboardingFormInstitution from './OnboardingFormInstitution';
 import OnboardingFormIndividual from './OnboardingFormIndividual';
 import OnboardingFormIntermediary from './OnboardingFormIntermediary';
-import AuthLayout from '../../components/AuthLayout';
+import AuthLayout from '../../layout/AuthLayout';
 
 export default function OnboardingForm() {
   const [onboardingState, _setOnboardingState] = useOnboardingState();
@@ -25,11 +25,8 @@ export default function OnboardingForm() {
     FormComponent = <OnboardingFormIntermediary />;
   }
 
-  const staticImageUrl = "https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/mvp-assets/office-images/dave-goudreau-Fa7Zv28vxa4-unsplash.jpg";
+  const staticImageUrl =
+    'https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/mvp-assets/office-images/dave-goudreau-Fa7Zv28vxa4-unsplash.jpg';
 
-  return (
-    <AuthLayout imageUrl={staticImageUrl} altText="Office background image">
-      {FormComponent}
-    </AuthLayout>
-  );
+  return <AuthLayout imageUrl={staticImageUrl}>{FormComponent}</AuthLayout>;
 }

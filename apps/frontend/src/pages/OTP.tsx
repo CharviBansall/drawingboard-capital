@@ -3,10 +3,11 @@ import { unstable_OneTimePasswordField as OneTimePasswordField } from 'radix-ui'
 import { useLocation, useNavigate } from 'react-router';
 import supabase from '@/lib/supabase';
 import { useState, useEffect } from 'react';
-import AuthLayout from '@/components/AuthLayout';
+import AuthLayout from '@/layout/AuthLayout';
 
 export default function OtpPage() {
-  const staticImageUrl = "https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/mvp-assets/office-images/dave-goudreau-Fa7Zv28vxa4-unsplash.jpg";
+  const staticImageUrl =
+    'https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/mvp-assets/office-images/dave-goudreau-Fa7Zv28vxa4-unsplash.jpg';
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const email = params.get('email');
@@ -98,7 +99,7 @@ export default function OtpPage() {
   );
 
   return (
-    <AuthLayout imageUrl={staticImageUrl} altText="Office background image">
+    <AuthLayout imageUrl={staticImageUrl}>
       <div className="flex flex-col items-center justify-center h-full p-8">
         <div className="flex flex-col w-96">
           <button
@@ -108,7 +109,9 @@ export default function OtpPage() {
             <ArrowLeft />
             Back
           </button>
-          <h1 className="text-2xl font-medium text-white text-center mb-2">Email verification</h1>
+          <h1 className="text-2xl font-medium text-white text-center mb-2">
+            Email verification
+          </h1>
           <p className="text-slate-400 text-center">
             Enter the verification code or click on the link we sent to {email}.
           </p>
