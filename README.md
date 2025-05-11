@@ -1,2 +1,1 @@
-Added a read me 
-.
+Added a read me.
