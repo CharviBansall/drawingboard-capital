@@ -53,7 +53,7 @@ export default function OnboardingInvestorType() {
                   }}
                 >
                   <item.icon size={28} className="mb-2" /> {/* Increased icon size and added margin */}
-                  <p className="font-medium text-sm text-white">{item.name}</p>
+                  <p className="font-medium text-sm text-blue-12">{item.name}</p>
                 </div>
               );
             })}
