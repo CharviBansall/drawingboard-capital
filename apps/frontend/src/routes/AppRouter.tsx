@@ -51,7 +51,7 @@ export function AppRouter() {
       </Route>
       {/* Private routes */}
       <Route element={<AppLayout />}>
-        {internal.flatMap((section) =>
+        {internalRoutes.flatMap((section) =>
           section.items.map((item) => (
             <Route
               key={item.path}
