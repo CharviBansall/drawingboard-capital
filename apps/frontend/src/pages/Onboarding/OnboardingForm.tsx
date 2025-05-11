@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router';
 import { useOnboardingState } from './OnboardingState';
 import { useEffect } from 'react';
-// Supabase and useState are no longer needed
 import OnboardingFormInstitution from './OnboardingFormInstitution';
 import OnboardingFormIndividual from './OnboardingFormIndividual';
 import OnboardingFormIntermediary from './OnboardingFormIntermediary';
