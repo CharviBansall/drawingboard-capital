@@ -3,7 +3,7 @@ import { AppLayout } from '@/layout/AppLayout';
 import Home from '@/pages/Home';
 import Portfolio from '../pages/Portfolio';
 import CapitalCalls from '../pages/CapitalCalls';
-import Funds from '../pages/Funds';
+import Funds from '../pages/Funds/Funds';
 import Fund from '../pages/Fund';
 import Secondaries from '../pages/Secondaries';
 import CoInvestments from '../pages/CoInvestments';

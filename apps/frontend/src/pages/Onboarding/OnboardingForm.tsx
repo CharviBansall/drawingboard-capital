@@ -11,17 +11,17 @@ export default function OnboardingForm() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!onboardingState.investorType) {
+    if (!onboardingState.profileType) {
       navigate('/onboarding');
     }
-  }, [onboardingState.investorType, navigate]);
+  }, [onboardingState.profileType, navigate]);
 
   let FormComponent = null;
-  if (onboardingState.investorType === 'institutional') {
+  if (onboardingState.profileType === 'investor') {
     FormComponent = <OnboardingFormInstitution />;
-  } else if (onboardingState.investorType === 'individual') {
+  } else if (onboardingState.profileType === 'fund_manager') {
     FormComponent = <OnboardingFormIndividual />;
-  } else if (onboardingState.investorType === 'intermediary') {
+  } else if (onboardingState.profileType === 'admin') {
     FormComponent = <OnboardingFormIntermediary />;
   }
 

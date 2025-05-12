@@ -1,66 +1,79 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import supabase from '@/lib/supabase';
 import { useAuth } from '@/hooks/useAuth';
-import { Tables } from '@/lib/types-supabase';
+import { Tables } from '@/types/types-supabase';
 import { PostgrestSingleResponse } from '@supabase/supabase-js';
 
+// Define the shape of the joined query result
 type ProfileWithCompany = Tables<'profiles'> & {
   company: Pick<Tables<'companies'>, 'company_name'> | null;
 };
 
-type UseProfileResult = {
-  profile: ProfileWithCompany | null;
-  loading: boolean;
-  error: string | null;
-  refetch: () => void;
-};
+// Cache to store profiles by user ID
+const profileCache = new Map<string, ProfileWithCompany>();
 
-export function useProfile(): UseProfileResult {
+export function useProfile() {
   const { user } = useAuth();
   const [profile, setProfile] = useState<ProfileWithCompany | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const abortRef = useRef(false);
+  const fetchingRef = useRef(false);
 
-  const fetchProfile = useCallback(async () => {
-    if (!user) {
+  // Memoize user ID to prevent unnecessary effect triggers
+  const userId = useMemo(() => user?.id, [user?.id]);
+
+  useEffect(() => {
+    // Skip if we're already fetching
+    if (fetchingRef.current) return;
+
+    if (!userId) {
       setProfile(null);
       setLoading(false);
-      setError(null);
       return;
     }
-    setLoading(true);
-    setError(null);
-    try {
+
+    // Check if we have a cached profile for this user
+    const cachedProfile = profileCache.get(userId);
+    if (cachedProfile) {
+      console.log('Using cached profile');
+      setProfile(cachedProfile);
+      setLoading(false);
+      return;
+    }
+
+    const fetchProfile = async () => {
+      // Set fetching flag to prevent duplicate requests
+      fetchingRef.current = true;
+
       const { data, error }: PostgrestSingleResponse<ProfileWithCompany> =
         await supabase
           .from('profiles')
           .select('*, company:company_id(company_name)')
-          .eq('id', user.id)
+          .eq('id', userId)
           .single();
 
-      if (abortRef.current) return;
-
       if (error) {
-        setError(error.message);
+        console.error('Error fetching profile:', error.message);
         setProfile(null);
       } else {
+        // Cache the profile
+        if (data) {
+          profileCache.set(userId, data);
+        }
         setProfile(data);
       }
-    } catch (err: any) {
-      if (!abortRef.current) setError(err.message ?? 'Unknown error');
-    } finally {
-      if (!abortRef.current) setLoading(false);
-    }
-  }, [user]);
 
-  useEffect(() => {
-    abortRef.current = false;
-    fetchProfile();
-    return () => {
-      abortRef.current = true;
+      setLoading(false);
+      fetchingRef.current = false;
     };
-  }, [fetchProfile]);
 
-  return { profile, loading, error, refetch: fetchProfile };
+    fetchProfile();
+
+    // Cleanup function
+    return () => {
+      fetchingRef.current = false;
+    };
+  }, [userId]);
+
+  // Memoize the return value to prevent unnecessary re-renders
+  return useMemo(() => ({ profile, loading }), [profile, loading]);
 }
