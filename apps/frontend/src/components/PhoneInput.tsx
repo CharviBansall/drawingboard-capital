@@ -47,7 +47,10 @@ export default function PhoneInput({
         defaultCountry="US"
         countries={['AU', 'US', 'GB', 'CA', 'IN', 'AE']}
         placeholder="Enter phone number"
-        onChange={(value) => console.log(value)}
+        onChange={(value) => {
+          propOnChange?.(value);
+          setValue(value);
+        }}
         className={`w-full flex flex-row gap-2 items-center mt-4 focus:outline-none text-white ${
           isActive ? 'opacity-100' : 'opacity-0'
         }`}

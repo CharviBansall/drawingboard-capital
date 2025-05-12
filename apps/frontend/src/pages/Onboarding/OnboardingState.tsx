@@ -1,8 +1,8 @@
-import { Enums } from '@/lib/types-supabase';
+import { Enums } from '@/types/types-supabase';
 import { createContext, useContext, useState } from 'react';
 
 export type OnboardingState = {
-  investorType?: Enums<'investor_type_enum'>;
+  profileType?: Enums<'profile_type_enum'>;
 };
 
 type OnboardingContextType = [

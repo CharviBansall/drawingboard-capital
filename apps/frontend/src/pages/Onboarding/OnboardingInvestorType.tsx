@@ -1,4 +1,4 @@
-import { Briefcase, Building, User } from 'lucide-react';
+import { Building, User } from 'lucide-react';
 import { OnboardingState, useOnboardingState } from './OnboardingState';
 import { useNavigate } from 'react-router';
 import AuthLayout from '@/layout/AuthLayout';
@@ -7,22 +7,16 @@ export default function OnboardingInvestorType() {
   const navigate = useNavigate();
   const investorTypes = [
     {
-      name: 'Institutional Investor',
+      name: 'Investor',
 
-      value: 'institutional' as OnboardingState['investorType'],
-      icon: Building,
-    },
-    {
-      name: 'Accredited Investor',
-
-      value: 'individual' as OnboardingState['investorType'],
+      value: 'investor' as OnboardingState['profileType'],
       icon: User,
     },
     {
-      name: 'Financial Advisor',
+      name: 'Fund Manager',
 
-      value: 'intermediary' as OnboardingState['investorType'],
-      icon: Briefcase,
+      value: 'fund_manager' as OnboardingState['profileType'],
+      icon: Building,
     },
   ];
   const [_onboardingState, setOnboardingState] = useOnboardingState();
@@ -47,7 +41,7 @@ export default function OnboardingInvestorType() {
                   onClick={() => {
                     setOnboardingState((prev) => ({
                       ...prev,
-                      investorType: item.value,
+                      profileType: item.value,
                     }));
                     navigate('/onboarding/form');
                   }}

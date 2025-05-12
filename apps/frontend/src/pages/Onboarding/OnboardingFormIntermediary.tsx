@@ -5,9 +5,6 @@ import { useState } from 'react';
 
 export default function OnboardingFormIntermediary() {
   const [phoneNumber, setPhoneNumber] = useState<any>();
-  async function onSubmit() {
-    console.log(phoneNumber);
-  }
   return (
     <form className="flex flex-col gap-4 w-96">
       <h2 className="text-xl font-medium">
