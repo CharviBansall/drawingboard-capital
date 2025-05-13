@@ -3,7 +3,7 @@ import { AppLayout } from '@/layout/AppLayout';
 import Home from '@/pages/Home';
 import Portfolio from '../pages/Portfolio';
 import CapitalCalls from '../pages/CapitalCalls';
-import Funds from '../pages/Funds';
+import Funds from '../pages/Funds/Funds';
 import Fund from '../pages/Fund';
 import Secondaries from '../pages/Secondaries';
 import CoInvestments from '../pages/CoInvestments';
@@ -29,7 +29,7 @@ import SignUp from '../pages/SignUp';
 import SignIn from '../pages/SignIn';
 import AuthCallback from '../pages/AuthCallback';
 import OtpPage from '@/pages/OTP';
-import { routes } from './routes';
+import { internalRoutes } from './internalRoutes';
 import React from 'react';
 import OnboardingWrapper from '@/pages/Onboarding/OnboardingWrapper';
 import OnboardingInvestorType from '@/pages/Onboarding/OnboardingInvestorType';
@@ -51,7 +51,7 @@ export function AppRouter() {
       </Route>
       {/* Private routes */}
       <Route element={<AppLayout />}>
-        {routes.flatMap((section) =>
+        {internalRoutes.flatMap((section) =>
           section.items.map((item) => (
             <Route
               key={item.path}
