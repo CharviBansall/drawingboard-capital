@@ -1,5 +1,4 @@
 import Button from '@/ui/Button/Button';
-import { Tables } from '@/types/types-supabase';
 import {
   Building2,
   Globe,
@@ -10,6 +9,9 @@ import {
   Briefcase,
   MapPin,
 } from 'lucide-react';
+// Import types from supabase and Funds component
+import { Json } from '@/types/types-supabase';
+import { FundArray } from './Funds';
 
 // Define a proper TypeScript interface for fund details
 interface FundDetails {
@@ -26,15 +28,33 @@ interface FundDetails {
   [key: string]: any; // Allow for other properties
 }
 
+// Type definitions for the FundCard component
+
 // Interface that extends the base Fund type with properly typed details
-interface FundWithDetails extends Tables<'funds'> {
+type FundWithDetails = Omit<FundArray[number], 'details' | 'companies'> & {
   details: FundDetails;
-}
+  companies?: any; // Accept any form of companies data
+};
+
+/**
+ * Helper function to extract logo URL from companies property which can be an object or array
+ */
+const getLogoUrl = (companies: any): string => {
+  if (!companies) return '';
+
+  // If companies is an array, get the first item's logo
+  if (Array.isArray(companies)) {
+    return companies[0]?.logo || '';
+  }
+
+  // If companies is an object with logo property
+  return companies.logo || '';
+};
 
 /**
  * Parse and validate fund details to ensure type safety and provide defaults
  */
-function parseFundDetails(fund: Tables<'funds'>): FundWithDetails {
+function parseFundDetails(fund: FundArray[number]): FundWithDetails {
   let details: FundDetails;
 
   try {
@@ -42,7 +62,7 @@ function parseFundDetails(fund: Tables<'funds'>): FundWithDetails {
     details =
       typeof fund.details === 'string'
         ? JSON.parse(fund.details)
-        : (fund.details as any) || {};
+        : (fund.details as Json) || {};
   } catch (e) {
     console.error('Error parsing fund details:', e);
     details = {} as FundDetails;
@@ -51,6 +71,7 @@ function parseFundDetails(fund: Tables<'funds'>): FundWithDetails {
   // Ensure all required properties exist with defaults
   return {
     ...fund,
+    companies: fund.companies || null,
     details: {
       ...details, // First spread original properties
       // Then override with defaults for missing properties
@@ -67,7 +88,7 @@ function parseFundDetails(fund: Tables<'funds'>): FundWithDetails {
   };
 }
 
-export function FundCard({ fund }: { fund: Tables<'funds'> }) {
+export function FundCard({ fund }: { fund: FundArray[number] }) {
   // Process the fund to ensure details are properly structured
   const processedFund = parseFundDetails(fund);
   return (
@@ -77,10 +98,16 @@ export function FundCard({ fund }: { fund: Tables<'funds'> }) {
         <div className="flex justify-between items-start">
           <div className="flex flex-row gap-2 items-start justify-center">
             <div className="h-16 aspect-square">
-              <img
-                src={`https://picsum.photos/seed/${processedFund.fund_id}/100`}
-                className="w-full h-full object-cover"
-              />
+              {getLogoUrl(processedFund.companies) ? (
+                <img
+                  src={getLogoUrl(processedFund.companies)}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-slate-200 flex items-center justify-center">
+                  <span className="text-slate-500">No Logo</span>
+                </div>
+              )}
             </div>
             <div className="flex flex-col h-full">
               <h3 className="text-2xl font-medium text-slate-900">

@@ -13,8 +13,10 @@ import { Separator, DropdownMenu } from 'radix-ui';
 import { useEffect, useState, useCallback, memo } from 'react';
 import { FundCard } from './FundCard';
 
-const fundsQuery = supabase.from('funds').select('*', { count: 'exact' });
-type FundArray = QueryData<typeof fundsQuery>;
+const fundsQuery = supabase
+  .from('funds')
+  .select('*, companies (logo)', { count: 'exact' });
+export type FundArray = QueryData<typeof fundsQuery>;
 
 // Define FilterOption type outside the component so it's available to all components
 type FilterOption = {
@@ -288,12 +290,15 @@ export default function Funds() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [funds, setFunds] = useState<FundArray>([]);
-
+  const [loading, setLoading] = useState(true);
   // Track selected filters as a map of category -> selected options
   const [selectedFilters, setSelectedFilters] = useState<
     Record<string, string[]>
   >({});
   const [filterOptions, setFilterOptions] = useState<FilterOption[]>([]);
+  useEffect(() => {
+    console.log(selectedFilters);
+  }, [selectedFilters]);
 
   const sortOptions: SortOption[] = [
     {
@@ -339,19 +344,23 @@ export default function Funds() {
     fetchFilters();
   }, []);
 
-  useEffect(() => {
-    const fetchFunds = async () => {
+  const fetchFunds = async () => {
+    console.log('fetching funds with filters:', selectedFilters);
+    setLoading(true);
+
+    try {
+      // Start building the query
       let query = supabase
         .from('funds')
-        .select('*', { count: 'exact' })
+        .select('*, companies (logo)', { count: 'exact' })
         .range(
           (currentPage - 1) * itemsPerPage,
           currentPage * itemsPerPage - 1,
         );
 
-      // Apply filters
+      // Apply filters only if there are selected filters
       for (const [category, options] of Object.entries(selectedFilters)) {
-        if (options.length > 0) {
+        if (options && options.length > 0) {
           query = query.in(category, options);
         }
       }
@@ -363,18 +372,27 @@ export default function Funds() {
         });
       }
 
+      // Execute the query
       const { data, count, error } = await query;
 
       if (error) {
         console.error('Error fetching funds:', error);
         return;
       }
-      console.log(data);
+
+      // Update state with the fetched data
       setFunds(data || []);
       if (typeof count === 'number') {
         setTotalPages(Math.ceil(count / itemsPerPage));
       }
-    };
+    } catch (err) {
+      console.error('Unexpected error in fetchFunds:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchFunds();
   }, [currentPage, selectedFilters, sortState]); // Added sortState as a dependency
 
@@ -391,6 +409,7 @@ export default function Funds() {
   };
 
   const PaginationControls = memo(() => {
+    if (totalPages <= 1) return null;
     return (
       <div className="flex flex-row mt-auto w-full items-center justify-center gap-4">
         {currentPage > 1 && (
@@ -419,7 +438,7 @@ export default function Funds() {
   return (
     <div className="w-full px-8 py-6">
       <div className="w-full flex flex-col gap-6 h-full">
-        <span className="font-ebgaramond text-4xl">Browse Funds</span>
+        <span className="font-ebgaramond text-4xl">Browse Opportunities</span>
         <Separator.Root
           orientation="horizontal"
           decorative
@@ -435,9 +454,37 @@ export default function Funds() {
           setSortState={setSortState}
         />
         <div className="h-fit grid gap-3 grid-cols-1">
-          {funds.map((fund) => (
-            <FundCard key={fund.fund_id} fund={fund} />
-          ))}
+          {loading ? (
+            <div className="h-fit grid gap-3 grid-cols-1">
+              {Array.from({ length: itemsPerPage }).map((_, index) => (
+                <div
+                  key={index}
+                  className="w-full rounded-lg h-96 bg-slate-200 border border-slate-200 animate-pulse shadow-sm overflow-hidden"
+                ></div>
+              ))}
+            </div>
+          ) : funds.length === 0 && !loading ? (
+            <div className="flex flex-row items-center gap-2">
+              <span className="text-slate-500">
+                {Object.keys(selectedFilters).length > 0
+                  ? 'No funds found meeting your criteria.'
+                  : 'No funds available at this time.'}
+              </span>
+              {Object.keys(selectedFilters).length > 0 && (
+                <button
+                  className="text-slate-500 hover:underline transition-all"
+                  onClick={() => {
+                    setSelectedFilters({});
+                    setCurrentPage(1);
+                  }}
+                >
+                  Clear Filters?
+                </button>
+              )}
+            </div>
+          ) : (
+            funds.map((fund) => <FundCard key={fund.fund_id} fund={fund} />)
+          )}
         </div>
         <PaginationControls />
       </div>
