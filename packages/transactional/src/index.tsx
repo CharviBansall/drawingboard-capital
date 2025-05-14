@@ -22,6 +22,7 @@
 import { Webhook } from 'standardwebhooks';
 import { Resend } from 'resend';
 import OTPLoginTemplate from './emails/OTPLoginTemplate';
+import { randomUUID } from 'crypto';
 /**
  * Environment variables required by the handler.
  * @typedef {Object} Env
@@ -91,6 +92,9 @@ export default {
 					validationCode: email_data.token,
 					link: url.toString(),
 				}),
+				headers: {
+					'X-Entity-Ref-ID': randomUUID(),
+				},
 			});
 			console.log(response);
 			return Response.json({});
