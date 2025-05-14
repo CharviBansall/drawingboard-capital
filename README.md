@@ -1,6 +1,6 @@
 # DrawingBoard App
 
-![DrawingBoard Logo](https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/brand-assets/svg/WhiteLogoNoWordmark.svg)
+<img src="https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/brand-assets/svg/WhiteLogoNoWordmark.svg" width="100"/>
 
 ## Repository Structure
 
