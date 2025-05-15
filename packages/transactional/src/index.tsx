@@ -81,21 +81,26 @@ export default {
 		console.log('url:', url.toString());
 		// Initialize Resend client for transactional emails
 		const resend = new Resend(env.RESEND_TRANSACTIONAL_API_KEY);
+		const id = randomUUID();
 		// Only send email if the action type is 'magiclink'
 		if (email_data.email_action_type === 'magiclink') {
 			// Send the magic link login email using Resend
-			const response = await resend.emails.send({
-				from: 'DrawingBoard <team@transactional.drawingboard.capital>',
-				to: user.email,
-				subject: 'Your login code for DrawingBoard',
-				react: OTPLoginTemplate({
-					validationCode: email_data.token,
-					link: url.toString(),
-				}),
-				headers: {
-					'X-Entity-Ref-ID': randomUUID(),
+			const response = await resend.emails.send(
+				{
+					from: 'DrawingBoard <team@transactional.drawingboard.capital>',
+					to: user.email,
+					replyTo: 'support@drawingboard.capital',
+					subject: 'Your login code for DrawingBoard',
+					react: OTPLoginTemplate({
+						validationCode: email_data.token,
+						link: url.toString(),
+					}),
+					headers: {
+						'X-Entity-Ref-ID': id,
+					},
 				},
-			});
+				{ idempotencyKey: id },
+			);
 			console.log(response);
 			return Response.json({});
 		} else {

@@ -47,9 +47,17 @@ export const OTPLoginTemplate = ({
 					directly:
 				</Text>
 				<code style={code}>{validationCode}</code>
+				<Text>
+					Having trouble logging in? Reply to this email or contact us at{' '}
+					<Link href="mailto:support@drawingboard.capital">
+						support@drawingboard.capital
+					</Link>
+					.
+				</Text>
 				<Hr style={hr} />
 				<Link href="https://drawingboard.capital" style={reportLink}>
-					DrawingBoard
+					DrawingBoard Capital LLC | 8 The Green Suite Suite A, Dover, DE 19901,
+					USA
 				</Link>
 			</Container>
 		</Body>
@@ -122,7 +130,7 @@ const reportLink = {
 
 const hr = {
 	borderColor: '#dfe1e4',
-	margin: '42px 0 26px',
+	margin: '12px 0 26px',
 };
 
 const code = {
