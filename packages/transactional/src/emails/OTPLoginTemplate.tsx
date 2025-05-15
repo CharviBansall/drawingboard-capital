@@ -25,7 +25,7 @@ export const OTPLoginTemplate = ({
 	<Html>
 		<Head />
 		<Body style={main}>
-			<Preview>Your login code for DrawingBoard</Preview>
+			<Preview>Use this code to finish signing in to your DrawingBoard account. This code is valid for one hour.</Preview>
 			<Container style={container}>
 				<Img
 					src={`https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/brand-assets/png/BlueLogoNoWordmark.png`}
