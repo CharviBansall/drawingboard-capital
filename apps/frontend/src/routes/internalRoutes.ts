@@ -10,6 +10,7 @@ import {
   Scroll,
   Notebook,
   UserList,
+  ClipboardText,
 } from '@phosphor-icons/react';
 
 export const internalRoutes = [
@@ -28,6 +29,12 @@ export const internalRoutes = [
         path: '/capital-calls',
         icon: HandCoins,
         element: 'CapitalCalls',
+      },
+      {
+        label: 'Compliance',
+        path: '/compliance',
+        icon: ClipboardText,
+        element: 'Compliance',
       },
     ],
   },

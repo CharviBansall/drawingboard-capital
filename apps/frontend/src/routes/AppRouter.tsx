@@ -3,6 +3,7 @@ import { AppLayout } from '@/layout/AppLayout';
 import Home from '@/pages/Home';
 import Portfolio from '../pages/Portfolio';
 import CapitalCalls from '../pages/CapitalCalls';
+import Compliance from '../pages/Compliance';
 import Funds from '../pages/Funds/Funds';
 import Fund from '../pages/Fund';
 import Secondaries from '../pages/Secondaries';
@@ -24,6 +25,7 @@ const componentMap = {
   MarketInsights,
   FundReports,
   ManagerProfiles,
+  Compliance,
 };
 import SignUp from '../pages/SignUp';
 import SignIn from '../pages/SignIn';

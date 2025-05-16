@@ -13,6 +13,7 @@ import {
   Scroll,
   Swap,
   UserList,
+  ClipboardText,
 } from '@phosphor-icons/react';
 
 export default function Sidebar() {
@@ -20,6 +21,7 @@ export default function Sidebar() {
     { label: 'Home', icon: <House />, link: '/home' },
     { label: 'Portfolio', icon: <Briefcase />, link: '/portfolio' },
     { label: 'Capital Calls', icon: <HandCoins />, link: '/capital-calls' },
+    { label: 'Compliance', icon: <ClipboardText />, link: '/compliance' },
   ];
   const investmentItems = [
     { label: 'Funds', icon: <Cards />, link: '/funds' },
