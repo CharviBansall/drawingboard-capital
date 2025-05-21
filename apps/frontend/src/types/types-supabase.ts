@@ -107,11 +107,8 @@ export type Database = {
           last_completed_date: string | null
           month_of_year: number | null
           month_ordinal: number | null
-          next_due_date: string | null
-          notes: string | null
           ordinal_number: number | null
           period_type: string | null
-          status: string
           timing: string | null
           updated_at: string
         }
@@ -126,11 +123,8 @@ export type Database = {
           last_completed_date?: string | null
           month_of_year?: number | null
           month_ordinal?: number | null
-          next_due_date?: string | null
-          notes?: string | null
           ordinal_number?: number | null
           period_type?: string | null
-          status?: string
           timing?: string | null
           updated_at?: string
         }
@@ -145,11 +139,8 @@ export type Database = {
           last_completed_date?: string | null
           month_of_year?: number | null
           month_ordinal?: number | null
-          next_due_date?: string | null
-          notes?: string | null
           ordinal_number?: number | null
           period_type?: string | null
-          status?: string
           timing?: string | null
           updated_at?: string
         }
@@ -212,7 +203,6 @@ export type Database = {
           name: string
           ordinal_number: number | null
           period_type: string | null
-          recurring: boolean | null
           timing: string | null
           updated_at: string
         }
@@ -228,7 +218,6 @@ export type Database = {
           name: string
           ordinal_number?: number | null
           period_type?: string | null
-          recurring?: boolean | null
           timing?: string | null
           updated_at?: string
         }
@@ -244,7 +233,6 @@ export type Database = {
           name?: string
           ordinal_number?: number | null
           period_type?: string | null
-          recurring?: boolean | null
           timing?: string | null
           updated_at?: string
         }
@@ -629,6 +617,20 @@ export type Database = {
         }
         Returns: string
       }
+      generate_compliance_dates: {
+        Args: {
+          company_compliance_id: string
+          ordinal_number: number
+          day_of_week: number
+          month_ordinal: number
+          period_type: string
+          day_of_month: number
+          month_of_year: number
+          start_date?: string
+          end_date?: string
+        }
+        Returns: string[]
+      }
       parse_timing: {
         Args: { timing_string: string }
         Returns: {
@@ -639,6 +641,14 @@ export type Database = {
           day_of_month: number
           month_of_year: number
         }[]
+      }
+      populate_compliance_dates: {
+        Args: {
+          p_company_compliance_id: string
+          p_start_date?: string
+          p_end_date?: string
+        }
+        Returns: undefined
       }
     }
     Enums: {

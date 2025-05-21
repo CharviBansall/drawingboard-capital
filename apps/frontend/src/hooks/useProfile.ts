@@ -1,16 +1,18 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import supabase from '@/lib/supabase';
 import { useAuth } from '@/hooks/useAuth';
-import { Tables } from '@/types/types-supabase';
+import { QueryData } from '@supabase/supabase-js';
 
 // Define the shape of the joined query result
+const profileQuery = supabase.from('profiles').select('*, companies (name)');
+type ProfileType = QueryData<typeof profileQuery>[0];
 
 // Cache to store profiles by user ID
-const profileCache = new Map<string, Tables<'profiles'>>();
+const profileCache = new Map<string, ProfileType>();
 
 export function useProfile() {
   const { user } = useAuth();
-  const [profile, setProfile] = useState<Tables<'profiles'> | null>(null);
+  const [profile, setProfile] = useState<ProfileType | null>(null);
   const [loading, setLoading] = useState(true);
   const fetchingRef = useRef(false);
 
@@ -40,11 +42,7 @@ export function useProfile() {
       // Set fetching flag to prevent duplicate requests
       fetchingRef.current = true;
 
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*, company:company_id(company_name)')
-        .eq('id', userId)
-        .single();
+      const { data, error } = await profileQuery.eq('id', userId).single();
 
       if (error) {
         console.error('Error fetching profile:', error.message);
