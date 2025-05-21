@@ -8,6 +8,7 @@ import {
   SortDesc,
   ArrowUp,
   ArrowDown,
+  Search,
 } from 'lucide-react';
 import { Separator, DropdownMenu } from 'radix-ui';
 import { useEffect, useState, useCallback, memo } from 'react';
@@ -296,6 +297,9 @@ export default function Funds() {
     Record<string, string[]>
   >({});
   const [filterOptions, setFilterOptions] = useState<FilterOption[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchInputValue, setSearchInputValue] = useState<string>('');
+
   useEffect(() => {
     console.log(selectedFilters);
   }, [selectedFilters]);
@@ -352,11 +356,17 @@ export default function Funds() {
       // Start building the query
       let query = supabase
         .from('funds')
-        .select('*, companies (logo)', { count: 'exact' })
-        .range(
-          (currentPage - 1) * itemsPerPage,
-          currentPage * itemsPerPage - 1,
-        );
+        .select('*, companies (logo)', { count: 'exact' });
+
+      // Apply search if query exists
+      if (searchQuery.trim()) {
+        query = query.ilike('name', `%${searchQuery}%`);
+      }
+
+      // Apply pagination
+      const fromIndex = (currentPage - 1) * itemsPerPage;
+      const toIndex = currentPage * itemsPerPage - 1;
+      query = query.range(fromIndex, toIndex);
 
       // Apply filters only if there are selected filters
       for (const [category, options] of Object.entries(selectedFilters)) {
@@ -394,7 +404,21 @@ export default function Funds() {
 
   useEffect(() => {
     fetchFunds();
-  }, [currentPage, selectedFilters, sortState]); // Added sortState as a dependency
+  }, [currentPage, selectedFilters, sortState, searchQuery]); // Added searchQuery as a dependency
+
+  // Handle search submission
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSearchQuery(searchInputValue);
+    setCurrentPage(1); // Reset to first page when searching
+  };
+
+  // Clear search
+  const clearSearch = () => {
+    setSearchQuery('');
+    setSearchInputValue('');
+    setCurrentPage(1);
+  };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -444,15 +468,65 @@ export default function Funds() {
           decorative
           className="bg-slate-200 h-px"
         />
-        <FilterBar
-          sortOptions={sortOptions}
-          filterOptions={filterOptions}
-          filterCount={filterCount}
-          selectedFilters={selectedFilters}
-          setSelectedFilters={setSelectedFilters}
-          sortState={sortState}
-          setSortState={setSortState}
-        />
+
+        {/* Search Bar */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
+          <form onSubmit={handleSearch} className="relative w-full sm:w-96">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <Search className="w-5 h-5 text-gray-500" />
+              </div>
+              <input
+                type="search"
+                className="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Search by fund name..."
+                value={searchInputValue}
+                onChange={(e) => setSearchInputValue(e.target.value)}
+              />
+              {searchQuery && (
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                  <button
+                    type="button"
+                    className="text-gray-500 hover:text-gray-700"
+                    onClick={clearSearch}
+                  >
+                    ×
+                  </button>
+                </div>
+              )}
+            </div>
+            <button type="submit" className="hidden">
+              Search
+            </button>
+          </form>
+
+          <div className="flex flex-row gap-3 items-center">
+            <FilterBar
+              sortOptions={sortOptions}
+              filterOptions={filterOptions}
+              filterCount={filterCount}
+              selectedFilters={selectedFilters}
+              setSelectedFilters={setSelectedFilters}
+              sortState={sortState}
+              setSortState={setSortState}
+            />
+          </div>
+        </div>
+
+        {/* Search Status */}
+        {searchQuery && (
+          <div className="flex items-center">
+            <p className="text-sm text-gray-600">
+              Showing results for "{searchQuery}"
+              <button
+                onClick={clearSearch}
+                className="ml-2 text-blue-600 hover:underline"
+              >
+                Clear
+              </button>
+            </p>
+          </div>
+        )}
         <div className="h-fit grid gap-3 grid-cols-1">
           {loading ? (
             <div className="h-fit grid gap-3 grid-cols-1">
@@ -466,19 +540,24 @@ export default function Funds() {
           ) : funds.length === 0 && !loading ? (
             <div className="flex flex-row items-center gap-2">
               <span className="text-slate-500">
-                {Object.keys(selectedFilters).length > 0
+                {searchQuery && 'No funds found matching your search query.'}
+                {!searchQuery && Object.keys(selectedFilters).length > 0
                   ? 'No funds found meeting your criteria.'
-                  : 'No funds available at this time.'}
+                  : !searchQuery
+                    ? 'No funds available at this time.'
+                    : ''}
               </span>
-              {Object.keys(selectedFilters).length > 0 && (
+              {(Object.keys(selectedFilters).length > 0 || searchQuery) && (
                 <button
                   className="text-slate-500 hover:underline transition-all"
                   onClick={() => {
                     setSelectedFilters({});
+                    setSearchQuery('');
+                    setSearchInputValue('');
                     setCurrentPage(1);
                   }}
                 >
-                  Clear Filters?
+                  Clear All
                 </button>
               )}
             </div>

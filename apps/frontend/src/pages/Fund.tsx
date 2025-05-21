@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import { useEffect } from "react";
-import Button from "@/ui/Button/Button";
+import Button from "@/components/Button";
 import { ArrowRight } from "lucide-react";
 import EChartPie from "@/components/PieChart";
 

@@ -30,7 +30,6 @@
     "react-hook-form": "^7.56.1",
     "react-phone-number-input": "^3.4.12",
     "react-router": "^7.5.3",
-    "react-spinners": "^0.17.0",
     "zod": "^3.24.3"
   },
   "devDependencies": {

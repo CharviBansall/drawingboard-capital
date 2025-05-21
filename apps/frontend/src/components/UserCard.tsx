@@ -1,6 +1,6 @@
 import { DropdownMenu } from 'radix-ui';
 import { useState } from 'react';
-import { Avatar } from '../ui/Avatar/Avatar';
+import { Avatar } from './Avatar';
 import { CaretDown, Gear, SignOut } from '@phosphor-icons/react';
 import { useProfile } from '@/hooks/useProfile';
 import supabase from '@/lib/supabase';
@@ -16,7 +16,7 @@ export default function UserCard() {
   const lastName = profile.last_name ?? '';
   const fullName = `${firstName} ${lastName}`.trim();
   const initials = (firstName[0] ?? '') + (lastName[0] ?? '');
-  const companyName = profile.company?.company_name ?? '';
+  const companyName = profile.company_id;
 
   async function handleLogout() {
     const { error } = await supabase.auth.signOut();

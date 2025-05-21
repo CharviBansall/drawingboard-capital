@@ -2,19 +2,15 @@ import { useEffect, useState, useRef, useMemo } from 'react';
 import supabase from '@/lib/supabase';
 import { useAuth } from '@/hooks/useAuth';
 import { Tables } from '@/types/types-supabase';
-import { PostgrestSingleResponse } from '@supabase/supabase-js';
 
 // Define the shape of the joined query result
-type ProfileWithCompany = Tables<'profiles'> & {
-  company: Pick<Tables<'companies'>, 'company_name'> | null;
-};
 
 // Cache to store profiles by user ID
-const profileCache = new Map<string, ProfileWithCompany>();
+const profileCache = new Map<string, Tables<'profiles'>>();
 
 export function useProfile() {
   const { user } = useAuth();
-  const [profile, setProfile] = useState<ProfileWithCompany | null>(null);
+  const [profile, setProfile] = useState<Tables<'profiles'> | null>(null);
   const [loading, setLoading] = useState(true);
   const fetchingRef = useRef(false);
 
@@ -44,12 +40,11 @@ export function useProfile() {
       // Set fetching flag to prevent duplicate requests
       fetchingRef.current = true;
 
-      const { data, error }: PostgrestSingleResponse<ProfileWithCompany> =
-        await supabase
-          .from('profiles')
-          .select('*, company:company_id(company_name)')
-          .eq('id', userId)
-          .single();
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*, company:company_id(company_name)')
+        .eq('id', userId)
+        .single();
 
       if (error) {
         console.error('Error fetching profile:', error.message);
