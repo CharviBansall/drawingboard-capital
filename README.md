@@ -168,7 +168,7 @@ Please review our [Contributing Guide](CONTRIBUTING.md) before submitting change
 
 This project is proprietary and confidential. Unauthorized copying, transfer, distribution, or use of this software, via any medium, is strictly prohibited. All rights reserved by Drawingboard Capital.
 
-## Contact.
+## Contact
 
 Drawingboard Capital - [Website](https://drawingboard.capital)
 
