@@ -21,7 +21,6 @@ export default function Sidebar() {
     { label: 'Home', icon: <House />, link: '/home' },
     { label: 'Portfolio', icon: <Briefcase />, link: '/portfolio' },
     { label: 'Capital Calls', icon: <HandCoins />, link: '/capital-calls' },
-    { label: 'Compliance', icon: <ClipboardText />, link: '/compliance' },
   ];
   const investmentItems = [
     { label: 'Funds', icon: <Cards />, link: '/funds' },
@@ -40,6 +39,10 @@ export default function Sidebar() {
       icon: <UserList />,
       link: '/manager-profiles',
     },
+  ];
+  
+  const complianceItems = [
+    { label: 'Compliance Settings', icon: <ClipboardText />, link: '/compliance' },
   ];
 
   return (
@@ -123,6 +126,30 @@ export default function Sidebar() {
       >
         <NavigationMenu.List className="">
           {researchItems.map((item) => (
+            <NavigationMenu.Link asChild key={item.label}>
+              <Link
+                to={item.link}
+                className="py-1 transition-all font-medium w-full rounded-sm flex cursor-default flex-row items-center gap-2 px-4 hover:bg-gray-200 focus:outline-none"
+              >
+                {item.icon}
+                {item.label}
+              </Link>
+            </NavigationMenu.Link>
+          ))}
+        </NavigationMenu.List>
+      </NavigationMenu.Root>
+      <Separator.Root
+        decorative
+        orientation="horizontal"
+        className="mx-2 w-full bg-slate-200 data-[orientation=horizontal]:h-px data-[orientation=vertical]:h-full data-[orientation=horizontal]:w-full data-[orientation=vertical]:w-px"
+      />
+      <span className="text-xs w-full px-2 text-slate-500">Compliance</span>
+      <NavigationMenu.Root
+        className="px-2 text-sm w-full"
+        orientation="vertical"
+      >
+        <NavigationMenu.List className="">
+          {complianceItems.map((item) => (
             <NavigationMenu.Link asChild key={item.label}>
               <Link
                 to={item.link}

@@ -30,12 +30,6 @@ export const internalRoutes = [
         icon: HandCoins,
         element: 'CapitalCalls',
       },
-      {
-        label: 'Compliance',
-        path: '/compliance',
-        icon: ClipboardText,
-        element: 'Compliance',
-      },
     ],
   },
   {
@@ -82,6 +76,17 @@ export const internalRoutes = [
         path: '/manager-profiles',
         icon: UserList,
         element: 'ManagerProfiles',
+      },
+    ],
+  },
+  {
+    section: 'Compliance',
+    items: [
+      {
+        label: 'Compliance Settings',
+        path: '/compliance',
+        icon: ClipboardText,
+        element: 'Compliance',
       },
     ],
   },

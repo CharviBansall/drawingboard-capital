@@ -1,5 +1,5 @@
 import { useProfile } from "@/hooks/useProfile";
-import Button from "@/ui/Button/Button";
+import Button from "@/components/Button";
 import { ArrowRight } from "@phosphor-icons/react";
 
 export default function Home() {

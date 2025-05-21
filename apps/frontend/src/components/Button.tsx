@@ -1,34 +1,102 @@
-import { BeatLoader } from 'react-spinners';
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
+
+type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'ghost'
+  | 'destructive'
+  | 'default';
+type ButtonSize = 'small' | 'medium' | 'large';
 
 type ButtonProps = {
+  /**
+   * The variant of the button
+   * @default 'default'
+   */
+  variant?: ButtonVariant;
+  /**
+   * The size of the button
+   * @default 'medium'
+   */
+  size?: ButtonSize;
+  /**
+   * Whether the button is in a loading state
+   * @default false
+   */
   isLoading?: boolean;
+  /**
+   * Whether the button is disabled
+   * @default false
+   */
   disabled?: boolean;
+  /**
+   * Optional click handler
+   */
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  /**
+   * The content of the button
+   * @default 'Continue'
+   */
   children?: React.ReactNode;
+  /**
+   * Additional class names to apply to the button
+   */
   className?: string;
-};
+  /**
+   * Whether the button should take the full width of its container
+   * @default false
+   */
+  fullWidth?: boolean;
+} & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'>;
 
-export default function Button({
-  isLoading,
-  disabled,
+/**
+ * A versatile button component with multiple variants and states
+ */
+const Button = ({
+  variant = 'default',
+  size = 'medium',
+  isLoading = false,
+  disabled = false,
   onClick,
   children = 'Continue',
   className = '',
-}: ButtonProps) {
+  fullWidth = false,
+  ...props
+}: ButtonProps) => {
+  const baseStyles =
+    'flex items-center justify-center gap-2 rounded-md transition-all duration-200 ease-in-out font-medium';
+
+  const variantStyles = {
+    default: 'bg-white text-blue-12 hover:bg-slate-200',
+    primary: 'bg-blue-600 text-white hover:bg-blue-700',
+    secondary: 'bg-blue-300 text-blue-900 hover:bg-blue-400',
+    ghost: 'bg-transparent text-slate-900 hover:bg-slate-200',
+    destructive: 'bg-red-600 text-white hover:bg-red-700',
+  };
+
+  const sizeStyles = {
+    small: 'text-sm py-1 px-3',
+    medium: 'text-base py-2 px-4',
+    large: 'text-lg py-3 px-6',
+  };
+
+  const widthStyles = fullWidth ? 'w-full' : 'w-auto';
+
   return (
     <button
-      disabled={disabled}
+      type="button"
+      disabled={disabled || isLoading}
       onClick={onClick}
-      className={`w-full bg-white text-blue-12 font-medium p-2 rounded-md transition-all
-        hover:bg-slate-200 disabled:bg-slate-400 disabled:text-slate-700 disabled:cursor-not-allowed
-        cursor-pointer ${className}`}
+      className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${widthStyles} ${
+        disabled
+          ? 'bg-slate-400 text-slate-700 cursor-not-allowed'
+          : 'cursor-pointer'
+      } ${className}`}
+      {...props}
     >
-      {isLoading ? (
-        <BeatLoader className="text-blue-12" size={7} speedMultiplier={0.5} />
-      ) : (
-        children
-      )}
+      {isLoading ? <span className="animate-pulse">Loading...</span> : children}
     </button>
   );
-}
+};
+
+export default Button;

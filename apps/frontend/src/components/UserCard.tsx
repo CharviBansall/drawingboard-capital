@@ -1,6 +1,6 @@
 import { DropdownMenu } from 'radix-ui';
 import { useState } from 'react';
-import { Avatar } from '../ui/Avatar/Avatar';
+import { Avatar } from './Avatar';
 import { CaretDown, Gear, SignOut } from '@phosphor-icons/react';
 import { useProfile } from '@/hooks/useProfile';
 import supabase from '@/lib/supabase';
@@ -16,7 +16,7 @@ export default function UserCard() {
   const lastName = profile.last_name ?? '';
   const fullName = `${firstName} ${lastName}`.trim();
   const initials = (firstName[0] ?? '') + (lastName[0] ?? '');
-  const companyName = profile.company?.company_name ?? '';
+  const companyName = profile.companies?.name;
 
   async function handleLogout() {
     const { error } = await supabase.auth.signOut();
@@ -32,22 +32,22 @@ export default function UserCard() {
       <DropdownMenu.Trigger asChild>
         <div
           className={
-            'flex h-fit w-full cursor-default flex-row items-center justify-center gap-3 rounded-md p-2 transition-all ' +
+            'flex h-fit w-full cursor-default flex-row items-center gap-3 rounded-md p-2 transition-all ' +
             (open
               ? 'bg-slate-200 dark:bg-slate-800'
               : 'hover:bg-slate-200 dark:hover:bg-slate-800')
           }
         >
           <Avatar initials={initials} />
-          <div className="flex flex-col">
-            <span className="text-sm font-medium">{fullName}</span>
-            <span className="text-xs font-light text-slate-500">
+          <div className="flex flex-col min-w-0 flex-1 overflow-hidden">
+            <span className="text-sm font-medium truncate">{fullName}</span>
+            <span className="text-xs font-light text-slate-500 truncate">
               {companyName}
             </span>
           </div>
           <div
             className={
-              'transition-transform duration-200 ' + (open ? 'rotate-180' : '')
+              'flex-shrink-0 transition-transform duration-200 ' + (open ? 'rotate-180' : '')
             }
           >
             <CaretDown />
