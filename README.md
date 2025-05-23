@@ -172,4 +172,4 @@ This project is proprietary and confidential. Unauthorized copying, transfer, di
 
 Drawingboard Capital - [Website](https://drawingboard.capital)
 
-For technical issues or questions, please create an issue in the repository or contact the development team via Slack (#drawingboard-dev channel).
+For technical issues or questions, please create an issue in the repository or contact the development team via Slack (#drawingboard-dev channel)
