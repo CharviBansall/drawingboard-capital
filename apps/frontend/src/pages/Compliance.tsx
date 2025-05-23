@@ -6,6 +6,7 @@ import { Paperclip, Calendar, CheckCircle } from 'lucide-react';
 import Button from '@/components/Button';
 import { format, isPast, isToday } from 'date-fns';
 import { useProfile } from '@/hooks/useProfile';
+import PageTitle from '@/components/PageTitle';
 
 export default function Compliance() {
   // State for user profile and company compliance tasks
@@ -154,26 +155,26 @@ export default function Compliance() {
   }, [viewMode, profile?.company_id]);
 
   return (
-    <div className="p-6 w-full">
+    <div className="h-full w-full">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Compliance Tasks</h1>
+        <PageTitle title="Compliance Tasks" />
         <div className="flex space-x-2">
           <Button
-            variant={viewMode === 'upcoming' ? 'primary' : 'ghost'}
+            variant={viewMode === 'upcoming' ? 'secondary' : 'ghost'}
             onClick={() => setViewMode('upcoming')}
             size="small"
           >
             Upcoming
           </Button>
           <Button
-            variant={viewMode === 'all' ? 'primary' : 'ghost'}
+            variant={viewMode === 'all' ? 'secondary' : 'ghost'}
             onClick={() => setViewMode('all')}
             size="small"
           >
             All Tasks
           </Button>
           <Button
-            variant={viewMode === 'completed' ? 'primary' : 'ghost'}
+            variant={viewMode === 'completed' ? 'secondary' : 'ghost'}
             onClick={() => setViewMode('completed')}
             size="small"
           >

@@ -10,8 +10,9 @@ import {
   ArrowDown,
   Search,
 } from 'lucide-react';
-import { Separator, DropdownMenu } from 'radix-ui';
-import { useEffect, useState, useCallback, memo } from 'react';
+import { DropdownMenu } from 'radix-ui';
+import React, { useState, useEffect, useCallback, memo } from 'react';
+import PageTitle from '@/components/PageTitle';
 import { FundCard } from './FundCard';
 
 const fundsQuery = supabase
@@ -460,15 +461,9 @@ export default function Funds() {
   });
 
   return (
-    <div className="w-full px-8 py-6">
-      <div className="w-full flex flex-col gap-6 h-full">
-        <span className="font-ebgaramond text-4xl">Browse Opportunities</span>
-        <Separator.Root
-          orientation="horizontal"
-          decorative
-          className="bg-slate-200 h-px"
-        />
-
+    <div className="w-full h-fit">
+      <PageTitle title="Browse Funds" />
+      <div className="w-full flex flex-col gap-6 h-fit">
         {/* Search Bar */}
         <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
           <form onSubmit={handleSearch} className="relative w-full sm:w-96">

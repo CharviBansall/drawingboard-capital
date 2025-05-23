@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import Button from "@/components/Button";
 import { ArrowRight } from "lucide-react";
 import EChartPie from "@/components/PieChart";
+import PageTitle from "@/components/PageTitle";
 
 export default function Fund() {
   const { slug } = useParams<{ slug: string }>();
@@ -158,7 +159,7 @@ export default function Fund() {
   }, [slug]);
   return (
     <div className="w-full px-8 py-6 gap-4 flex flex-col">
-      <h1 className="text-4xl font-ebgaramond">{fund.name}</h1>
+      <PageTitle title={fund.name} />
       <div className="grid grid-cols-3 gap-8 h-fit overflow-hidden">
         <div className="col-span-2 h-full rounded-md overflow-hidden">
           <img

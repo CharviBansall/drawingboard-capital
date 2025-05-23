@@ -66,10 +66,6 @@
   --font-ebgaramond: 'EB Garamond', serif;
 }
 
-* {
-  font-family: var(--font-geist);
-}
-
 .custom-loader {
   aspect-ratio: 1;
   background:

@@ -16,7 +16,7 @@ export function AppLayout() {
       <div className="w-1/6 relative">
         <Sidebar />
       </div>
-      <main className="h-fit min-h-screen overflow-y-auto w-5/6 flex py-8 px-4">
+      <main className="h-fit min-h-screen overflow-y-auto w-5/6 flex p-8">
         <Outlet />
       </main>
     </div>

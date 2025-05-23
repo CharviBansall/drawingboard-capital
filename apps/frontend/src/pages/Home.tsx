@@ -1,27 +1,28 @@
-import { useProfile } from "@/hooks/useProfile";
-import Button from "@/components/Button";
-import { ArrowRight } from "@phosphor-icons/react";
+import { useProfile } from '@/hooks/useProfile';
+import Button from '@/components/Button';
+import { ArrowRight } from '@phosphor-icons/react';
+import PageTitle from '@/components/PageTitle';
 
 export default function Home() {
   const { profile } = useProfile();
   function News() {
     const newsItems = [
       {
-        headline: "Vandelay Industries Launches Global Latex Initiative",
-        image: "https://picsum.photos/seed/george/400/400",
+        headline: 'Vandelay Industries Launches Global Latex Initiative',
+        image: 'https://picsum.photos/seed/george/400/400',
         subhead:
-          "George Costanza named Chief Innovation Officer in surprise move.",
+          'George Costanza named Chief Innovation Officer in surprise move.',
       },
       {
-        headline: "Bluth Company Secures Funding for Banana Stand Expansion",
-        image: "https://picsum.photos/seed/bluth/400/400",
+        headline: 'Bluth Company Secures Funding for Banana Stand Expansion',
+        image: 'https://picsum.photos/seed/bluth/400/400',
         subhead:
-          "Analysts question valuation as shares skyrocket 200% overnight.",
+          'Analysts question valuation as shares skyrocket 200% overnight.',
       },
       {
-        headline: "Pied Piper Raises $100M in Series B Funding",
-        image: "https://picsum.photos/seed/piedpiper/400/400",
-        subhead: "Valuation surges as investors flock to unicorn.",
+        headline: 'Pied Piper Raises $100M in Series B Funding',
+        image: 'https://picsum.photos/seed/piedpiper/400/400',
+        subhead: 'Valuation surges as investors flock to unicorn.',
       },
     ];
     return (
@@ -54,13 +55,9 @@ export default function Home() {
     );
   }
   return (
-    <div className="w-full px-8 py-6">
+    <div className="w-full h-full">
       {/* Welcome Header */}
-      <h1 className="text-4xl font-ebgaramond">
-        Welcome, {profile?.first_name}.
-      </h1>
-      <hr className="my-4 border-gray-300" />
-
+      <PageTitle title={`Welcome, ${profile?.first_name}.`} />
       {/* Main Section */}
       <div className="grid grid-cols-3 gap-6">
         <span className="col-span-3 bg-blue-4 flex flex-row justify-between items-center text-sm rounded-md p-2 text-blue-12">
