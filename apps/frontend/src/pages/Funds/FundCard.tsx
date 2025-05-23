@@ -259,7 +259,7 @@ export function FundCard({ fund }: { fund: FundArray[number] }) {
 
       {/* Card Footer */}
       <div className="p-4 flex flex-col sm:flex-row justify-end items-start sm:items-center gap-4 border-t border-slate-200">
-        <Button isLoading={true}>View Details</Button>
+        <Button variant="primary">View Details</Button>
       </div>
     </div>
   );

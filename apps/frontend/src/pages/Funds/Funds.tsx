@@ -269,7 +269,7 @@ const FilterBar = memo(
     );
 
     return (
-      <div className="flex justify-between flex-row w-full">
+      <div className="flex justify-between gap-3 flex-row w-full">
         <FilterDropdown
           filterOptions={filterOptions}
           filterCount={filterCount}
@@ -500,7 +500,7 @@ export default function Funds() {
             </button>
           </form>
 
-          <div className="flex flex-row gap-3 items-center">
+          <div className="flex flex-row items-center">
             <FilterBar
               sortOptions={sortOptions}
               filterOptions={filterOptions}

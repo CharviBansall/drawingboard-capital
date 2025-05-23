@@ -95,6 +95,7 @@ export default function SignUpPage() {
             isLoading={isLoading}
             disabled={!email || !termsChecked || !demoChecked || isLoading}
             onClick={SignUp}
+            variant="secondary"
           >
             Continue
           </Button>

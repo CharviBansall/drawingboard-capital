@@ -56,12 +56,18 @@ export default function SignInPage() {
               value: email,
               onChange: (e) => setEmail(e.target.value),
               autoFocus: true,
+              onKeyDown: (e) => {
+                if (e.key === 'Enter') {
+                  SignIn();
+                }
+              },
             }}
           />
           <Button
             isLoading={isLoading}
             disabled={!email || isLoading}
             onClick={SignIn}
+            variant="secondary"
           >
             Continue
           </Button>

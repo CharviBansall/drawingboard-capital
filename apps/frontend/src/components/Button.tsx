@@ -6,6 +6,7 @@ type ButtonVariant =
   | 'ghost'
   | 'destructive'
   | 'default';
+
 type ButtonSize = 'small' | 'medium' | 'large';
 
 type ButtonProps = {
@@ -16,7 +17,7 @@ type ButtonProps = {
   variant?: ButtonVariant;
   /**
    * The size of the button
-   * @default 'medium'
+   * @default 'small'
    */
   size?: ButtonSize;
   /**
@@ -54,7 +55,7 @@ type ButtonProps = {
  */
 const Button = ({
   variant = 'default',
-  size = 'medium',
+  size = 'small',
   isLoading = false,
   disabled = false,
   onClick,
@@ -64,14 +65,14 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const baseStyles =
-    'flex items-center justify-center gap-2 rounded-md transition-all duration-200 ease-in-out font-medium';
+    'flex items-center justify-center gap-2 rounded-sm transition-all duration-200 ease-in-out font-medium';
 
   const variantStyles = {
     default: 'bg-white text-blue-12 hover:bg-slate-200',
-    primary: 'bg-blue-600 text-white hover:bg-blue-700',
-    secondary: 'bg-blue-300 text-blue-900 hover:bg-blue-400',
+    primary: 'bg-blue-10 text-blue-1 hover:bg-blue-12',
+    secondary: 'bg-blue-6 text-blue-12 hover:bg-blue-4',
     ghost: 'bg-transparent text-slate-900 hover:bg-slate-200',
-    destructive: 'bg-red-600 text-white hover:bg-red-700',
+    destructive: 'bg-red-800 text-white hover:bg-red-900',
   };
 
   const sizeStyles = {

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import Button from './Button';
+import { ArrowRight } from 'lucide-react';
 
 const meta = {
   title: 'Components/Button',
@@ -42,7 +43,7 @@ const meta = {
   args: {
     children: 'Button',
     variant: 'default',
-    size: 'medium',
+    size: 'small',
     isLoading: false,
     disabled: false,
     fullWidth: false,
@@ -121,7 +122,7 @@ export const FullWidth: Story = {
   },
   decorators: [
     (Story) => (
-      <div style={{ width: '100%', maxWidth: '500px' }}>
+      <div style={{ width: '100%' }}>
         <Story />
       </div>
     ),
@@ -133,20 +134,7 @@ export const WithIcon: Story = {
     children: (
       <>
         <span>Button with Icon</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M5 12h14" />
-          <path d="m12 5 7 7-7 7" />
-        </svg>
+        <ArrowRight />
       </>
     ),
   },
