@@ -109,7 +109,7 @@ export function FundCard({ fund }: { fund: FundArray[number] }) {
                 </div>
               )}
             </div>
-            <div className="flex flex-col h-full">
+            <div className="flex flex-col gap-1 h-full">
               <h3 className="text-2xl font-medium text-slate-900">
                 {processedFund.name}
               </h3>
