@@ -1,3 +1,9 @@
+import PageTitle from '@/components/PageTitle';
+
 export default function Settings() {
-  return <div className="w-full">Settings</div>;
+  return (
+    <div>
+      <PageTitle title="Settings" />
+    </div>
+  );
 }

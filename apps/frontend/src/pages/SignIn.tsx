@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
-import Input from '@/components/Input';
+import FancyInput from '@/components/FancyInput';
 import supabase from '@/lib/supabase';
 import Button from '@/components/Button';
 import AuthLayout from '@/layout/AuthLayout';
@@ -48,19 +48,17 @@ export default function SignInPage() {
           {error && (
             <p className="text-red-400 mt-2 text-center">{error || ''}</p>
           )}
-          <Input
-            props={{
-              label: 'Email',
-              type: 'email',
-              placeholder: 'warren@example.com',
-              value: email,
-              onChange: (e) => setEmail(e.target.value),
-              autoFocus: true,
-              onKeyDown: (e) => {
-                if (e.key === 'Enter') {
-                  SignIn();
-                }
-              },
+          <FancyInput
+            label="Email"
+            type="email"
+            placeholder="warren@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            autoFocus
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                SignIn();
+              }
             }}
           />
           <Button

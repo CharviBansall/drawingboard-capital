@@ -3,6 +3,7 @@ import * as echarts from 'echarts';
 import DonutChart from '../components/DonutChart';
 import { CaretDown, User } from '@phosphor-icons/react';
 import PageTitle from '@/components/PageTitle';
+import RadioGroup from '@/components/RadioGroup';
 
 interface AssetAllocation {
   name: string;
@@ -396,6 +397,17 @@ export default function Portfolio() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <RadioGroup<'overview' | 'usa' | 'india'>
+          options={[
+            { value: 'overview', label: 'Overview' },
+            { value: 'usa', label: 'USA' },
+            { value: 'india', label: 'India' },
+          ]}
+          value={selectedRegion}
+          onChange={handleRegionChange}
+          name="lineChartRegion"
+          className="col-span-3 mb-4"
+        />
         <div className="bg-white rounded-lg shadow p-4">
           <h2 className="text-lg font-medium mb-2">Total Portfolio Value</h2>
           <div className="flex items-end">
@@ -429,94 +441,12 @@ export default function Portfolio() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <div className="bg-white rounded-lg shadow p-4">
-          <div className="flex justify-center gap-4 mb-4">
-            <label
-              className={`inline-flex items-center px-3 py-1 rounded-md cursor-pointer ${selectedRegion === 'overview' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100'}`}
-            >
-              <input
-                type="radio"
-                name="lineChartRegion"
-                value="overview"
-                checked={selectedRegion === 'overview'}
-                onChange={() => handleRegionChange('overview')}
-                className="hidden"
-              />
-              Overview
-            </label>
-            <label
-              className={`inline-flex items-center px-3 py-1 rounded-md cursor-pointer ${selectedRegion === 'usa' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100'}`}
-            >
-              <input
-                type="radio"
-                name="lineChartRegion"
-                value="usa"
-                checked={selectedRegion === 'usa'}
-                onChange={() => handleRegionChange('usa')}
-                className="hidden"
-              />
-              USA
-            </label>
-            <label
-              className={`inline-flex items-center px-3 py-1 rounded-md cursor-pointer ${selectedRegion === 'india' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100'}`}
-            >
-              <input
-                type="radio"
-                name="lineChartRegion"
-                value="india"
-                checked={selectedRegion === 'india'}
-                onChange={() => handleRegionChange('india')}
-                className="hidden"
-              />
-              India
-            </label>
-          </div>
           <div
             style={{ height: '380px', width: '100%' }}
             ref={lineChartRef}
           ></div>
         </div>
         <div className="bg-white rounded-lg shadow p-4">
-          <div className="flex justify-center gap-4 mb-4">
-            <label
-              className={`inline-flex items-center px-3 py-1 rounded-md cursor-pointer ${selectedRegion === 'overview' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100'}`}
-            >
-              <input
-                type="radio"
-                name="donutChartRegion"
-                value="overview"
-                checked={selectedRegion === 'overview'}
-                onChange={() => handleRegionChange('overview')}
-                className="hidden"
-              />
-              Overview
-            </label>
-            <label
-              className={`inline-flex items-center px-3 py-1 rounded-md cursor-pointer ${selectedRegion === 'usa' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100'}`}
-            >
-              <input
-                type="radio"
-                name="donutChartRegion"
-                value="usa"
-                checked={selectedRegion === 'usa'}
-                onChange={() => handleRegionChange('usa')}
-                className="hidden"
-              />
-              USA
-            </label>
-            <label
-              className={`inline-flex items-center px-3 py-1 rounded-md cursor-pointer ${selectedRegion === 'india' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100'}`}
-            >
-              <input
-                type="radio"
-                name="donutChartRegion"
-                value="india"
-                checked={selectedRegion === 'india'}
-                onChange={() => handleRegionChange('india')}
-                className="hidden"
-              />
-              India
-            </label>
-          </div>
           <div style={{ height: '380px' }}>
             <DonutChart
               title="Asset Allocation"

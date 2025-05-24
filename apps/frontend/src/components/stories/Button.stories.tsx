@@ -14,7 +14,7 @@ const meta = {
     variant: {
       control: {
         type: 'select',
-        options: ['default', 'primary', 'secondary', 'ghost', 'destructive'],
+        options: ['primary', 'secondary', 'ghost', 'destructive'],
       },
       description: 'The variant of the button',
     },
@@ -42,7 +42,7 @@ const meta = {
   },
   args: {
     children: 'Button',
-    variant: 'default',
+    variant: 'primary',
     size: 'small',
     isLoading: false,
     disabled: false,
@@ -54,14 +54,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
-
-export const Primary: Story = {
-  args: {
-    variant: 'primary',
-    children: 'Primary Button',
-  },
-};
+export const Primary: Story = {};
 
 export const Secondary: Story = {
   args: {

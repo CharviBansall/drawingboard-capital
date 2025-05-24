@@ -1,18 +1,14 @@
 import React, { ButtonHTMLAttributes } from 'react';
+import Throbber from './Throbber';
 
-type ButtonVariant =
-  | 'primary'
-  | 'secondary'
-  | 'ghost'
-  | 'destructive'
-  | 'default';
+type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'destructive';
 
 type ButtonSize = 'small' | 'medium' | 'large';
 
 type ButtonProps = {
   /**
    * The variant of the button
-   * @default 'default'
+   * @default 'primary'
    */
   variant?: ButtonVariant;
   /**
@@ -54,7 +50,7 @@ type ButtonProps = {
  * A versatile button component with multiple variants and states
  */
 const Button = ({
-  variant = 'default',
+  variant = 'primary',
   size = 'small',
   isLoading = false,
   disabled = false,
@@ -68,7 +64,6 @@ const Button = ({
     'flex items-center justify-center gap-2 rounded-sm transition-all duration-200 ease-in-out font-medium';
 
   const variantStyles = {
-    default: 'bg-white text-blue-12 hover:bg-slate-200',
     primary: 'bg-blue-10 text-blue-1 hover:bg-blue-12',
     secondary: 'bg-blue-6 text-blue-12 hover:bg-blue-4',
     ghost: 'bg-transparent text-slate-900 hover:bg-slate-200',
@@ -83,19 +78,35 @@ const Button = ({
 
   const widthStyles = fullWidth ? 'w-full' : 'w-auto';
 
+  // Define throbber sizes based on button size
+  const throbberSizes = {
+    small: 12,
+    medium: 16,
+    large: 20,
+  };
+
+  // Define throbber colors based on button variant text colors
+  const throbberColors = {
+    primary: 'var(--color-blue-1)', // matches text-blue-1
+    secondary: 'var(--color-blue-12)', // matches text-blue-12
+    ghost: '#1a202c', // matches text-slate-900
+    destructive: 'white', // matches text-white
+  };
+
   return (
     <button
       type="button"
       disabled={disabled || isLoading}
       onClick={onClick}
       className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${widthStyles} ${
-        disabled
-          ? 'bg-slate-400 text-slate-700 cursor-not-allowed'
-          : 'cursor-pointer'
+        disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
       } ${className}`}
       {...props}
     >
-      {isLoading ? <span className="animate-pulse">Loading...</span> : children}
+      {isLoading ? (
+        <Throbber size={throbberSizes[size]} color={throbberColors[variant]} />
+      ) : null}
+      {children}
     </button>
   );
 };

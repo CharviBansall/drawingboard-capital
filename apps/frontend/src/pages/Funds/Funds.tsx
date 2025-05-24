@@ -1,10 +1,8 @@
 import supabase from '@/lib/supabase';
 import { QueryData } from '@supabase/supabase-js';
 import {
-  Check,
   ChevronLeft,
   ChevronRight,
-  ListFilter,
   SortDesc,
   ArrowUp,
   ArrowDown,
@@ -40,97 +38,8 @@ type SortState = {
   direction: SortDirection;
 };
 
-// FilterDropdown component extracted outside the main component
-const FilterDropdown = memo(
-  ({
-    filterOptions,
-    filterCount,
-    selectedFilters,
-    handleFilterToggle,
-  }: {
-    filterOptions: FilterOption[];
-    filterCount: number;
-    selectedFilters: Record<string, string[]>;
-    handleFilterToggle: (category: string, option: string) => void;
-  }) => {
-    // Add state to control dropdown open state
-    const [open, setOpen] = useState(false);
-
-    // Check if a filter option is selected
-    const isFilterSelected = (category: string, option: string) => {
-      return selectedFilters[category]?.includes(option) || false;
-    };
-
-    return (
-      <DropdownMenu.Root open={open} onOpenChange={setOpen} modal={false}>
-        <DropdownMenu.Trigger asChild>
-          <button
-            className="rounded-full
-         font-medium text-blue-9 w-fit flex flex-row 
-         items-center gap-1 px-3 py-1 text-sm 
-         bg-blue-4 hover:bg-blue-5 transition-all"
-          >
-            <ListFilter size={15} />
-            Filters {filterCount > 0 && `(${filterCount})`}
-          </button>
-        </DropdownMenu.Trigger>
-        <DropdownMenu.Portal>
-          <DropdownMenu.Content
-            side="bottom"
-            sideOffset={5}
-            align="start"
-            onCloseAutoFocus={(event) => event.preventDefault()}
-            className="min-w-36 w-full rounded-md border text-sm border-gray-200 bg-white p-1 shadow-sm dark:border-gray-700 dark:bg-slate-900"
-          >
-            {filterOptions.map((filterOption) => (
-              <div key={filterOption.category}>
-                <DropdownMenu.Group>
-                  <DropdownMenu.Sub>
-                    <DropdownMenu.SubTrigger className="px-2 py-0.5 gap-1 items-center flex flex-row focus:outline-none hover:bg-blue-3 text-blue-12 rounded-sm">
-                      {filterOption.displayName}
-                    </DropdownMenu.SubTrigger>
-                    <DropdownMenu.Portal>
-                      <DropdownMenu.SubContent
-                        sideOffset={8}
-                        className="min-w-36 rounded-md border text-sm border-gray-200 bg-white p-1 shadow-sm dark:border-gray-700 dark:bg-slate-900"
-                      >
-                        {filterOption.options.map((option: string) => (
-                          <DropdownMenu.CheckboxItem
-                            className="px-2 py-0.5 gap-1 items-center flex flex-row focus:outline-none hover:bg-blue-3 text-blue-12 rounded-sm"
-                            key={option}
-                            checked={isFilterSelected(
-                              filterOption.category,
-                              option,
-                            )}
-                            onCheckedChange={() => {
-                              handleFilterToggle(filterOption.category, option);
-                              // No need to return false anymore as we're controlling the open state
-                            }}
-                          >
-                            <div className="h-4 w-4 flex items-center justify-center rounded-xs border border-blue-10">
-                              <DropdownMenu.ItemIndicator className="p-0">
-                                <Check
-                                  size={13}
-                                  className="text-white rounded-xs bg-blue-12"
-                                />
-                              </DropdownMenu.ItemIndicator>
-                            </div>
-                            {option}
-                          </DropdownMenu.CheckboxItem>
-                        ))}
-                      </DropdownMenu.SubContent>
-                    </DropdownMenu.Portal>
-                  </DropdownMenu.Sub>
-                </DropdownMenu.Group>
-                <DropdownMenu.Separator />
-              </div>
-            ))}
-          </DropdownMenu.Content>
-        </DropdownMenu.Portal>
-      </DropdownMenu.Root>
-    );
-  },
-);
+// Import the reusable FilterDropdown component
+import FilterDropdown from '@/components/FilterDropdown';
 
 // SortDropdown component for sorting data
 // This component prevents the dropdown from closing when items are clicked
@@ -275,7 +184,7 @@ const FilterBar = memo(
           filterOptions={filterOptions}
           filterCount={filterCount}
           selectedFilters={selectedFilters}
-          handleFilterToggle={handleFilterToggle}
+          onFilterToggle={handleFilterToggle}
         />
         <SortDropdown
           sortOptions={sortOptions}

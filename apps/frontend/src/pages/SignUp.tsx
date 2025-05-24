@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router';
 import { useState } from 'react';
-import Input from '@/components/Input';
+import FancyInput from '@/components/FancyInput';
 import supabase from '@/lib/supabase';
 import Confirmation from '@/components/Confirmation';
 import Button from '@/components/Button';
@@ -52,15 +52,13 @@ export default function SignUpPage() {
           {error && (
             <p className="text-red-400 mt-2 text-center">{error || ''}</p>
           )}
-          <Input
-            props={{
-              label: 'Email',
-              type: 'email',
-              placeholder: 'warren@example.com',
-              value: email,
-              onChange: (e) => setEmail(e.target.value),
-              autoFocus: true,
-            }}
+          <FancyInput
+            label="Email"
+            type="email"
+            placeholder="warren@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            autoFocus
           />
           <Confirmation
             id="terms"

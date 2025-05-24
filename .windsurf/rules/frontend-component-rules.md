@@ -104,6 +104,7 @@ export { Header };
 - **MUST** include a brief description of what the component does.
 - **MUST** document the component's primary use case or purpose.
 - **SHOULD** include usage examples for complex components.
+- **MUST** include storybook stories.
 
 ### Correct:
 

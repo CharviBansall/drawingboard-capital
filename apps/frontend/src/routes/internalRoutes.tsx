@@ -6,13 +6,13 @@ import {
   Cards,
   Swap,
   Polygon,
-  CreditCard,
   Scroll,
   Notebook,
   UserList,
   ClipboardText,
   Money,
   Gear,
+  Calendar,
 } from '@phosphor-icons/react';
 import Home from '../pages/Home';
 import Portfolio from '../pages/Portfolio';
@@ -22,7 +22,6 @@ import Funds from '../pages/Funds/Funds';
 import Secondaries from '../pages/Secondaries';
 import CoInvestments from '../pages/CoInvestments';
 import PrivateEquity from '../pages/PrivateEquity';
-import PrivateCredit from '../pages/PrivateCredit';
 import MarketInsights from '../pages/MarketInsights';
 import FundReports from '../pages/FundReports';
 import ManagerProfiles from '../pages/ManagerProfiles';
@@ -45,8 +44,20 @@ export const internalRoutes: RouteSection[] = [
     section: 'Base',
     items: [
       { label: 'Home', path: '/home', icon: House, element: Home },
+
       {
-        label: 'Portfolio',
+        label: 'Settings',
+        path: '/settings',
+        icon: Gear,
+        element: Settings,
+      },
+    ],
+  },
+  {
+    section: 'Clients',
+    items: [
+      {
+        label: 'Portfolios',
         path: '/portfolio',
         icon: Briefcase,
         element: Portfolio,
@@ -57,35 +68,12 @@ export const internalRoutes: RouteSection[] = [
         icon: HandCoins,
         element: CapitalCalls,
       },
-      {
-        label: 'Settings',
-        path: '/settings',
-        icon: Gear,
-        element: Settings,
-      },
     ],
   },
   {
-    section: 'Alternatives',
+    section: 'Investments',
     items: [
       { label: 'Funds', path: '/funds', icon: Cards, element: Funds },
-      {
-        label: 'Secondaries',
-        path: '/secondaries',
-        icon: Swap,
-        element: Secondaries,
-      },
-    ],
-  },
-  {
-    section: 'Deals',
-    items: [
-      {
-        label: 'Co-Investments',
-        path: '/co-investments',
-        icon: Polygon,
-        element: CoInvestments,
-      },
       {
         label: 'Private Equity',
         path: '/private-equity',
@@ -93,10 +81,16 @@ export const internalRoutes: RouteSection[] = [
         element: PrivateEquity,
       },
       {
-        label: 'Private Credit',
-        path: '/private-credit',
-        icon: CreditCard,
-        element: PrivateCredit,
+        label: 'Secondaries',
+        path: '/secondaries',
+        icon: Swap,
+        element: Secondaries,
+      },
+      {
+        label: 'Co-Investments',
+        path: '/co-investments',
+        icon: Polygon,
+        element: CoInvestments,
       },
     ],
   },
@@ -110,7 +104,7 @@ export const internalRoutes: RouteSection[] = [
         element: MarketInsights,
       },
       {
-        label: 'Fund Reports',
+        label: 'Investment Reports',
         path: '/fund-reports',
         icon: Notebook,
         element: FundReports,
@@ -127,9 +121,15 @@ export const internalRoutes: RouteSection[] = [
     section: 'Compliance',
     items: [
       {
-        label: 'Compliance Settings',
+        label: 'Tasks',
         path: '/compliance',
         icon: ClipboardText,
+        element: Compliance,
+      },
+      {
+        label: 'Calendar',
+        path: '/compliance',
+        icon: Calendar,
         element: Compliance,
       },
     ],
