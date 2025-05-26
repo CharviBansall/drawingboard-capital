@@ -162,7 +162,7 @@ Manual deployments should be coordinated with the DevOps team.
 
 ## Contributing
 
-Please review our [Contributing Guide](CONTRIBUTING.md) before submitting changes.
+Please review our [Contributing Guide](CONTRIBUTING.md) before submitting changes
 
 ## Intellectual Property
 
@@ -172,4 +172,4 @@ This project is proprietary and confidential. Unauthorized copying, transfer, di
 
 Drawingboard Capital - [Website](https://drawingboard.capital)
 
-For technical issues or questions, please create an issue in the repository or contact the development team via Slack (#drawingboard-dev channel).
+For technical issues or questions, please create an issue in the repository or contact the development team via Slack (#drawingboard-dev channel)

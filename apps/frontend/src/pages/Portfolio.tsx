@@ -1,491 +1,516 @@
-import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
-import * as echarts from 'echarts';
-import DonutChart from '../components/DonutChart';
-import { CaretDown, User } from '@phosphor-icons/react';
+import { useState, useEffect } from 'react';
+import PageTitle from '@/components/PageTitle';
+import DonutChart from '@/components/DonutChart';
+import PieChart from '@/components/PieChart';
+import FilterDropdown from '@/components/FilterDropdown';
+import { FilterOption } from '@/components/FilterDropdown';
 
-interface AssetAllocation {
-  name: string;
-  value: number;
-  percentage: string;
-  change: string;
-}
+// Dummy data for the portfolio page
+const clientInfo = {
+  name: 'Jonathan Doe',
+  id: 'CL-78945',
+  riskProfile: 'Balanced',
+  joinDate: '2022-05-15',
+  advisor: 'Albin George (You)',
+  email: 'jonathan.doe@example.com',
+};
 
-interface Client {
-  id: string;
-  name: string;
-  company?: string;
-}
+const portfolioMetrics = {
+  totalValue: 4825000,
+  ytdPerformance: 8.7,
+  volatility: 'Medium',
+  unfundedCommitments: 750000,
+};
+
+// Dummy data for asset allocation
+const assetAllocationData = {
+  'Public Equity': 35,
+  'Private Equity': 25,
+  'Fixed Income': 15,
+  'Real Estate': 12,
+  'Hedge Funds': 8,
+  Cash: 5,
+};
+
+// Dummy data for regional allocation
+const regionAllocationData = {
+  'North America': 45,
+  Europe: 25,
+  'Asia Pacific': 20,
+  'Emerging Markets': 10,
+};
+
+// Dummy data for currency exposure
+const currencyExposureData = {
+  USD: 60,
+  EUR: 20,
+  GBP: 10,
+  JPY: 5,
+  Others: 5,
+};
+
+// Dummy data for portfolio holdings
+const portfolioHoldings = [
+  {
+    id: 1,
+    name: 'US Tech Growth Fund',
+    type: 'Public Equity',
+    value: 850000,
+    currency: 'USD',
+    region: 'North America',
+    risk: 'High',
+    performance: 12.5,
+  },
+  {
+    id: 2,
+    name: 'European Value Fund',
+    type: 'Public Equity',
+    value: 650000,
+    currency: 'EUR',
+    region: 'Europe',
+    risk: 'Medium',
+    performance: 6.8,
+  },
+  {
+    id: 3,
+    name: 'Global Bond Fund',
+    type: 'Fixed Income',
+    value: 725000,
+    currency: 'USD',
+    region: 'Global',
+    risk: 'Low',
+    performance: 3.2,
+  },
+  {
+    id: 4,
+    name: 'Real Estate Opportunity Fund',
+    type: 'Real Estate',
+    value: 580000,
+    currency: 'USD',
+    region: 'North America',
+    risk: 'Medium',
+    performance: 9.1,
+  },
+  {
+    id: 5,
+    name: 'Venture Capital Fund III',
+    type: 'Private Equity',
+    value: 450000,
+    currency: 'USD',
+    region: 'North America',
+    risk: 'Very High',
+    performance: 18.7,
+  },
+  {
+    id: 6,
+    name: 'Asian Growth Opportunities',
+    type: 'Public Equity',
+    value: 325000,
+    currency: 'JPY',
+    region: 'Asia Pacific',
+    risk: 'High',
+    performance: 10.3,
+  },
+  {
+    id: 7,
+    name: 'Sustainable Infrastructure Fund',
+    type: 'Private Equity',
+    value: 400000,
+    currency: 'EUR',
+    region: 'Europe',
+    risk: 'Medium',
+    performance: 7.5,
+  },
+  {
+    id: 8,
+    name: 'Global Macro Hedge Fund',
+    type: 'Hedge Funds',
+    value: 385000,
+    currency: 'USD',
+    region: 'Global',
+    risk: 'Medium-High',
+    performance: 11.2,
+  },
+  {
+    id: 9,
+    name: 'Emerging Markets Debt',
+    type: 'Fixed Income',
+    value: 290000,
+    currency: 'USD',
+    region: 'Emerging Markets',
+    risk: 'Medium-High',
+    performance: 5.8,
+  },
+  {
+    id: 10,
+    name: 'Cash Reserve',
+    type: 'Cash',
+    value: 170000,
+    currency: 'USD',
+    region: 'North America',
+    risk: 'Very Low',
+    performance: 1.2,
+  },
+];
+
+// Filter options
+const filterOptions: FilterOption[] = [
+  {
+    category: 'assetType',
+    displayName: 'Asset Type',
+    options: [
+      'Public Equity',
+      'Private Equity',
+      'Fixed Income',
+      'Real Estate',
+      'Hedge Funds',
+      'Cash',
+    ],
+  },
+  {
+    category: 'region',
+    displayName: 'Region',
+    options: [
+      'North America',
+      'Europe',
+      'Asia Pacific',
+      'Emerging Markets',
+      'Global',
+    ],
+  },
+  {
+    category: 'currency',
+    displayName: 'Currency',
+    options: ['USD', 'EUR', 'GBP', 'JPY', 'Others'],
+  },
+  {
+    category: 'risk',
+    displayName: 'Risk Profile',
+    options: ['Very Low', 'Low', 'Medium', 'Medium-High', 'High', 'Very High'],
+  },
+];
 
 export default function Portfolio() {
-  const lineChartRef = useRef<HTMLDivElement>(null);
-  const [selectedClient, setSelectedClient] = useState<string>('client1');
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedRegion, setSelectedRegion] = useState<'overview' | 'usa' | 'india'>('overview');
-  
-  // Sample client data
-  const clients: Client[] = [
-    { id: 'client1', name: 'John Smith', company: 'Smith Ventures LLC' },
-    { id: 'client2', name: 'Emily Johnson', company: 'Johnson Family Office' },
-    { id: 'client3', name: 'Michael Chen', company: 'Chen Capital' },
-    { id: 'client4', name: 'Sarah Williams', company: 'Williams Investments' },
-    { id: 'client5', name: 'David Rodriguez', company: 'Rodriguez Partners' },
-  ];
-  
-  // Get the current client
-  const currentClient = clients.find(client => client.id === selectedClient) || clients[0];
-  
-  // Generate random asset allocation data for different regions
-  const generateAssetAllocations = useCallback((region: 'overview' | 'usa' | 'india' = 'overview') => {
-    // Asset class names based on region
-    let assetNames: string[];
-    
-    if (region === 'usa') {
-      assetNames = ['US Equities', 'US Treasury', 'US Real Estate', 'US Credit', 'US Funds', 'US Others'];
-    } else if (region === 'india') {
-      assetNames = ['India Equities', 'India Bonds', 'India Real Estate', 'India Credit', 'India Funds', 'India Others'];
-    } else {
-      assetNames = ['PE Buyouts', 'PE Growth', 'Credit Assets', 'Funds', 'Real Estate', 'Others'];
-    }
-    
-    // Generate random values that sum to 100
-    let values: number[] = [];
-    let sum = 0;
-    
-    // Generate initial random values
-    for (let i = 0; i < assetNames.length; i++) {
-      const randomValue = Math.floor(Math.random() * 30) + 5; // Between 5 and 35
-      values.push(randomValue);
-      sum += randomValue;
-    }
-    
-    // Normalize to sum to 100
-    values = values.map(value => Math.round((value / sum) * 100));
-    
-    // Adjust to ensure sum is exactly 100
-    const currentSum = values.reduce((a, b) => a + b, 0);
-    if (currentSum !== 100) {
-      values[0] += (100 - currentSum); // Add or subtract the difference from the first value
-    }
-    
-    // Generate random changes
-    const changes = assetNames.map(() => {
-      const isPositive = Math.random() > 0.4; // 60% chance of positive change
-      const changeValue = (Math.random() * 3).toFixed(1); // Change between 0.0 and 3.0
-      return `${isPositive ? '+' : '-'}${changeValue}%`;
+  // State for selected filters
+  const [selectedFilters, setSelectedFilters] = useState<
+    Record<string, string[]>
+  >({
+    assetType: [],
+    region: [],
+    currency: [],
+    risk: [],
+  });
+
+  // State for filtered holdings
+  const [filteredHoldings, setFilteredHoldings] = useState(portfolioHoldings);
+
+  // Calculate total filter count
+  const filterCount = Object.values(selectedFilters).reduce(
+    (count, filters) => count + filters.length,
+    0,
+  );
+
+  // Handle filter toggle
+  const handleFilterToggle = (category: string, option: string) => {
+    setSelectedFilters((prev) => {
+      const newFilters = { ...prev };
+      if (newFilters[category].includes(option)) {
+        newFilters[category] = newFilters[category].filter(
+          (item) => item !== option,
+        );
+      } else {
+        newFilters[category] = [...newFilters[category], option];
+      }
+      return newFilters;
     });
-    
-    // Create the asset allocations
-    return assetNames.map((name, index) => ({
-      name,
-      value: values[index],
-      percentage: `${values[index].toFixed(2)}%`,
-      change: changes[index]
-    }));
-  }, []);
-  
-  const [overviewAllocations, setOverviewAllocations] = useState<AssetAllocation[]>(generateAssetAllocations('overview'));
-  const [usaAllocations, setUsaAllocations] = useState<AssetAllocation[]>(generateAssetAllocations('usa'));
-  const [indiaAllocations, setIndiaAllocations] = useState<AssetAllocation[]>(generateAssetAllocations('india'));
-  
-  // Get current allocations based on selected region
-  const assetAllocations = useMemo(() => {
-    switch (selectedRegion) {
-      case 'usa':
-        return usaAllocations;
-      case 'india':
-        return indiaAllocations;
-      default:
-        return overviewAllocations;
-    }
-  }, [selectedRegion, overviewAllocations, usaAllocations, indiaAllocations]);
-
-  // Prepare data for donut chart
-  const donutChartData = useMemo(() => {
-    return assetAllocations.reduce<Record<string, number>>(
-      (acc, item) => {
-        acc[item.name] = item.value;
-        return acc;
-      },
-      {}
-    );
-  }, [assetAllocations]);
-
-  // Generate random portfolio value data
-  const generatePortfolioData = useCallback((region: 'overview' | 'usa' | 'india' = 'overview') => {
-    // Adjust base values based on region
-    let baseValue: number;
-    
-    if (region === 'usa') {
-      baseValue = 12 + Math.random() * 8; // 12M to 20M
-    } else if (region === 'india') {
-      baseValue = 8 + Math.random() * 7; // 8M to 15M
-    } else {
-      baseValue = 15 + Math.random() * 10; // 15M to 25M
-    }
-    // Use the base value as starting value
-    const startValue = baseValue;
-    
-    // Generate monthly data with small random changes
-    const data: number[] = [];
-    let currentValue = startValue;
-    
-    for (let i = 0; i < 12; i++) {
-      // Add some randomness to the value (-5% to +5%)
-      const change = currentValue * (Math.random() * 0.1 - 0.05);
-      currentValue += change;
-      data.push(parseFloat(currentValue.toFixed(1)));
-    }
-    
-    return data;
-  }, []);
-  
-  // Handle client change
-  const handleClientChange = (clientId: string) => {
-    setSelectedClient(clientId);
-    setOverviewAllocations(generateAssetAllocations('overview'));
-    setUsaAllocations(generateAssetAllocations('usa'));
-    setIndiaAllocations(generateAssetAllocations('india'));
-    
-    // Force chart to update with new data
-    if (lineChartRef.current) {
-      const chart = echarts.getInstanceByDom(lineChartRef.current);
-      if (chart) {
-        chart.dispose();
-      }
-    }
-    
-    setIsDropdownOpen(false);
   };
-  
-  // Handle region change
-  const handleRegionChange = (region: 'overview' | 'usa' | 'india') => {
-    setSelectedRegion(region);
-    
-    // Force chart to update with new data
-    if (lineChartRef.current) {
-      const chart = echarts.getInstanceByDom(lineChartRef.current);
-      if (chart) {
-        chart.dispose();
-      }
-    }
+
+  // Reset all filters
+  const resetFilters = () => {
+    setSelectedFilters({
+      assetType: [],
+      region: [],
+      currency: [],
+      risk: [],
+    });
   };
-  
-  // Line chart data - historical portfolio value
+
+  // Apply filters to holdings
   useEffect(() => {
-    let chart: echarts.ECharts | undefined;
+    let result = [...portfolioHoldings];
 
-    if (lineChartRef.current) {
-      chart = echarts.init(lineChartRef.current);
-
-      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      const data = generatePortfolioData(selectedRegion);
-      
-      // Find lowest, highest, and current values
-      const lowestValue = Math.min(...data);
-      const highestValue = Math.max(...data);
-      const currentValue = data[data.length - 1];
-      
-      // Find indices
-      const lowestIndex = data.indexOf(lowestValue);
-      const highestIndex = data.indexOf(highestValue);
-      
-      // Highlight points
-      const markPoints = [
-        { name: 'Lowest', value: lowestValue, xAxis: lowestIndex, yAxis: lowestValue },
-        { name: 'Highest', value: highestValue, xAxis: highestIndex, yAxis: highestValue },
-        { name: 'Current', value: currentValue, xAxis: 11, yAxis: currentValue }
-      ];
-
-      chart.setOption({
-        title: {
-          text: 'Portfolio Value ($M)',
-          left: 'left',
-          textStyle: { fontSize: 16 },
-        },
-        tooltip: {
-          trigger: 'axis',
-          formatter: '${c0}M',
-          axisPointer: {
-            type: 'cross',
-            label: {
-              backgroundColor: '#6a7985',
-            },
-          },
-        },
-        grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
-          containLabel: true,
-        },
-        xAxis: {
-          type: 'category',
-          boundaryGap: false,
-          data: months,
-        },
-        yAxis: {
-          type: 'value',
-          min: 18,
-          axisLabel: {
-            formatter: '${value}M',
-          },
-        },
-        series: [
-          {
-            name: 'Portfolio Value',
-            type: 'line',
-            smooth: true,
-            lineStyle: {
-              width: 3,
-              color: '#011a2b',
-            },
-            symbol: 'circle',
-            symbolSize: 8,
-            itemStyle: {
-              color: '#011a2b',
-            },
-            emphasis: {
-              scale: true,
-            },
-            data: data,
-            markPoint: {
-              data: markPoints,
-              symbolSize: 12,
-              itemStyle: {
-                color: '#25a55f',
-              },
-              label: {
-                formatter: '${c}M',
-                position: 'top',
-              },
-            },
-            areaStyle: {
-              color: {
-                type: 'linear',
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [
-                  {
-                    offset: 0,
-                    color: 'rgba(1, 26, 43, 0.3)',
-                  },
-                  {
-                    offset: 1,
-                    color: 'rgba(1, 26, 43, 0.05)',
-                  },
-                ],
-              },
-            },
-          },
-        ],
-      });
+    // TODO: Implement actual filtering logic based on selectedFilters
+    // This is a simplified example
+    if (selectedFilters.assetType.length > 0) {
+      result = result.filter((holding) =>
+        selectedFilters.assetType.includes(holding.type),
+      );
     }
 
-    // Handle resize
-    const handleResize = () => {
-      chart?.resize();
-    };
+    if (selectedFilters.region.length > 0) {
+      result = result.filter((holding) =>
+        selectedFilters.region.includes(holding.region),
+      );
+    }
 
-    window.addEventListener('resize', handleResize);
+    if (selectedFilters.currency.length > 0) {
+      result = result.filter((holding) =>
+        selectedFilters.currency.includes(holding.currency),
+      );
+    }
 
-    return () => {
-      chart?.dispose();
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [selectedClient, selectedRegion, generatePortfolioData]);
+    if (selectedFilters.risk.length > 0) {
+      result = result.filter((holding) =>
+        selectedFilters.risk.includes(holding.risk),
+      );
+    }
+
+    setFilteredHoldings(result);
+  }, [selectedFilters]);
+
+  // Format currency
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      maximumFractionDigits: 0,
+    }).format(value);
+  };
 
   return (
-    <div className="p-6 w-full">
-      <div className="flex justify-between items-start mb-6">
-        <div>
-          <h1 className="text-2xl font-semibold mb-2">Portfolio Dashboard</h1>
-          <p className="text-gray-600">Overview of your investment portfolio and performance</p>
+    <div className="container mx-auto px-4 py-8">
+      {/* Page Header */}
+      <div className="flex justify-between items-center mb-8">
+        <PageTitle title="Client Portfolio" />
+        <div className="flex flex-col items-end">
+          <h2 className="text-2xl font-semibold">{clientInfo.name}</h2>
+          <p className="text-gray-600">Client ID: {clientInfo.id}</p>
         </div>
-        
-        {/* Client Selection Dropdown */}
-        <div className="relative">
-          <div 
-            className="flex items-center bg-white border border-gray-300 rounded-lg px-4 py-2 cursor-pointer"
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+      </div>
+
+      {/* Client Profile Summary */}
+      <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+        <h3 className="text-xl font-semibold mb-4">Client Profile</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div>
+            <p className="text-gray-600">Risk Profile</p>
+            <p className="font-semibold">{clientInfo.riskProfile}</p>
+          </div>
+          <div>
+            <p className="text-gray-600">Client Since</p>
+            <p className="font-semibold">
+              {new Date(clientInfo.joinDate).toLocaleDateString()}
+            </p>
+          </div>
+          <div>
+            <p className="text-gray-600">Advisor</p>
+            <p className="font-semibold">{clientInfo.advisor}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Top-Level Summary - Metric Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="bg-white rounded-lg shadow-sm p-6">
+          <h3 className="text-gray-600 text-sm mb-1">Total Portfolio Value</h3>
+          <p className="text-3xl font-semibold">
+            {formatCurrency(portfolioMetrics.totalValue)}
+          </p>
+        </div>
+        <div className="bg-white rounded-lg shadow-sm p-6">
+          <h3 className="text-gray-600 text-sm mb-1">YTD Performance</h3>
+          <p className="text-3xl font-semibold text-green-600">
+            +{portfolioMetrics.ytdPerformance}%
+          </p>
+        </div>
+        <div className="bg-white rounded-lg shadow-sm p-6">
+          <h3 className="text-gray-600 text-sm mb-1">Risk Level</h3>
+          <p className="text-3xl font-semibold">
+            {portfolioMetrics.volatility}
+          </p>
+        </div>
+        <div className="bg-white rounded-lg shadow-sm p-6">
+          <h3 className="text-gray-600 text-sm mb-1">Unfunded Commitments</h3>
+          <p className="text-3xl font-semibold">
+            {formatCurrency(portfolioMetrics.unfundedCommitments)}
+          </p>
+        </div>
+      </div>
+
+      {/* Filters Section */}
+      <div className="flex flex-wrap items-center gap-4 mb-8">
+        <FilterDropdown
+          filterOptions={filterOptions}
+          selectedFilters={selectedFilters}
+          onFilterToggle={handleFilterToggle}
+          filterCount={filterCount}
+          triggerText="Filter Portfolio"
+        />
+        {filterCount > 0 && (
+          <button
+            onClick={resetFilters}
+            className="text-sm text-blue-9 hover:text-blue-12 transition-colors"
           >
-            <User size={20} className="text-gray-500 mr-2" />
-            <div className="mr-2">
-              <div className="font-medium">{currentClient.name}</div>
-              <div className="text-xs text-gray-500">{currentClient.company}</div>
-            </div>
-            <CaretDown size={16} className="text-gray-500" />
+            Reset Filters
+          </button>
+        )}
+      </div>
+
+      {/* Charts Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+        {/* Asset Allocation Chart */}
+        <div className="bg-white rounded-lg shadow-sm p-6">
+          <h3 className="text-xl font-semibold mb-4">Asset Allocation</h3>
+          <div className="h-80">
+            <DonutChart title="Asset Allocation" data={assetAllocationData} />
           </div>
-          
-          {isDropdownOpen && (
-            <div className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
-              {clients.map(client => (
-                <div 
-                  key={client.id}
-                  className={`px-4 py-3 hover:bg-gray-100 cursor-pointer ${client.id === selectedClient ? 'bg-gray-50' : ''}`}
-                  onClick={() => handleClientChange(client.id)}
-                >
-                  <div className="font-medium">{client.name}</div>
-                  <div className="text-xs text-gray-500">{client.company}</div>
+        </div>
+        {/* Region Allocation Chart */}
+        <div className="bg-white rounded-lg shadow-sm p-6">
+          <h3 className="text-xl font-semibold mb-4">Regional Allocation</h3>
+          <div className="h-80">
+            <PieChart title="Regional Allocation" data={regionAllocationData} />
+          </div>
+        </div>
+      </div>
+
+      {/* Currency Exposure Chart */}
+      <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+        <h3 className="text-xl font-semibold mb-4">Currency Exposure</h3>
+        <div className="h-80">
+          {/* TODO: Replace with a proper Bar Chart component when available */}
+          <div className="flex items-end h-64 space-x-4 pt-4">
+            {Object.entries(currencyExposureData).map(
+              ([currency, percentage]) => (
+                <div key={currency} className="flex flex-col items-center">
+                  <div
+                    className="bg-blue-6 w-16 rounded-t-md"
+                    style={{ height: `${percentage * 2}px` }}
+                  ></div>
+                  <div className="text-sm mt-2">{currency}</div>
+                  <div className="text-xs text-gray-600">{percentage}%</div>
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-        <div className="bg-white rounded-lg shadow p-4">
-          <h2 className="text-lg font-medium mb-2">Total Portfolio Value</h2>
-          <div className="flex items-end">
-            <span className="text-3xl font-bold">${assetAllocations.length > 0 ? (Math.random() * 10 + 15).toFixed(1) : '21.2'}M</span>
-            <span className="ml-2 text-green-600 text-sm">+0.8% MTD</span>
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow p-4">
-          <h2 className="text-lg font-medium mb-2">YTD Performance</h2>
-          <div className="flex items-end">
-            <span className="text-3xl font-bold">+10.4%</span>
-            <span className="ml-2 text-gray-500 text-sm">
-              vs +8.2% benchmark
-            </span>
-          </div>
-        </div>
-        <div className="bg-white rounded-lg shadow p-4">
-          <h2 className="text-lg font-medium mb-2">Committed Capital</h2>
-          <div className="flex items-end">
-            <span className="text-3xl font-bold">$25.0M</span>
-            <span className="ml-2 text-gray-500 text-sm">85% deployed</span>
+              ),
+            )}
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <div className="bg-white rounded-lg shadow p-4">
-          <div className="flex justify-center gap-4 mb-4">
-            <label className={`inline-flex items-center px-3 py-1 rounded-md cursor-pointer ${selectedRegion === 'overview' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100'}`}>
-              <input 
-                type="radio" 
-                name="lineChartRegion" 
-                value="overview" 
-                checked={selectedRegion === 'overview'} 
-                onChange={() => handleRegionChange('overview')} 
-                className="hidden" 
-              />
-              Overview
-            </label>
-            <label className={`inline-flex items-center px-3 py-1 rounded-md cursor-pointer ${selectedRegion === 'usa' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100'}`}>
-              <input 
-                type="radio" 
-                name="lineChartRegion" 
-                value="usa" 
-                checked={selectedRegion === 'usa'} 
-                onChange={() => handleRegionChange('usa')} 
-                className="hidden" 
-              />
-              USA
-            </label>
-            <label className={`inline-flex items-center px-3 py-1 rounded-md cursor-pointer ${selectedRegion === 'india' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100'}`}>
-              <input 
-                type="radio" 
-                name="lineChartRegion" 
-                value="india" 
-                checked={selectedRegion === 'india'} 
-                onChange={() => handleRegionChange('india')} 
-                className="hidden" 
-              />
-              India
-            </label>
-          </div>
-          <div style={{ height: '380px', width: '100%' }} ref={lineChartRef}></div>
-        </div>
-        <div className="bg-white rounded-lg shadow p-4">
-          <div className="flex justify-center gap-4 mb-4">
-            <label className={`inline-flex items-center px-3 py-1 rounded-md cursor-pointer ${selectedRegion === 'overview' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100'}`}>
-              <input 
-                type="radio" 
-                name="donutChartRegion" 
-                value="overview" 
-                checked={selectedRegion === 'overview'} 
-                onChange={() => handleRegionChange('overview')} 
-                className="hidden" 
-              />
-              Overview
-            </label>
-            <label className={`inline-flex items-center px-3 py-1 rounded-md cursor-pointer ${selectedRegion === 'usa' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100'}`}>
-              <input 
-                type="radio" 
-                name="donutChartRegion" 
-                value="usa" 
-                checked={selectedRegion === 'usa'} 
-                onChange={() => handleRegionChange('usa')} 
-                className="hidden" 
-              />
-              USA
-            </label>
-            <label className={`inline-flex items-center px-3 py-1 rounded-md cursor-pointer ${selectedRegion === 'india' ? 'bg-blue-100 text-blue-800' : 'bg-gray-100'}`}>
-              <input 
-                type="radio" 
-                name="donutChartRegion" 
-                value="india" 
-                checked={selectedRegion === 'india'} 
-                onChange={() => handleRegionChange('india')} 
-                className="hidden" 
-              />
-              India
-            </label>
-          </div>
-          <div style={{ height: '380px' }}>
-            <DonutChart title="Asset Allocation" data={donutChartData} region={selectedRegion} />
+      {/* Portfolio Performance Chart */}
+      <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+        <h3 className="text-xl font-semibold mb-4">Portfolio Performance</h3>
+        <div className="h-80 flex items-center justify-center">
+          {/* TODO: Replace with a proper Line Chart component when available */}
+          <div className="text-center text-gray-500">
+            <p>Portfolio Performance Line Chart would go here.</p>
+            <p className="text-sm">
+              This requires a LineChart component to be implemented.
+            </p>
           </div>
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <div className="p-4 border-b">
-          <h2 className="text-lg font-medium">Asset Allocation</h2>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Asset Class
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Allocation
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Change
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {assetAllocations.map((asset, index) => (
-                <tr key={index}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                    {asset.name}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {asset.percentage}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <span
-                      className={
-                        asset.change.startsWith('+')
-                          ? 'text-green-600'
-                          : 'text-red-600'
-                      }
-                    >
-                      {asset.change}
-                    </span>
-                  </td>
+      {/* Holdings Table */}
+      <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
+        <h3 className="text-xl font-semibold mb-4">Portfolio Holdings</h3>
+
+        {filteredHoldings.length > 0 ? (
+          <div className="overflow-x-auto">
+            {/* TODO: Replace with a proper Table component when available */}
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Asset Name
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Asset Type
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Market Value
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Currency
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Region
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Risk Score
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Performance
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {filteredHoldings.map((holding) => (
+                  <tr key={holding.id}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                      {holding.name}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {holding.type}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {formatCurrency(holding.value)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {holding.currency}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {holding.region}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      {holding.risk}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <span
+                        className={`${holding.performance > 0 ? 'text-green-600' : 'text-red-600'}`}
+                      >
+                        {holding.performance > 0 ? '+' : ''}
+                        {holding.performance}%
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="text-center py-12 bg-gray-50 rounded-md">
+            <p className="text-gray-500">
+              No holdings match the current filters.
+            </p>
+            <button
+              onClick={resetFilters}
+              className="mt-4 px-4 py-2 bg-blue-6 text-white rounded-md hover:bg-blue-7 transition-colors"
+            >
+              Reset Filters
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

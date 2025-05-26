@@ -551,11 +551,11 @@ export type Database = {
           company_id: string | null
           created_at: string | null
           eligibility: Database["public"]["Enums"]["eligibility_enum"]
-          email: string | null
           first_name: string | null
           id: string
           last_name: string | null
           phone_number: string | null
+          profile_picture_url: string | null
           profile_type: Database["public"]["Enums"]["profile_type_enum"]
           stage: string | null
         }
@@ -563,11 +563,11 @@ export type Database = {
           company_id?: string | null
           created_at?: string | null
           eligibility?: Database["public"]["Enums"]["eligibility_enum"]
-          email?: string | null
           first_name?: string | null
           id: string
           last_name?: string | null
           phone_number?: string | null
+          profile_picture_url?: string | null
           profile_type?: Database["public"]["Enums"]["profile_type_enum"]
           stage?: string | null
         }
@@ -575,11 +575,11 @@ export type Database = {
           company_id?: string | null
           created_at?: string | null
           eligibility?: Database["public"]["Enums"]["eligibility_enum"]
-          email?: string | null
           first_name?: string | null
           id?: string
           last_name?: string | null
           phone_number?: string | null
+          profile_picture_url?: string | null
           profile_type?: Database["public"]["Enums"]["profile_type_enum"]
           stage?: string | null
         }

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import Button from './Button';
+import Button from '@/components/Button';
+import { ArrowRight } from 'lucide-react';
 
 const meta = {
   title: 'Components/Button',
@@ -13,7 +14,7 @@ const meta = {
     variant: {
       control: {
         type: 'select',
-        options: ['default', 'primary', 'secondary', 'ghost', 'destructive'],
+        options: ['primary', 'secondary', 'ghost', 'destructive'],
       },
       description: 'The variant of the button',
     },
@@ -41,8 +42,8 @@ const meta = {
   },
   args: {
     children: 'Button',
-    variant: 'default',
-    size: 'medium',
+    variant: 'primary',
+    size: 'small',
     isLoading: false,
     disabled: false,
     fullWidth: false,
@@ -53,14 +54,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
-
-export const Primary: Story = {
-  args: {
-    variant: 'primary',
-    children: 'Primary Button',
-  },
-};
+export const Primary: Story = {};
 
 export const Secondary: Story = {
   args: {
@@ -121,7 +115,7 @@ export const FullWidth: Story = {
   },
   decorators: [
     (Story) => (
-      <div style={{ width: '100%', maxWidth: '500px' }}>
+      <div style={{ width: '100%' }}>
         <Story />
       </div>
     ),
@@ -133,20 +127,7 @@ export const WithIcon: Story = {
     children: (
       <>
         <span>Button with Icon</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M5 12h14" />
-          <path d="m12 5 7 7-7 7" />
-        </svg>
+        <ArrowRight />
       </>
     ),
   },

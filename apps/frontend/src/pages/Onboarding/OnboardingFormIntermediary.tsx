@@ -1,4 +1,4 @@
-import Input from '@/components/Input';
+import FancyInput from '@/components/FancyInput';
 import Button from '@/components/Button';
 import PhoneInput from '@/components/PhoneInput';
 import { useState } from 'react';
@@ -16,21 +16,17 @@ export default function OnboardingFormIntermediary() {
         process.
       </p>
       <div className="grid grid-cols-2 gap-2">
-        <Input
-          props={{
-            label: 'First Name',
-            type: 'text',
-            placeholder: 'John',
-            onChange: () => {},
-          }}
+        <FancyInput
+          label="First Name"
+          type="text"
+          placeholder="John"
+          onChange={() => {}}
         />
-        <Input
-          props={{
-            label: 'Last Name',
-            type: 'text',
-            placeholder: 'Doe',
-            onChange: () => {},
-          }}
+        <FancyInput
+          label="Last Name"
+          type="text"
+          placeholder="Doe"
+          onChange={() => {}}
         />
         <div className="col-span-2">
           <PhoneInput
@@ -39,23 +35,19 @@ export default function OnboardingFormIntermediary() {
           />
         </div>
         <div className="col-span-2">
-          <Input
-            props={{
-              label: 'Company Name',
-              type: 'text',
-              onChange: () => {},
-              placeholder: 'Berkshire Hathaway',
-            }}
+          <FancyInput
+            label="Company Name"
+            type="text"
+            onChange={() => {}}
+            placeholder="Berkshire Hathaway"
           />
         </div>
         <div className="col-span-2">
-          <Input
-            props={{
-              label: 'Company Website/Social Media',
-              type: 'text',
-              onChange: () => {},
-              placeholder: 'https://www.example.com',
-            }}
+          <FancyInput
+            label="Company Website/Social Media"
+            type="text"
+            onChange={() => {}}
+            placeholder="https://www.example.com"
           />
         </div>
       </div>

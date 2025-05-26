@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
-import supabase from '../lib/supabase';
+import supabase from '@/lib/supabase';
 import { Accordion } from 'radix-ui';
-import '../styles/accordion.css';
-import { Paperclip, Calendar, CheckCircle } from 'lucide-react';
+import '@/styles/accordion.css';
 import Button from '@/components/Button';
 import { format, isPast, isToday } from 'date-fns';
 import { useProfile } from '@/hooks/useProfile';
+import PageTitle from '@/components/PageTitle';
+import RadioGroup from '@/components/RadioGroup';
+import { Calendar, Check, Paperclip } from '@phosphor-icons/react';
 
-export default function Compliance() {
+export default function ComplianceTasks() {
   // State for user profile and company compliance tasks
   const { profile } = useProfile();
   const [complianceTasks, setComplianceTasks] = useState<any[]>([]);
@@ -154,32 +156,19 @@ export default function Compliance() {
   }, [viewMode, profile?.company_id]);
 
   return (
-    <div className="p-6 w-full">
+    <div className="h-full w-full">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Compliance Tasks</h1>
-        <div className="flex space-x-2">
-          <Button
-            variant={viewMode === 'upcoming' ? 'primary' : 'ghost'}
-            onClick={() => setViewMode('upcoming')}
-            size="small"
-          >
-            Upcoming
-          </Button>
-          <Button
-            variant={viewMode === 'all' ? 'primary' : 'ghost'}
-            onClick={() => setViewMode('all')}
-            size="small"
-          >
-            All Tasks
-          </Button>
-          <Button
-            variant={viewMode === 'completed' ? 'primary' : 'ghost'}
-            onClick={() => setViewMode('completed')}
-            size="small"
-          >
-            Completed
-          </Button>
-        </div>
+        <PageTitle title="Compliance Tasks" />
+        <RadioGroup<'upcoming' | 'all' | 'completed'>
+          options={[
+            { value: 'upcoming', label: 'Upcoming' },
+            { value: 'all', label: 'All Tasks' },
+            { value: 'completed', label: 'Completed' },
+          ]}
+          value={viewMode}
+          onChange={setViewMode}
+          name="viewMode"
+        />
       </div>
 
       {loading ? (
@@ -237,15 +226,15 @@ export default function Compliance() {
                             </span>
                             <div className="text-right flex justify-end space-x-2">
                               <Button
-                                variant="primary"
+                                variant="secondary"
                                 size="small"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   markTaskComplete(task.company_compliance_id);
                                 }}
                               >
-                                <CheckCircle className="w-4 h-4 mr-1" />
-                                Complete
+                                <Check />
+                                Mark as Complete
                               </Button>
                             </div>
                           </Accordion.Trigger>
@@ -260,7 +249,7 @@ export default function Compliance() {
                               size="small"
                               className="mr-2"
                             >
-                              <Paperclip className="w-4 h-4 mr-1" />
+                              <Paperclip />
                               Attach Evidence
                             </Button>
                           </div>
@@ -315,15 +304,15 @@ export default function Compliance() {
                             </span>
                             <div className="text-right flex justify-end space-x-2">
                               <Button
-                                variant="primary"
+                                variant="secondary"
                                 size="small"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   markTaskComplete(task.company_compliance_id);
                                 }}
                               >
-                                <CheckCircle className="w-4 h-4 mr-1" />
-                                Complete
+                                <Check />
+                                Mark as Complete
                               </Button>
                             </div>
                           </Accordion.Trigger>
@@ -419,7 +408,7 @@ export default function Compliance() {
           {/* No Tasks Message */}
           {complianceTasks.length === 0 && (
             <div className="bg-white rounded-lg shadow p-6 text-center">
-              <Calendar className="w-12 h-12 mx-auto text-gray-400 mb-4" />
+              <Calendar />
               <h3 className="text-lg font-medium text-gray-900 mb-1">
                 No compliance tasks found
               </h3>

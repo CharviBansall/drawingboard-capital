@@ -1,6 +1,6 @@
 import { DropdownMenu } from 'radix-ui';
 import { useState } from 'react';
-import { Avatar } from './Avatar';
+import Avatar from './Avatar';
 import { CaretDown, Gear, SignOut } from '@phosphor-icons/react';
 import { useProfile } from '@/hooks/useProfile';
 import supabase from '@/lib/supabase';
@@ -38,7 +38,10 @@ export default function UserCard() {
               : 'hover:bg-slate-200 dark:hover:bg-slate-800')
           }
         >
-          <Avatar initials={initials} />
+          <Avatar
+            initials={initials}
+            src={profile.profile_picture_url || undefined}
+          />
           <div className="flex flex-col min-w-0 flex-1 overflow-hidden">
             <span className="text-sm font-medium truncate">{fullName}</span>
             <span className="text-xs font-light text-slate-500 truncate">
@@ -47,7 +50,8 @@ export default function UserCard() {
           </div>
           <div
             className={
-              'flex-shrink-0 transition-transform duration-200 ' + (open ? 'rotate-180' : '')
+              'flex-shrink-0 transition-transform duration-200 ' +
+              (open ? 'rotate-180' : '')
             }
           >
             <CaretDown />
