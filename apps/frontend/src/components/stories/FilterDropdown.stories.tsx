@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { fn } from '@storybook/test';
 import FilterDropdown, { FilterOption } from '../FilterDropdown';
 import { Filter, ListFilter, Sliders } from 'lucide-react';
@@ -75,8 +75,10 @@ const meta = {
     filterCount: 0,
     selectedFilters: {},
     onFilterToggle: fn(),
+    onClearAll: fn(),
     triggerText: 'Filters',
     showFilterCount: true,
+    showFilterTags: true,
   },
 } satisfies Meta<typeof FilterDropdown>;
 
@@ -99,7 +101,7 @@ function InteractiveFilterDropdown() {
   );
 
   // Handle filter toggle
-  const handleFilterToggle = (category: string, option: string) => {
+  const handleFilterToggle = useCallback((category: string, option: string) => {
     setSelectedFilters((prev) => {
       const prevSelected = prev[category] || [];
 
@@ -123,22 +125,31 @@ function InteractiveFilterDropdown() {
         [category]: [...prevSelected, option],
       };
     });
-  };
+  }, []);
+
+  // Handle clear all filters
+  const handleClearAll = useCallback(() => {
+    setSelectedFilters({});
+  }, []);
 
   return (
-    <div className="p-6 border border-gray-200 rounded-md bg-white max-w-md">
+    <div className="p-6 border border-gray-200 rounded-md bg-white">
       <h3 className="mb-4 text-sm font-medium text-gray-500">
         Selected filters: 
         <span className="ml-2 px-2 py-1 bg-gray-100 rounded text-xs font-mono">
           {JSON.stringify(selectedFilters)}
         </span>
       </h3>
-      <FilterDropdown
-        filterOptions={sampleFilterOptions}
-        filterCount={filterCount}
-        selectedFilters={selectedFilters}
-        onFilterToggle={handleFilterToggle}
-      />
+      <div className="border border-gray-200 p-3 rounded-md">
+        <FilterDropdown
+          filterOptions={sampleFilterOptions}
+          filterCount={filterCount}
+          selectedFilters={selectedFilters}
+          onFilterToggle={handleFilterToggle}
+          onClearAll={handleClearAll}
+          showFilterTags={true}
+        />
+      </div>
     </div>
   );
 }
@@ -163,12 +174,13 @@ export const Interactive: Story = {
 export const Default: Story = {};
 
 /**
- * FilterDropdown with pre-selected filters
+ * FilterDropdown with pre-selected filters and tags
  */
 export const WithSelectedFilters: Story = {
   args: {
     selectedFilters: { type: ['Venture', 'Growth'], region: ['Europe'] },
     filterCount: 3,
+    showFilterTags: true,
   },
 };
 
@@ -228,5 +240,160 @@ export const ManyOptions: Story = {
         options: ['Technology', 'Healthcare', 'Finance', 'Consumer', 'Industrial', 'Energy', 'Real Estate'],
       },
     ],
+  },
+};
+
+/**
+ * FilterDropdown with horizontal layout demonstration
+ */
+function HorizontalLayoutDemo() {
+  const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({
+    type: ['Venture'],
+    region: ['Europe'],
+    size: ['Medium ($50M-$250M)'],
+  });
+
+  // Calculate filter count
+  const filterCount = Object.values(selectedFilters).reduce(
+    (count, options) => count + options.length,
+    0
+  );
+
+  // Handle filter toggle
+  const handleFilterToggle = useCallback((category: string, option: string) => {
+    setSelectedFilters((prev) => {
+      const prevSelected = prev[category] || [];
+
+      if (prevSelected.includes(option)) {
+        const newSelected = prevSelected.filter((item) => item !== option);
+        if (newSelected.length === 0) {
+          const { [category]: _, ...rest } = prev;
+          return rest;
+        }
+        return { ...prev, [category]: newSelected };
+      }
+
+      return {
+        ...prev,
+        [category]: [...prevSelected, option],
+      };
+    });
+  }, []);
+
+  // Handle clear all filters
+  const handleClearAll = useCallback(() => {
+    setSelectedFilters({});
+  }, []);
+
+  return (
+    <div className="p-6 border border-gray-200 rounded-md bg-white">
+      <h3 className="mb-4 text-sm font-medium text-gray-500">
+        Horizontal layout with filter tags to the right of the dropdown
+      </h3>
+      <div className="border border-gray-200 p-3 rounded-md">
+        <FilterDropdown
+          filterOptions={sampleFilterOptions}
+          filterCount={filterCount}
+          selectedFilters={selectedFilters}
+          onFilterToggle={handleFilterToggle}
+          onClearAll={handleClearAll}
+          showFilterTags={true}
+        />
+      </div>
+    </div>
+  );
+}
+
+export const HorizontalLayout: Story = {
+  render: () => <HorizontalLayoutDemo />,
+  parameters: {
+    docs: {
+      description: {
+        story: 'FilterDropdown with a horizontal layout where filter tags appear to the right of the dropdown button and wrap only when necessary.',
+      },
+    },
+  },
+};
+
+/**
+ * FilterDropdown with filter tags hidden
+ */
+export const WithoutFilterTags: Story = {
+  args: {
+    selectedFilters: { type: ['Venture', 'Growth'], region: ['Europe'] },
+    filterCount: 3,
+    showFilterTags: false,
+  },
+};
+
+/**
+ * FilterDropdown with filter tags and clear all button
+ */
+function WithClearAllDemo() {
+  const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({
+    type: ['Venture', 'Growth'],
+    region: ['Europe', 'Asia'],
+    size: ['Large ($250M-$1B)'],
+  });
+
+  // Calculate filter count
+  const filterCount = Object.values(selectedFilters).reduce(
+    (count, options) => count + options.length,
+    0
+  );
+
+  // Handle filter toggle
+  const handleFilterToggle = useCallback((category: string, option: string) => {
+    setSelectedFilters((prev) => {
+      const prevSelected = prev[category] || [];
+
+      if (prevSelected.includes(option)) {
+        const newSelected = prevSelected.filter((item) => item !== option);
+        if (newSelected.length === 0) {
+          const { [category]: _, ...rest } = prev;
+          return rest;
+        }
+        return { ...prev, [category]: newSelected };
+      }
+
+      return {
+        ...prev,
+        [category]: [...prevSelected, option],
+      };
+    });
+  }, []);
+
+  // Handle clear all filters
+  const handleClearAll = useCallback(() => {
+    setSelectedFilters({});
+  }, []);
+
+  return (
+    <div className="p-6 border border-gray-200 rounded-md bg-white">
+      <h3 className="mb-4 text-sm font-medium text-gray-500">
+        Try clicking the 'Clear all' button or the X on individual filter tags
+      </h3>
+      <div className="border border-gray-200 p-3 rounded-md">
+        <FilterDropdown
+          filterOptions={sampleFilterOptions}
+          filterCount={filterCount}
+          selectedFilters={selectedFilters}
+          onFilterToggle={handleFilterToggle}
+          onClearAll={handleClearAll}
+          showFilterTags={true}
+        />
+      </div>
+    </div>
+  );
+}
+
+export const WithClearAll: Story = {
+  render: () => <WithClearAllDemo />,
+  parameters: {
+    docs: {
+      description: {
+        story: 'FilterDropdown with filter tags and a clear all button. Try clicking on the X icons or the clear all button to see how they work.',
+      },
+    },
   },
 };

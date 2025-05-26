@@ -13,19 +13,21 @@ import {
   Money,
   Gear,
   Calendar,
+  ChartLineUp,
 } from '@phosphor-icons/react';
-import Home from '../pages/Home';
-import Portfolio from '../pages/Portfolio';
-import CapitalCalls from '../pages/CapitalCalls';
-import Settings from '../pages/Settings';
-import Funds from '../pages/Funds/Funds';
-import Secondaries from '../pages/Secondaries';
-import CoInvestments from '../pages/CoInvestments';
-import PrivateEquity from '../pages/PrivateEquity';
-import MarketInsights from '../pages/MarketInsights';
-import FundReports from '../pages/FundReports';
-import ManagerProfiles from '../pages/ManagerProfiles';
-import Compliance from '../pages/Compliance';
+import Home from '@/pages/Home';
+import Portfolio from '@/pages/Portfolio';
+import CapitalCalls from '@/pages/CapitalCalls';
+import Settings from '@/pages/Settings';
+import Funds from '@/pages/Funds/Funds';
+import Secondaries from '@/pages/Secondaries';
+import CoInvestments from '@/pages/CoInvestments';
+import PrivateEquity from '@/pages/PrivateEquity';
+import MarketInsights from '@/pages/MarketInsights';
+import FundReports from '@/pages/FundReports';
+import ManagerProfiles from '@/pages/ManagerProfiles';
+import ComplianceTasks from '@/pages/ComplianceTasks';
+import Stocks from '@/pages/Stocks';
 
 interface RouteItem {
   label: string;
@@ -73,6 +75,12 @@ export const internalRoutes: RouteSection[] = [
   {
     section: 'Investments',
     items: [
+      {
+        label: 'Stocks and ETFs',
+        path: '/stocks',
+        icon: ChartLineUp,
+        element: Stocks,
+      },
       { label: 'Funds', path: '/funds', icon: Cards, element: Funds },
       {
         label: 'Private Equity',
@@ -118,19 +126,19 @@ export const internalRoutes: RouteSection[] = [
     ],
   },
   {
-    section: 'Compliance',
+    section: 'Firm Operations',
     items: [
       {
         label: 'Tasks',
         path: '/compliance',
         icon: ClipboardText,
-        element: Compliance,
+        element: ComplianceTasks,
       },
       {
         label: 'Calendar',
         path: '/compliance',
         icon: Calendar,
-        element: Compliance,
+        element: ComplianceTasks,
       },
     ],
   },

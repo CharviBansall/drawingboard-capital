@@ -178,14 +178,24 @@ const FilterBar = memo(
       [setSelectedFilters],
     );
 
+    // Handle clearing all filters
+    const handleClearAllFilters = useCallback(() => {
+      setSelectedFilters({});
+    }, [setSelectedFilters]);
+
     return (
       <div className="flex justify-between gap-3 flex-row w-full">
-        <FilterDropdown
-          filterOptions={filterOptions}
-          filterCount={filterCount}
-          selectedFilters={selectedFilters}
-          onFilterToggle={handleFilterToggle}
-        />
+        <div className="flex-grow">
+          <FilterDropdown
+            filterOptions={filterOptions}
+            filterCount={filterCount}
+            selectedFilters={selectedFilters}
+            onFilterToggle={handleFilterToggle}
+            onClearAll={handleClearAllFilters}
+            showFilterTags={true}
+            filterTagsContainerClassName="mt-3"
+          />
+        </div>
         <SortDropdown
           sortOptions={sortOptions}
           sortState={sortState}

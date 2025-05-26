@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import supabase from '../lib/supabase';
+import supabase from '@/lib/supabase';
 import { Accordion } from 'radix-ui';
-import '../styles/accordion.css';
+import '@/styles/accordion.css';
 import Button from '@/components/Button';
 import { format, isPast, isToday } from 'date-fns';
 import { useProfile } from '@/hooks/useProfile';
@@ -9,7 +9,7 @@ import PageTitle from '@/components/PageTitle';
 import RadioGroup from '@/components/RadioGroup';
 import { Calendar, Check, Paperclip } from '@phosphor-icons/react';
 
-export default function Compliance() {
+export default function ComplianceTasks() {
   // State for user profile and company compliance tasks
   const { profile } = useProfile();
   const [complianceTasks, setComplianceTasks] = useState<any[]>([]);

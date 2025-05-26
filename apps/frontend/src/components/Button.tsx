@@ -61,7 +61,7 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const baseStyles =
-    'flex items-center justify-center gap-2 rounded-sm transition-all duration-200 ease-in-out font-medium';
+    'flex items-center justify-center gap-2 rounded-sm transition-all duration-200 ease-in-out font-medium whitespace-nowrap';
 
   const variantStyles = {
     primary: 'bg-blue-10 text-blue-1 hover:bg-blue-12',
