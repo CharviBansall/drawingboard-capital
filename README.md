@@ -162,7 +162,7 @@ Manual deployments should be coordinated with the DevOps team.
 
 ## Contributing
 
-Please review our [Contributing Guide](CONTRIBUTING.md) before submitting changes.
+Please review our [Contributing Guide](CONTRIBUTING.md) before submitting changes
 
 ## Intellectual Property
 
