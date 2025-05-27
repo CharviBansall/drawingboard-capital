@@ -1,11 +1,11 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import React, { ElementType, ComponentPropsWithoutRef } from 'react';
 import Throbber from './Throbber';
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'destructive';
 
 type ButtonSize = 'small' | 'medium' | 'large';
 
-type ButtonProps = {
+type ButtonProps<C extends ElementType = 'button'> = {
   /**
    * The variant of the button
    * @default 'primary'
@@ -29,7 +29,7 @@ type ButtonProps = {
   /**
    * Optional click handler
    */
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (e: React.MouseEvent<HTMLElement>) => void;
   /**
    * The content of the button
    * @default 'Continue'
@@ -44,12 +44,17 @@ type ButtonProps = {
    * @default false
    */
   fullWidth?: boolean;
-} & Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'>;
+  /**
+   * The element type to render as
+   * @default 'button'
+   */
+  as?: C;
+} & Omit<ComponentPropsWithoutRef<C>, 'className' | 'onClick' | 'disabled' | 'children'>;
 
 /**
  * A versatile button component with multiple variants and states
  */
-const Button = ({
+function Button<C extends ElementType = 'button'>({
   variant = 'primary',
   size = 'small',
   isLoading = false,
@@ -58,8 +63,9 @@ const Button = ({
   children = 'Continue',
   className = '',
   fullWidth = false,
+  as,
   ...props
-}: ButtonProps) => {
+}: ButtonProps<C>) {
   const baseStyles =
     'flex items-center justify-center gap-2 rounded-sm transition-all duration-200 ease-in-out font-medium whitespace-nowrap';
 
@@ -93,22 +99,27 @@ const Button = ({
     destructive: 'white', // matches text-white
   };
 
+  const Component = as || 'button';
+  
+  const combinedClassName = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${widthStyles} ${
+    disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+  } ${className}`;
+  
+  const buttonProps = Component === 'button' ? { type: 'button' as const, disabled: disabled || isLoading } : {};
+  
   return (
-    <button
-      type="button"
-      disabled={disabled || isLoading}
+    <Component
+      {...buttonProps}
       onClick={onClick}
-      className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${widthStyles} ${
-        disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
-      } ${className}`}
+      className={combinedClassName}
       {...props}
     >
       {isLoading ? (
         <Throbber size={throbberSizes[size]} color={throbberColors[variant]} />
       ) : null}
       {children}
-    </button>
+    </Component>
   );
-};
+}
 
 export default Button;

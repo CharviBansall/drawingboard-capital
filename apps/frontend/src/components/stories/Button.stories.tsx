@@ -25,6 +25,13 @@ const meta = {
       },
       description: 'The size of the button',
     },
+    as: {
+      control: {
+        type: 'select',
+        options: ['button', 'a', 'div', 'span'],
+      },
+      description: 'The element type to render as',
+    },
     isLoading: {
       control: 'boolean',
       description: 'Whether the button is in a loading state',
@@ -130,5 +137,37 @@ export const WithIcon: Story = {
         <ArrowRight />
       </>
     ),
+  },
+};
+
+export const AsLink: Story = {
+  args: {
+    as: 'a',
+    href: '#',
+    children: 'Link Button',
+    variant: 'primary',
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Button can be rendered as different HTML elements using the `as` prop. This example shows a button rendered as an anchor (`<a>`) tag.',
+      },
+    },
+  },
+};
+
+export const AsDiv: Story = {
+  args: {
+    as: 'div',
+    children: 'Div Button',
+    variant: 'secondary',
+    onClick: fn(),
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Button can be rendered as a `<div>` element. This is useful when you need to avoid nested button elements, such as when placing a button inside another interactive element.',
+      },
+    },
   },
 };

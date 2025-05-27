@@ -12,7 +12,6 @@ import {
   ClipboardText,
   Money,
   Gear,
-  Calendar,
   ChartLineUp,
 } from '@phosphor-icons/react';
 import Home from '@/pages/Home';
@@ -26,7 +25,7 @@ import PrivateEquity from '@/pages/PrivateEquity';
 import MarketInsights from '@/pages/MarketInsights';
 import FundReports from '@/pages/FundReports';
 import ManagerProfiles from '@/pages/ManagerProfiles';
-import ComplianceTasks from '@/pages/ComplianceTasks';
+import ComplianceTasks from '@/pages/ComplianceTasks/ComplianceTasks';
 import Stocks from '@/pages/Stocks';
 
 interface RouteItem {
@@ -129,15 +128,9 @@ export const internalRoutes: RouteSection[] = [
     section: 'Firm Operations',
     items: [
       {
-        label: 'Tasks',
+        label: 'Compliance Tasks',
         path: '/compliance',
         icon: ClipboardText,
-        element: ComplianceTasks,
-      },
-      {
-        label: 'Calendar',
-        path: '/compliance',
-        icon: Calendar,
         element: ComplianceTasks,
       },
     ],

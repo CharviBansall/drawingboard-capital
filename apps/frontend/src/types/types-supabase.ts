@@ -97,51 +97,42 @@ export type Database = {
       }
       company_compliance: {
         Row: {
-          assigned_to: string | null
           company_id: string
           compliance_definition_id: string
           created_at: string
           day_of_month: number | null
           day_of_week: number | null
           id: string
-          last_completed_date: string | null
           month_of_year: number | null
           month_ordinal: number | null
           ordinal_number: number | null
           period_type: string | null
-          timing: string | null
           updated_at: string
         }
         Insert: {
-          assigned_to?: string | null
           company_id: string
           compliance_definition_id: string
           created_at?: string
           day_of_month?: number | null
           day_of_week?: number | null
           id?: string
-          last_completed_date?: string | null
           month_of_year?: number | null
           month_ordinal?: number | null
           ordinal_number?: number | null
           period_type?: string | null
-          timing?: string | null
           updated_at?: string
         }
         Update: {
-          assigned_to?: string | null
           company_id?: string
           compliance_definition_id?: string
           created_at?: string
           day_of_month?: number | null
           day_of_week?: number | null
           id?: string
-          last_completed_date?: string | null
           month_of_year?: number | null
           month_ordinal?: number | null
           ordinal_number?: number | null
           period_type?: string | null
-          timing?: string | null
           updated_at?: string
         }
         Relationships: [
@@ -167,18 +158,21 @@ export type Database = {
           created_at: string
           date: string
           id: string
+          status: Database["public"]["Enums"]["new_compliance_status"]
         }
         Insert: {
           company_compliance_id: string
           created_at?: string
           date: string
           id?: string
+          status?: Database["public"]["Enums"]["new_compliance_status"]
         }
         Update: {
           company_compliance_id?: string
           created_at?: string
           date?: string
           id?: string
+          status?: Database["public"]["Enums"]["new_compliance_status"]
         }
         Relationships: [
           {
@@ -240,27 +234,27 @@ export type Database = {
       }
       compliance_documents: {
         Row: {
-          company_compliance_id: string
+          company_compliance_date_id: string | null
           document_name: string
-          document_path: string
+          document_url: string
           id: string
           notes: string | null
           uploaded_at: string
           uploaded_by: string
         }
         Insert: {
-          company_compliance_id: string
+          company_compliance_date_id?: string | null
           document_name: string
-          document_path: string
+          document_url: string
           id?: string
           notes?: string | null
           uploaded_at?: string
           uploaded_by: string
         }
         Update: {
-          company_compliance_id?: string
+          company_compliance_date_id?: string | null
           document_name?: string
-          document_path?: string
+          document_url?: string
           id?: string
           notes?: string | null
           uploaded_at?: string
@@ -268,10 +262,10 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "compliance_documents_company_compliance_fk"
-            columns: ["company_compliance_id"]
+            foreignKeyName: "compliance_documents_company_compliance_date_id_fkey"
+            columns: ["company_compliance_date_id"]
             isOneToOne: false
-            referencedRelation: "company_compliance"
+            referencedRelation: "company_compliance_dates"
             referencedColumns: ["id"]
           },
         ]
@@ -279,7 +273,7 @@ export type Database = {
       compliance_history: {
         Row: {
           action_date: string
-          company_compliance_id: string
+          company_compliance_date_id: string
           id: string
           notes: string | null
           performed_by: string
@@ -287,7 +281,7 @@ export type Database = {
         }
         Insert: {
           action_date?: string
-          company_compliance_id: string
+          company_compliance_date_id: string
           id?: string
           notes?: string | null
           performed_by: string
@@ -295,7 +289,7 @@ export type Database = {
         }
         Update: {
           action_date?: string
-          company_compliance_id?: string
+          company_compliance_date_id?: string
           id?: string
           notes?: string | null
           performed_by?: string
@@ -303,10 +297,17 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "compliance_history_company_compliance_fk"
-            columns: ["company_compliance_id"]
+            foreignKeyName: "compliance_history_company_compliance_date_id_fkey"
+            columns: ["company_compliance_date_id"]
             isOneToOne: false
-            referencedRelation: "company_compliance"
+            referencedRelation: "company_compliance_dates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "compliance_history_performed_by_fkey"
+            columns: ["performed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -664,6 +665,7 @@ export type Database = {
         | "approved"
         | "denied"
       investor_type: "individual" | "institutional"
+      new_compliance_status: "pending" | "submitted"
       "portfolio status": "Added" | "Pending" | "Shortlisted"
       profile_type_enum: "investor" | "fund_manager" | "admin"
     }
@@ -795,6 +797,7 @@ export const Constants = {
         "denied",
       ],
       investor_type: ["individual", "institutional"],
+      new_compliance_status: ["pending", "submitted"],
       "portfolio status": ["Added", "Pending", "Shortlisted"],
       profile_type_enum: ["investor", "fund_manager", "admin"],
     },

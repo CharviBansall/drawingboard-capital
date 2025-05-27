@@ -4,6 +4,8 @@ import DonutChart from '@/components/DonutChart';
 import PieChart from '@/components/PieChart';
 import FilterDropdown from '@/components/FilterDropdown';
 import { FilterOption } from '@/components/FilterDropdown';
+import Sparkline from '@/components/Sparkline';
+import RadioGroup from '@/components/RadioGroup';
 
 // Dummy data for the portfolio page
 const clientInfo = {
@@ -60,6 +62,7 @@ const portfolioHoldings = [
     region: 'North America',
     risk: 'High',
     performance: 12.5,
+    historicalData: [25, 28, 32, 35, 30, 28, 33, 36, 40, 38, 42, 45],
   },
   {
     id: 2,
@@ -69,7 +72,8 @@ const portfolioHoldings = [
     currency: 'EUR',
     region: 'Europe',
     risk: 'Medium',
-    performance: 6.8,
+    performance: -2.5,
+    historicalData: [25, 24, 22, 20, 19, 18, 17, 16, 18, 19, 20, 19],
   },
   {
     id: 3,
@@ -80,6 +84,9 @@ const portfolioHoldings = [
     region: 'Global',
     risk: 'Low',
     performance: 3.2,
+    historicalData: [
+      15, 16, 15.5, 16.5, 17, 17.2, 17.5, 17.8, 18, 18.2, 18.5, 19,
+    ],
   },
   {
     id: 4,
@@ -90,6 +97,7 @@ const portfolioHoldings = [
     region: 'North America',
     risk: 'Medium',
     performance: 9.1,
+    historicalData: [22, 24, 23, 25, 28, 30, 32, 31, 33, 35, 38, 40],
   },
   {
     id: 5,
@@ -100,6 +108,7 @@ const portfolioHoldings = [
     region: 'North America',
     risk: 'Very High',
     performance: 18.7,
+    historicalData: [30, 28, 32, 35, 40, 38, 42, 45, 50, 48, 52, 60],
   },
   {
     id: 6,
@@ -109,7 +118,8 @@ const portfolioHoldings = [
     currency: 'JPY',
     region: 'Asia Pacific',
     risk: 'High',
-    performance: 10.3,
+    performance: -4.8,
+    historicalData: [45, 42, 40, 38, 35, 33, 32, 30, 28, 25, 24, 22],
   },
   {
     id: 7,
@@ -120,6 +130,7 @@ const portfolioHoldings = [
     region: 'Europe',
     risk: 'Medium',
     performance: 7.5,
+    historicalData: [18, 20, 22, 21, 23, 25, 24, 26, 28, 27, 29, 32],
   },
   {
     id: 8,
@@ -130,6 +141,7 @@ const portfolioHoldings = [
     region: 'Global',
     risk: 'Medium-High',
     performance: 11.2,
+    historicalData: [28, 30, 32, 35, 33, 36, 38, 40, 38, 42, 45, 48],
   },
   {
     id: 9,
@@ -139,7 +151,8 @@ const portfolioHoldings = [
     currency: 'USD',
     region: 'Emerging Markets',
     risk: 'Medium-High',
-    performance: 5.8,
+    performance: -1.2,
+    historicalData: [28, 27, 26, 25, 24, 23, 22, 21, 22, 21, 20, 19],
   },
   {
     id: 10,
@@ -150,6 +163,9 @@ const portfolioHoldings = [
     region: 'North America',
     risk: 'Very Low',
     performance: 1.2,
+    historicalData: [
+      10, 10.2, 10.4, 10.5, 10.6, 10.8, 11, 11.2, 11.3, 11.5, 11.8, 12,
+    ],
   },
 ];
 
@@ -338,7 +354,19 @@ export default function Portfolio() {
       </div>
 
       {/* Filters Section */}
-      <div className="flex flex-wrap items-center gap-4 mb-8">
+      <div className="flex flex-row items-center gap-2">
+        <span>Region:</span>
+        <RadioGroup
+          options={[
+            { value: 'india', label: 'India' },
+            { value: 'usa', label: 'USA' },
+          ]}
+          value="india"
+          onChange={(value) => console.log(value)}
+          name="region"
+        />
+      </div>
+      <div className="flex mt-4 flex-wrap items-center gap-4 mb-8">
         <FilterDropdown
           filterOptions={filterOptions}
           selectedFilters={selectedFilters}
@@ -462,6 +490,12 @@ export default function Portfolio() {
                   >
                     Performance
                   </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Trend
+                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -492,6 +526,17 @@ export default function Portfolio() {
                         {holding.performance > 0 ? '+' : ''}
                         {holding.performance}%
                       </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <Sparkline
+                        data={holding.historicalData}
+                        width={100}
+                        height={30}
+                        strokeColor={
+                          holding.performance > 0 ? '#10b981' : '#ef4444'
+                        }
+                        strokeWidth={1.5}
+                      />
                     </td>
                   </tr>
                 ))}
