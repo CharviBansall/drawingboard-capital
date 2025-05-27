@@ -1,4 +1,4 @@
-# DrawingBoard App
+# DrawingBoard App.
 
 <img src="https://dszguymnctetiaycvfaq.supabase.co/storage/v1/object/public/brand-assets/svg/WhiteLogoNoWordmark.svg" width="100"/>
 
