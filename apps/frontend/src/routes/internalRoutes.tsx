@@ -13,6 +13,7 @@ import {
   Money,
   Gear,
   ChartLineUp,
+  UserCircle,
 } from '@phosphor-icons/react';
 import Home from '@/pages/Home';
 import Portfolio from '@/pages/Portfolio';
@@ -25,6 +26,7 @@ import PrivateEquity from '@/pages/PrivateEquity';
 import MarketInsights from '@/pages/MarketInsights';
 import FundReports from '@/pages/FundReports';
 import ManagerProfiles from '@/pages/ManagerProfiles';
+import EditFundManagerProfile from '@/pages/EditFundManagerProfile';
 import ComplianceTasks from '@/pages/ComplianceTasks/ComplianceTasks';
 import Stocks from '@/pages/Stocks';
 
@@ -121,6 +123,12 @@ export const internalRoutes: RouteSection[] = [
         path: '/manager-profiles',
         icon: UserList,
         element: ManagerProfiles,
+      },
+      {
+        label: 'Edit Fund Manager',
+        path: '/edit-fund-manager',
+        icon: UserCircle,
+        element: EditFundManagerProfile,
       },
     ],
   },
