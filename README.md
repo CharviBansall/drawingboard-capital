@@ -158,7 +158,7 @@ Our CI/CD pipeline automatically deploys:
 - `develop` branch to the staging environment
 - `main` branch to the production environment
 
-Manual deployments should be coordinated with the DevOps team.
+Manual deployments should be coordinated with the DevOps team
 
 ## Contributing
 
