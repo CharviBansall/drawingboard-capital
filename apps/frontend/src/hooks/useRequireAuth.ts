@@ -6,11 +6,14 @@ export function useRequireAuth() {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
 
+  // Development mode: bypass authentication
+  const isDevelopment = import.meta.env.DEV;
+
   useEffect(() => {
-    if (!loading && !user) {
+    if (!isDevelopment && !loading && !user) {
       navigate("/signup", { replace: true });
     }
-  }, [user, loading, navigate]);
+  }, [user, loading, navigate, isDevelopment]);
 
-  return { user, loading };
+  return { user, loading: false }; // Set loading to false for development
 }

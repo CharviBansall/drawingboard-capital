@@ -29,6 +29,7 @@ import ManagerProfiles from '@/pages/ManagerProfiles';
 import EditFundManagerProfile from '@/pages/EditFundManagerProfile';
 import ComplianceTasks from '@/pages/ComplianceTasks/ComplianceTasks';
 import Stocks from '@/pages/Stocks';
+import RequestAdvU4 from '@/pages/RequestAdvU4';
 
 interface RouteItem {
   label: string;
@@ -140,6 +141,12 @@ export const internalRoutes: RouteSection[] = [
         path: '/compliance',
         icon: ClipboardText,
         element: ComplianceTasks,
+      },
+      {
+        label: 'Request ADV/U4',
+        path: '/request-adv',
+        icon: Scroll,
+        element: RequestAdvU4,
       },
     ],
   },
