@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { Briefcase, TrendUp, TrendDown, Calendar, DotsThree } from '@phosphor-icons/react';
+import {
+  Briefcase,
+  TrendUp,
+  TrendDown,
+  Calendar,
+  DotsThree,
+} from '@phosphor-icons/react';
 import PageTitle from '@/components/PageTitle';
 import Tabs from '@/components/Tabs';
 import Button from '@/components/Button';
@@ -70,7 +76,9 @@ export default function PrivateEquity() {
         {/* Summary Cards */}
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-medium text-gray-900">Total Committed</h3>
+            <h3 className="text-lg font-medium text-gray-900">
+              Total Committed
+            </h3>
             <Briefcase className="w-6 h-6 text-blue-600" />
           </div>
           <p className="text-3xl font-bold text-gray-900">$15.5M</p>
@@ -88,7 +96,9 @@ export default function PrivateEquity() {
 
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-medium text-gray-900">Overall Performance</h3>
+            <h3 className="text-lg font-medium text-gray-900">
+              Overall Performance
+            </h3>
             <TrendUp className="w-6 h-6 text-green-600" />
           </div>
           <p className="text-3xl font-bold text-gray-900">+12.3%</p>
@@ -113,42 +123,65 @@ export default function PrivateEquity() {
           <div className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
-                <h3 className="text-lg font-medium text-gray-900 mb-4">Sector Allocation</h3>
+                <h3 className="text-lg font-medium text-gray-900 mb-4">
+                  Sector Allocation
+                </h3>
                 <div className="h-64">
                   <DonutChart
                     title="Sector Allocation"
-                    data={Object.fromEntries(portfolioData.map(item => [item.name, item.value]))}
+                    data={Object.fromEntries(
+                      portfolioData.map((item) => [item.name, item.value]),
+                    )}
                   />
                 </div>
               </div>
               <div>
-                <h3 className="text-lg font-medium text-gray-900 mb-4">Investment Strategy</h3>
+                <h3 className="text-lg font-medium text-gray-900 mb-4">
+                  Investment Strategy
+                </h3>
                 <div className="space-y-4">
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <h4 className="font-medium text-gray-900">Growth Equity</h4>
                     <div className="flex justify-between items-center mt-2">
                       <div className="w-full bg-gray-200 rounded-full h-2.5">
-                        <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: '65%' }}></div>
+                        <div
+                          className="bg-blue-600 h-2.5 rounded-full"
+                          style={{ width: '65%' }}
+                        ></div>
                       </div>
-                      <span className="ml-4 text-sm font-medium text-gray-700">65%</span>
+                      <span className="ml-4 text-sm font-medium text-gray-700">
+                        65%
+                      </span>
                     </div>
                   </div>
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <h4 className="font-medium text-gray-900">Buyout</h4>
                     <div className="flex justify-between items-center mt-2">
                       <div className="w-full bg-gray-200 rounded-full h-2.5">
-                        <div className="bg-purple-600 h-2.5 rounded-full" style={{ width: '25%' }}></div>
+                        <div
+                          className="bg-purple-600 h-2.5 rounded-full"
+                          style={{ width: '25%' }}
+                        ></div>
                       </div>
-                      <span className="ml-4 text-sm font-medium text-gray-700">25%</span>
+                      <span className="ml-4 text-sm font-medium text-gray-700">
+                        25%
+                      </span>
                     </div>
                   </div>
                   <div className="bg-gray-50 p-4 rounded-lg">
-                    <h4 className="font-medium text-gray-900">Venture Capital</h4>
+                    <h4 className="font-medium text-gray-900">
+                      Venture Capital
+                    </h4>
                     <div className="flex justify-between items-center mt-2">
                       <div className="w-full bg-gray-200 rounded-full h-2.5">
-                        <div className="bg-pink-600 h-2.5 rounded-full" style={{ width: '10%' }}></div>
+                        <div
+                          className="bg-pink-600 h-2.5 rounded-full"
+                          style={{ width: '10%' }}
+                        ></div>
                       </div>
-                      <span className="ml-4 text-sm font-medium text-gray-700">10%</span>
+                      <span className="ml-4 text-sm font-medium text-gray-700">
+                        10%
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -160,7 +193,9 @@ export default function PrivateEquity() {
         {activeTab === 'investments' && (
           <div className="p-6">
             <div className="flex justify-between mb-4">
-              <h3 className="text-lg font-medium text-gray-900">Recent Investments</h3>
+              <h3 className="text-lg font-medium text-gray-900">
+                Recent Investments
+              </h3>
               <Button variant="secondary" size="small">
                 Add Investment
               </Button>
@@ -240,9 +275,12 @@ export default function PrivateEquity() {
               <div className="mx-auto w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center mb-4">
                 <Calendar className="w-12 h-12 text-blue-600" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No Reports Available</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                No Reports Available
+              </h3>
               <p className="text-gray-500 max-w-md mx-auto mb-6">
-                Reports for your private equity investments will appear here once they are generated.
+                Reports for your private equity investments will appear here
+                once they are generated.
               </p>
               <Button variant="primary">Request Report</Button>
             </div>

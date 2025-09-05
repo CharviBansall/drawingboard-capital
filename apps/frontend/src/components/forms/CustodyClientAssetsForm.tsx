@@ -42,26 +42,26 @@ const CustodyClientAssetsForm: React.FC = () => {
     additionalNotes: '',
   });
 
-  const handleInputChange = (field: keyof Omit<CustodyFormData, 'safeguards'>) => (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: event.target.value,
-    }));
-  };
+  const handleInputChange =
+    (field: keyof Omit<CustodyFormData, 'safeguards'>) =>
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setFormData((prev) => ({
+        ...prev,
+        [field]: event.target.value,
+      }));
+    };
 
-  const handleSafeguardChange = (safeguard: keyof CustodyFormData['safeguards']) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setFormData(prev => ({
-      ...prev,
-      safeguards: {
-        ...prev.safeguards,
-        [safeguard]: event.target.checked,
-      },
-    }));
-  };
+  const handleSafeguardChange =
+    (safeguard: keyof CustodyFormData['safeguards']) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFormData((prev) => ({
+        ...prev,
+        safeguards: {
+          ...prev.safeguards,
+          [safeguard]: event.target.checked,
+        },
+      }));
+    };
 
   const handleSubmit = () => {
     console.log('Submitting custody form:', formData);
@@ -77,7 +77,8 @@ const CustodyClientAssetsForm: React.FC = () => {
       {/* Section A - Description */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>A.</strong> Please provide a description of <strong>why</strong> the firm has custody:
+          <strong>A.</strong> Please provide a description of{' '}
+          <strong>why</strong> the firm has custody:
         </Typography>
         <TextField
           multiline
@@ -88,17 +89,23 @@ const CustodyClientAssetsForm: React.FC = () => {
           onChange={handleInputChange('description')}
           sx={{ mb: 2 }}
         />
-        <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic' }}>
-          (Some examples: Affiliate acts as trustee to a trust client; Related to sponsor and manager of a 
-          private fund/pooled investment vehicle; Affiliate has bill-pay or signatory authority for client 
-          accounts; <strong>Standing Letter of Authorization</strong>; etc.)
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ fontStyle: 'italic' }}
+        >
+          (Some examples: Affiliate acts as trustee to a trust client; Related
+          to sponsor and manager of a private fund/pooled investment vehicle;
+          Affiliate has bill-pay or signatory authority for client accounts;{' '}
+          <strong>Standing Letter of Authorization</strong>; etc.)
         </Typography>
       </Box>
 
       {/* Section B - Client Funds Amount */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>B.</strong> What is the approximate amount of client funds for which you have custody?
+          <strong>B.</strong> What is the approximate amount of client funds for
+          which you have custody?
         </Typography>
         <TextField
           fullWidth
@@ -107,18 +114,24 @@ const CustodyClientAssetsForm: React.FC = () => {
           onChange={handleInputChange('clientFunds')}
           sx={{ mb: 2 }}
         />
-        <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic' }}>
-          (Note: The RIA will have to tally up the assets over which it has custody. However, if the RIA has 
-          custody over all regulatory AUM listed in Form ADV, then please indicate "ALL FIRM AUM" in the text 
-          box below and the regulatory AUM figure from Form ADV will be used rather than having to re-
-          calculate AUM for all accounts.)
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ fontStyle: 'italic' }}
+        >
+          (Note: The RIA will have to tally up the assets over which it has
+          custody. However, if the RIA has custody over all regulatory AUM
+          listed in Form ADV, then please indicate "ALL FIRM AUM" in the text
+          box below and the regulatory AUM figure from Form ADV will be used
+          rather than having to re- calculate AUM for all accounts.)
         </Typography>
       </Box>
 
       {/* Section C - Number of Clients */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>C.</strong> What is the total number of clients for which you have custody?
+          <strong>C.</strong> What is the total number of clients for which you
+          have custody?
         </Typography>
         <TextField
           type="number"
@@ -132,8 +145,9 @@ const CustodyClientAssetsForm: React.FC = () => {
       {/* Section D - Qualified Custodians */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>D.</strong> How many persons/firms (including related persons) act as qualified custodians in connection 
-          with advisory services the RIA provide to clients?
+          <strong>D.</strong> How many persons/firms (including related persons)
+          act as qualified custodians in connection with advisory services the
+          RIA provide to clients?
         </Typography>
         <TextField
           type="number"
@@ -147,9 +161,10 @@ const CustodyClientAssetsForm: React.FC = () => {
       {/* Section E - Custody Safeguards */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>E.</strong> Please select all of the custody safeguards that the RIA will use:
+          <strong>E.</strong> Please select all of the custody safeguards that
+          the RIA will use:
         </Typography>
-        
+
         <FormControlLabel
           control={
             <Checkbox
@@ -192,8 +207,12 @@ const CustodyClientAssetsForm: React.FC = () => {
           }
           label={
             <span>
-              An independent public accountant prepares an internal control report with respect to custodial services when the 
-              RIA or a <Link href="#" underline="hover">related persons</Link> are qualified custodians for client funds and securities.
+              An independent public accountant prepares an internal control
+              report with respect to custodial services when the RIA or a{' '}
+              <Link href="#" underline="hover">
+                related persons
+              </Link>{' '}
+              are qualified custodians for client funds and securities.
             </span>
           }
           sx={{ display: 'block', mb: 2 }}
@@ -208,8 +227,13 @@ const CustodyClientAssetsForm: React.FC = () => {
           }
           label={
             <span>
-              The RIA has custody due to a Standing Letter of Authorization (SLOA) and will follow the 7-step safeguards outlined 
-              in the SEC's February 2017 No Action Letter. [see <Link href="#" underline="hover">RIA in a Box blog</Link>]
+              The RIA has custody due to a Standing Letter of Authorization
+              (SLOA) and will follow the 7-step safeguards outlined in the SEC's
+              February 2017 No Action Letter. [see{' '}
+              <Link href="#" underline="hover">
+                RIA in a Box blog
+              </Link>
+              ]
             </span>
           }
           sx={{ display: 'block', mb: 2 }}
@@ -219,7 +243,8 @@ const CustodyClientAssetsForm: React.FC = () => {
       {/* Section F - Additional Notes */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>F.</strong> Additional notes from firm to RIA in a Box: (optional)
+          <strong>F.</strong> Additional notes from firm to RIA in a Box:
+          (optional)
         </Typography>
         <TextField
           multiline
@@ -246,4 +271,4 @@ const CustodyClientAssetsForm: React.FC = () => {
   );
 };
 
-export default CustodyClientAssetsForm; 
+export default CustodyClientAssetsForm;

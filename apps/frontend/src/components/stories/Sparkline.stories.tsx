@@ -11,7 +11,8 @@ const meta = {
   argTypes: {
     data: {
       control: 'object',
-      description: 'Array of numeric data points to be displayed in the sparkline',
+      description:
+        'Array of numeric data points to be displayed in the sparkline',
     },
     width: {
       control: { type: 'number', min: 50, max: 500 },
@@ -51,7 +52,10 @@ export const Default: Story = {};
 
 export const Large: Story = {
   args: {
-    data: [4, 8, 15, 16, 23, 42, 38, 25, 15, 12, 9, 17, 25, 32, 40, 35, 28, 20, 15, 10],
+    data: [
+      4, 8, 15, 16, 23, 42, 38, 25, 15, 12, 9, 17, 25, 32, 40, 35, 28, 20, 15,
+      10,
+    ],
     width: 300,
     height: 80,
     strokeColor: '#1976d2',
@@ -96,17 +100,32 @@ export const MultipleSparklines: Story = {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <span>Revenue:</span>
-        <Sparkline data={[5, 10, 15, 20, 15, 25, 30, 25, 20, 25, 30, 35]} width={100} height={30} strokeColor="#4caf50" />
+        <Sparkline
+          data={[5, 10, 15, 20, 15, 25, 30, 25, 20, 25, 30, 35]}
+          width={100}
+          height={30}
+          strokeColor="#4caf50"
+        />
         <span>+12%</span>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <span>Users:</span>
-        <Sparkline data={[10, 15, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70]} width={100} height={30} strokeColor="#2196f3" />
+        <Sparkline
+          data={[10, 15, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70]}
+          width={100}
+          height={30}
+          strokeColor="#2196f3"
+        />
         <span>+24%</span>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <span>Costs:</span>
-        <Sparkline data={[30, 25, 35, 20, 30, 35, 25, 30, 20, 15, 20, 15]} width={100} height={30} strokeColor="#f44336" />
+        <Sparkline
+          data={[30, 25, 35, 20, 30, 35, 25, 30, 20, 15, 20, 15]}
+          width={100}
+          height={30}
+          strokeColor="#f44336"
+        />
         <span>-5%</span>
       </div>
     </div>

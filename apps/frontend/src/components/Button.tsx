@@ -49,7 +49,10 @@ type ButtonProps<C extends ElementType = 'button'> = {
    * @default 'button'
    */
   as?: C;
-} & Omit<ComponentPropsWithoutRef<C>, 'className' | 'onClick' | 'disabled' | 'children'>;
+} & Omit<
+  ComponentPropsWithoutRef<C>,
+  'className' | 'onClick' | 'disabled' | 'children'
+>;
 
 /**
  * A versatile button component with multiple variants and states
@@ -100,13 +103,16 @@ function Button<C extends ElementType = 'button'>({
   };
 
   const Component = as || 'button';
-  
+
   const combinedClassName = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${widthStyles} ${
     disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
   } ${className}`;
-  
-  const buttonProps = Component === 'button' ? { type: 'button' as const, disabled: disabled || isLoading } : {};
-  
+
+  const buttonProps =
+    Component === 'button'
+      ? { type: 'button' as const, disabled: disabled || isLoading }
+      : {};
+
   return (
     <Component
       {...buttonProps}

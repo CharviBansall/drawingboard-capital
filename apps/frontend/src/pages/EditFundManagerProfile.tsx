@@ -9,8 +9,9 @@ import Button from '@/components/Button';
 type FundManagerTabs = 'general' | 'financial' | 'structure' | 'performance';
 
 export default function EditFundManagerProfile() {
-  const [fundManagerProfile, setFundManagerProfile] =
-    useState<Tables<'fund_managers'>>({} as Tables<'fund_managers'>);
+  const [fundManagerProfile, setFundManagerProfile] = useState<
+    Tables<'fund_managers'>
+  >({} as Tables<'fund_managers'>);
   const [activeTab, setActiveTab] = useState<FundManagerTabs>('general');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,18 +24,20 @@ export default function EditFundManagerProfile() {
   ];
 
   // Handle input change
-  const handleInputChange = (field: keyof Tables<'fund_managers'>) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFundManagerProfile(prev => ({
-      ...prev,
-      [field]: e.target.value
-    }));
-  };
+  const handleInputChange =
+    (field: keyof Tables<'fund_managers'>) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setFundManagerProfile((prev) => ({
+        ...prev,
+        [field]: e.target.value,
+      }));
+    };
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
+
     try {
       // Here you would implement the API call to update the fund manager profile
       console.log('Submitting fund manager profile:', fundManagerProfile);
@@ -52,7 +55,7 @@ export default function EditFundManagerProfile() {
   return (
     <div className="container mx-auto px-4 py-8">
       <PageTitle title="Edit Fund Manager Profile" />
-      
+
       <form onSubmit={handleSubmit} className="mt-6">
         <Tabs
           tabs={tabs}
@@ -74,7 +77,7 @@ export default function EditFundManagerProfile() {
                     placeholder="Enter fund manager name"
                   />
                 </div>
-                
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Email
@@ -145,8 +148,12 @@ export default function EditFundManagerProfile() {
                   </label>
                   <Input
                     type="text"
-                    value={fundManagerProfile.fund_manager_total_aum_usd_mn || ''}
-                    onChange={handleInputChange('fund_manager_total_aum_usd_mn')}
+                    value={
+                      fundManagerProfile.fund_manager_total_aum_usd_mn || ''
+                    }
+                    onChange={handleInputChange(
+                      'fund_manager_total_aum_usd_mn',
+                    )}
                     placeholder="Enter total AUM in USD"
                   />
                 </div>
@@ -157,8 +164,12 @@ export default function EditFundManagerProfile() {
                   </label>
                   <Input
                     type="text"
-                    value={fundManagerProfile.fund_manager_total_aum_eur_mn || ''}
-                    onChange={handleInputChange('fund_manager_total_aum_eur_mn')}
+                    value={
+                      fundManagerProfile.fund_manager_total_aum_eur_mn || ''
+                    }
+                    onChange={handleInputChange(
+                      'fund_manager_total_aum_eur_mn',
+                    )}
                     placeholder="Enter total AUM in EUR"
                   />
                 </div>
@@ -169,8 +180,13 @@ export default function EditFundManagerProfile() {
                   </label>
                   <Input
                     type="text"
-                    value={fundManagerProfile.co_investment_capital_amount_usd_mn || ''}
-                    onChange={handleInputChange('co_investment_capital_amount_usd_mn')}
+                    value={
+                      fundManagerProfile.co_investment_capital_amount_usd_mn ||
+                      ''
+                    }
+                    onChange={handleInputChange(
+                      'co_investment_capital_amount_usd_mn',
+                    )}
                     placeholder="Enter co-investment capital in USD"
                   />
                 </div>
@@ -181,8 +197,13 @@ export default function EditFundManagerProfile() {
                   </label>
                   <Input
                     type="text"
-                    value={fundManagerProfile.co_investment_capital_amount_eur_mn || ''}
-                    onChange={handleInputChange('co_investment_capital_amount_eur_mn')}
+                    value={
+                      fundManagerProfile.co_investment_capital_amount_eur_mn ||
+                      ''
+                    }
+                    onChange={handleInputChange(
+                      'co_investment_capital_amount_eur_mn',
+                    )}
                     placeholder="Enter co-investment capital in EUR"
                   />
                 </div>
@@ -193,8 +214,13 @@ export default function EditFundManagerProfile() {
                   </label>
                   <Input
                     type="text"
-                    value={fundManagerProfile.co_investment_capital_amount_curr_mn || ''}
-                    onChange={handleInputChange('co_investment_capital_amount_curr_mn')}
+                    value={
+                      fundManagerProfile.co_investment_capital_amount_curr_mn ||
+                      ''
+                    }
+                    onChange={handleInputChange(
+                      'co_investment_capital_amount_curr_mn',
+                    )}
                     placeholder="Enter co-investment capital in local currency"
                   />
                 </div>
@@ -272,7 +298,9 @@ export default function EditFundManagerProfile() {
                   </label>
                   <Input
                     type="text"
-                    value={fundManagerProfile.subscription_credit_facility || ''}
+                    value={
+                      fundManagerProfile.subscription_credit_facility || ''
+                    }
                     onChange={handleInputChange('subscription_credit_facility')}
                     placeholder="Enter subscription credit facility details"
                   />
@@ -325,7 +353,11 @@ export default function EditFundManagerProfile() {
           )}
 
           <div className="mt-8 flex justify-end space-x-4">
-            <Button type="button" variant="secondary" onClick={() => window.history.back()}>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => window.history.back()}
+            >
               Cancel
             </Button>
             <Button type="submit" disabled={isLoading}>

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useRef } from "react";
+import { createContext, useContext, useState, useEffect, useRef } from 'react';
 
 interface DarkModeContextType {
   isDark: boolean;
@@ -6,7 +6,7 @@ interface DarkModeContextType {
 }
 
 const DarkModeContext = createContext<DarkModeContextType | undefined>(
-  undefined
+  undefined,
 );
 
 export function DarkModeProvider({ children }: { children: React.ReactNode }) {
@@ -15,11 +15,11 @@ export function DarkModeProvider({ children }: { children: React.ReactNode }) {
 
   // Step 1: Check stored theme or system preference after mount
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
+    const storedTheme = localStorage.getItem('theme');
 
-    if (storedTheme === "dark") {
+    if (storedTheme === 'dark') {
       setIsDark(true);
-    } else if (storedTheme === "light") {
+    } else if (storedTheme === 'light') {
       setIsDark(false);
     }
     // else {
@@ -37,11 +37,11 @@ export function DarkModeProvider({ children }: { children: React.ReactNode }) {
     if (isDark !== null) {
       // Only run after `isDark` is initialized
       if (isDark) {
-        document.documentElement.classList.add("dark");
+        document.documentElement.classList.add('dark');
       } else {
-        document.documentElement.classList.remove("dark");
+        document.documentElement.classList.remove('dark');
       }
-      localStorage.setItem("theme", isDark ? "dark" : "light");
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
     }
   }, [isDark]);
 
@@ -62,7 +62,7 @@ export function DarkModeProvider({ children }: { children: React.ReactNode }) {
 export function useDark() {
   const context = useContext(DarkModeContext);
   if (context === undefined) {
-    throw new Error("useDark must be used within a DarkModeProvider");
+    throw new Error('useDark must be used within a DarkModeProvider');
   }
   return context;
 }

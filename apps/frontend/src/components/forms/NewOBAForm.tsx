@@ -124,37 +124,39 @@ const NewOBAForm: React.FC = () => {
     'Sarah Wilson',
   ];
 
-  const handleInputChange = (field: string) => (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | any
-  ) => {
-    if (field.includes('.')) {
-      const [parent, child] = field.split('.');
-      setFormData(prev => ({
+  const handleInputChange =
+    (field: string) =>
+    (
+      event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | any,
+    ) => {
+      if (field.includes('.')) {
+        const [parent, child] = field.split('.');
+        setFormData((prev) => ({
+          ...prev,
+          [parent]: {
+            ...prev[parent as keyof OBAFormData],
+            [child]: event.target.value,
+          },
+        }));
+      } else {
+        setFormData((prev) => ({
+          ...prev,
+          [field]: event.target.value,
+        }));
+      }
+    };
+
+  const handleCategoryChange =
+    (category: keyof OBAFormData['businessCategories']) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFormData((prev) => ({
         ...prev,
-        [parent]: {
-          ...prev[parent as keyof OBAFormData],
-          [child]: event.target.value,
+        businessCategories: {
+          ...prev.businessCategories,
+          [category]: event.target.checked,
         },
       }));
-    } else {
-      setFormData(prev => ({
-        ...prev,
-        [field]: event.target.value,
-      }));
-    }
-  };
-
-  const handleCategoryChange = (category: keyof OBAFormData['businessCategories']) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setFormData(prev => ({
-      ...prev,
-      businessCategories: {
-        ...prev.businessCategories,
-        [category]: event.target.checked,
-      },
-    }));
-  };
+    };
 
   const handleSubmit = () => {
     console.log('Submitting OBA form:', formData);
@@ -170,7 +172,9 @@ const NewOBAForm: React.FC = () => {
       {/* Section 1 - Name of Individual */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>1. Name of individual(s) disclosing this outside business</strong>
+          <strong>
+            1. Name of individual(s) disclosing this outside business
+          </strong>
         </Typography>
         <FormControl fullWidth>
           <Select
@@ -207,10 +211,13 @@ const NewOBAForm: React.FC = () => {
       {/* Section 3 - Business Categories */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>3. Which of the following categories apply to the outside business?</strong>
+          <strong>
+            3. Which of the following categories apply to the outside business?
+          </strong>
         </Typography>
         <Typography variant="body2" sx={{ mb: 2 }}>
-          Check off all that apply for the outside business being disclosed or, if none, then check off option 'none of these'
+          Check off all that apply for the outside business being disclosed or,
+          if none, then check off option 'none of these'
         </Typography>
 
         <FormControlLabel
@@ -231,7 +238,9 @@ const NewOBAForm: React.FC = () => {
           <FormControlLabel
             control={
               <Checkbox
-                checked={formData.businessCategories.registeredInvestmentAdviser}
+                checked={
+                  formData.businessCategories.registeredInvestmentAdviser
+                }
                 onChange={handleCategoryChange('registeredInvestmentAdviser')}
               />
             }
@@ -251,7 +260,10 @@ const NewOBAForm: React.FC = () => {
         </Box>
 
         <Typography variant="body2" gutterBottom sx={{ mt: 2 }}>
-          <strong>Under what exemption is the investment adviser exempt from registration?</strong>
+          <strong>
+            Under what exemption is the investment adviser exempt from
+            registration?
+          </strong>
         </Typography>
 
         <FormControlLabel
@@ -268,8 +280,12 @@ const NewOBAForm: React.FC = () => {
         <FormControlLabel
           control={
             <Checkbox
-              checked={formData.businessCategories.registeredSecurityBasedSwapDealer}
-              onChange={handleCategoryChange('registeredSecurityBasedSwapDealer')}
+              checked={
+                formData.businessCategories.registeredSecurityBasedSwapDealer
+              }
+              onChange={handleCategoryChange(
+                'registeredSecurityBasedSwapDealer',
+              )}
             />
           }
           label="d. registered security-based swap dealer"
@@ -279,8 +295,12 @@ const NewOBAForm: React.FC = () => {
         <FormControlLabel
           control={
             <Checkbox
-              checked={formData.businessCategories.majorSecurityBasedSwapParticipant}
-              onChange={handleCategoryChange('majorSecurityBasedSwapParticipant')}
+              checked={
+                formData.businessCategories.majorSecurityBasedSwapParticipant
+              }
+              onChange={handleCategoryChange(
+                'majorSecurityBasedSwapParticipant',
+              )}
             />
           }
           label="e. major security-based swap participant"
@@ -419,8 +439,12 @@ const NewOBAForm: React.FC = () => {
         <FormControlLabel
           control={
             <Checkbox
-              checked={formData.businessCategories.sponsorSyndicatorLimitedPartnerships}
-              onChange={handleCategoryChange('sponsorSyndicatorLimitedPartnerships')}
+              checked={
+                formData.businessCategories.sponsorSyndicatorLimitedPartnerships
+              }
+              onChange={handleCategoryChange(
+                'sponsorSyndicatorLimitedPartnerships',
+              )}
             />
           }
           label="o. sponsor or syndicator of limited partnerships (or equivalent), excluding pooled investment vehicles"
@@ -430,8 +454,12 @@ const NewOBAForm: React.FC = () => {
         <FormControlLabel
           control={
             <Checkbox
-              checked={formData.businessCategories.sponsorGeneralPartnerPooledVehicles}
-              onChange={handleCategoryChange('sponsorGeneralPartnerPooledVehicles')}
+              checked={
+                formData.businessCategories.sponsorGeneralPartnerPooledVehicles
+              }
+              onChange={handleCategoryChange(
+                'sponsorGeneralPartnerPooledVehicles',
+              )}
             />
           }
           label="p. sponsor, general partner, managing member (or equivalent) of pooled investment vehicles"
@@ -464,7 +492,10 @@ const NewOBAForm: React.FC = () => {
       {/* Section 4 - Principal/Control Person */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>4. Is the individual a principal/control person of the outside business?</strong>
+          <strong>
+            4. Is the individual a principal/control person of the outside
+            business?
+          </strong>
         </Typography>
         <RadioGroup
           value={formData.isPrincipalControlPerson}
@@ -478,7 +509,10 @@ const NewOBAForm: React.FC = () => {
       {/* Section 5 - Service on Board */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>5. Does this activity entail Service on Board of Directors for a Publicly Traded Company?</strong>
+          <strong>
+            5. Does this activity entail Service on Board of Directors for a
+            Publicly Traded Company?
+          </strong>
         </Typography>
         <RadioGroup
           value={formData.entailsServiceOnBoard}
@@ -495,10 +529,12 @@ const NewOBAForm: React.FC = () => {
           <strong>6. Is the business "investment-related?"</strong>
         </Typography>
         <Typography variant="body2" sx={{ mb: 2 }}>
-          This is defined as activities that pertain to securities, commodities, banking, insurance, or real estate 
-          (including, but not limited to, acting as or being associated with an investment adviser, broker-dealer, 
-          municipal securities dealer, government securities broker or dealer, issuer, investment company, futures 
-          sponsor, bank, or savings association).
+          This is defined as activities that pertain to securities, commodities,
+          banking, insurance, or real estate (including, but not limited to,
+          acting as or being associated with an investment adviser,
+          broker-dealer, municipal securities dealer, government securities
+          broker or dealer, issuer, investment company, futures sponsor, bank,
+          or savings association).
         </Typography>
         <RadioGroup
           value={formData.isInvestmentRelated}
@@ -514,7 +550,7 @@ const NewOBAForm: React.FC = () => {
         <Typography variant="subtitle1" gutterBottom>
           <strong>7. Location and description of business</strong>
         </Typography>
-        
+
         <Box sx={{ mb: 2 }}>
           <Typography variant="body2" gutterBottom>
             Street name and number
@@ -633,7 +669,7 @@ const NewOBAForm: React.FC = () => {
         <Typography variant="subtitle1" gutterBottom>
           <strong>11. Hours per month devoted to the business:</strong>
         </Typography>
-        
+
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
           <Typography variant="body2" sx={{ minWidth: '150px' }}>
             During trading hours
@@ -664,7 +700,10 @@ const NewOBAForm: React.FC = () => {
       {/* Section 12 - Compensation Percentage */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>12. Percentage of total yearly compensation expected to be derived from the business:</strong>
+          <strong>
+            12. Percentage of total yearly compensation expected to be derived
+            from the business:
+          </strong>
         </Typography>
         <TextField
           variant="outlined"
@@ -680,7 +719,10 @@ const NewOBAForm: React.FC = () => {
       {/* Section 13 - IRS Form */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>13. Will you receive an IRS form for the income earned from this outside business? (Optional)</strong>
+          <strong>
+            13. Will you receive an IRS form for the income earned from this
+            outside business? (Optional)
+          </strong>
         </Typography>
         <RadioGroup
           value={formData.receivesIRSForm}
@@ -752,4 +794,4 @@ const NewOBAForm: React.FC = () => {
   );
 };
 
-export default NewOBAForm; 
+export default NewOBAForm;

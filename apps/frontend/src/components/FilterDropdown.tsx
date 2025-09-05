@@ -153,7 +153,9 @@ function FilterDropdown({
 
   return (
     <div className="w-full">
-      <div className={`flex flex-row flex-wrap items-center ${filterTagsContainerClassName}`}>
+      <div
+        className={`flex flex-row flex-wrap items-center ${filterTagsContainerClassName}`}
+      >
         <DropdownMenu.Root open={open} onOpenChange={setOpen} modal={false}>
           <DropdownMenu.Trigger asChild>
             <button

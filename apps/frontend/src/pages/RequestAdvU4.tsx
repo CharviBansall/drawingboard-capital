@@ -33,7 +33,13 @@ const RequestAdvU4: React.FC = () => {
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ mb: 4 }}>
+      <Typography
+        variant="h4"
+        component="h1"
+        gutterBottom
+        align="center"
+        sx={{ mb: 4 }}
+      >
         Request ADV/U4 Changes
       </Typography>
 
@@ -50,17 +56,37 @@ const RequestAdvU4: React.FC = () => {
             onChange={handleFormChange}
           >
             <MenuItem value="aum-update">AUM Update</MenuItem>
-            <MenuItem value="address-update">Add new / update existing / remove existing address</MenuItem>
-            <MenuItem value="additional-custodians">Adding Additional Custodians</MenuItem>
-            <MenuItem value="custody-client-assets">Adding Custody of Client Assets</MenuItem>
-            <MenuItem value="asset-based-fee">Fee Structure: Asset-based fee update</MenuItem>
-            <MenuItem value="performance-based-fee">Fee Structure: Performance-based fee update</MenuItem>
-            <MenuItem value="new-document">New Document (2A, 2B, P&P, Wrap Fee Brochure)</MenuItem>
-            <MenuItem value="new-oba">New Outside Business Activity (OBA)</MenuItem>
-            <MenuItem value="new-management">New Owner, Officer, or Management Person</MenuItem>
+            <MenuItem value="address-update">
+              Add new / update existing / remove existing address
+            </MenuItem>
+            <MenuItem value="additional-custodians">
+              Adding Additional Custodians
+            </MenuItem>
+            <MenuItem value="custody-client-assets">
+              Adding Custody of Client Assets
+            </MenuItem>
+            <MenuItem value="asset-based-fee">
+              Fee Structure: Asset-based fee update
+            </MenuItem>
+            <MenuItem value="performance-based-fee">
+              Fee Structure: Performance-based fee update
+            </MenuItem>
+            <MenuItem value="new-document">
+              New Document (2A, 2B, P&P, Wrap Fee Brochure)
+            </MenuItem>
+            <MenuItem value="new-oba">
+              New Outside Business Activity (OBA)
+            </MenuItem>
+            <MenuItem value="new-management">
+              New Owner, Officer, or Management Person
+            </MenuItem>
             <MenuItem value="new-private-fund">New Private Fund</MenuItem>
-            <MenuItem value="new-service-fee">New Service & Fee Structure: Financial Planning</MenuItem>
-            <MenuItem value="tpmm">TPMM: Adding a new third-party money manager / investment adviser</MenuItem>
+            <MenuItem value="new-service-fee">
+              New Service & Fee Structure: Financial Planning
+            </MenuItem>
+            <MenuItem value="tpmm">
+              TPMM: Adding a new third-party money manager / investment adviser
+            </MenuItem>
             <MenuItem value="other">Other</MenuItem>
           </Select>
         </FormControl>
@@ -165,11 +191,16 @@ const RequestAdvU4: React.FC = () => {
       <Box sx={{ mt: 2 }}>
         <Typography variant="body2" color="text.secondary">
           * In order to close ANY case or change an in-progress request, please{' '}
-          <Link href="#" underline="hover">contact our team</Link>.
+          <Link href="#" underline="hover">
+            contact our team
+          </Link>
+          .
         </Typography>
         <Typography variant="body2" color="text.secondary">
           ** Closed Requests appear in your{' '}
-          <Link href="#" underline="hover">Compliance Log</Link>{' '}
+          <Link href="#" underline="hover">
+            Compliance Log
+          </Link>{' '}
           in the Registration Changes section.
         </Typography>
       </Box>

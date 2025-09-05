@@ -25,7 +25,7 @@
 }
 
 /* Fix for Radix Accordion styling */
-[data-state=open] .accordion-icon {
+[data-state='open'] .accordion-icon {
   transform: rotate(180deg);
 }
 

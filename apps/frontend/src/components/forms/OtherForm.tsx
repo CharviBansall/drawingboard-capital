@@ -27,9 +27,9 @@ const OtherForm: React.FC = () => {
   });
 
   const handleInputChange = (field: keyof OtherFormData) => (event: any) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: event.target.value
+      [field]: event.target.value,
     }));
   };
 
@@ -55,12 +55,20 @@ const OtherForm: React.FC = () => {
             displayEmpty
             sx={{ backgroundColor: 'white' }}
           >
-            <MenuItem value="" disabled>Select request type</MenuItem>
+            <MenuItem value="" disabled>
+              Select request type
+            </MenuItem>
             <MenuItem value="address_change">Address Change</MenuItem>
-            <MenuItem value="business_name_change">Business Name Change</MenuItem>
-            <MenuItem value="contact_information">Contact Information Update</MenuItem>
+            <MenuItem value="business_name_change">
+              Business Name Change
+            </MenuItem>
+            <MenuItem value="contact_information">
+              Contact Information Update
+            </MenuItem>
             <MenuItem value="regulatory_question">Regulatory Question</MenuItem>
-            <MenuItem value="compliance_clarification">Compliance Clarification</MenuItem>
+            <MenuItem value="compliance_clarification">
+              Compliance Clarification
+            </MenuItem>
             <MenuItem value="form_amendment">Form Amendment</MenuItem>
             <MenuItem value="general_inquiry">General Inquiry</MenuItem>
             <MenuItem value="other">Other (specify in description)</MenuItem>
@@ -94,12 +102,16 @@ const OtherForm: React.FC = () => {
             displayEmpty
             sx={{ backgroundColor: 'white' }}
           >
-            <MenuItem value="" disabled>Select urgency level</MenuItem>
+            <MenuItem value="" disabled>
+              Select urgency level
+            </MenuItem>
             <MenuItem value="low">Low - No specific deadline</MenuItem>
             <MenuItem value="medium">Medium - Within 2-4 weeks</MenuItem>
             <MenuItem value="high">High - Within 1-2 weeks</MenuItem>
             <MenuItem value="urgent">Urgent - Within 1 week</MenuItem>
-            <MenuItem value="critical">Critical - Immediate attention required</MenuItem>
+            <MenuItem value="critical">
+              Critical - Immediate attention required
+            </MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -140,4 +152,4 @@ const OtherForm: React.FC = () => {
   );
 };
 
-export default OtherForm; 
+export default OtherForm;

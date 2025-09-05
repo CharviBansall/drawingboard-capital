@@ -50,7 +50,7 @@ type Story = StoryObj<typeof Tabs>;
  */
 function InteractiveTabs(args: any) {
   const [selectedTab, setSelectedTab] = useState(args.value);
-  
+
   // Find a non-disabled tab if the current one is disabled
   const findEnabledTab = () => {
     const currentTab = args.tabs.find((tab: any) => tab.value === selectedTab);
@@ -60,10 +60,10 @@ function InteractiveTabs(args: any) {
     }
     return selectedTab;
   };
-  
+
   // Ensure we're not showing a disabled tab as selected
   const activeTab = findEnabledTab();
-  
+
   return (
     <div className="w-[600px]">
       <Tabs
@@ -78,19 +78,27 @@ function InteractiveTabs(args: any) {
           {selectedTab === 'overview' && (
             <div>
               <h3 className="text-lg font-medium mb-2">Overview Content</h3>
-              <p>This is the overview tab content. It provides a general summary.</p>
+              <p>
+                This is the overview tab content. It provides a general summary.
+              </p>
             </div>
           )}
           {selectedTab === 'analytics' && (
             <div>
               <h3 className="text-lg font-medium mb-2">Analytics Content</h3>
-              <p>This is the analytics tab content. It shows detailed metrics and charts.</p>
+              <p>
+                This is the analytics tab content. It shows detailed metrics and
+                charts.
+              </p>
             </div>
           )}
           {selectedTab === 'settings' && (
             <div>
               <h3 className="text-lg font-medium mb-2">Settings Content</h3>
-              <p>This is the settings tab content. It allows configuration of various options.</p>
+              <p>
+                This is the settings tab content. It allows configuration of
+                various options.
+              </p>
             </div>
           )}
         </div>
@@ -121,7 +129,11 @@ export const WithIcons: Story = {
   args: {
     tabs: [
       { value: 'overview', label: 'Overview', icon: <House weight="fill" /> },
-      { value: 'analytics', label: 'Analytics', icon: <ChartBar weight="fill" /> },
+      {
+        value: 'analytics',
+        label: 'Analytics',
+        icon: <ChartBar weight="fill" />,
+      },
       { value: 'settings', label: 'Settings', icon: <Gear weight="fill" /> },
     ],
     value: 'analytics',
@@ -168,7 +180,12 @@ export const WithIconsAndDisabled: Story = {
   args: {
     tabs: [
       { value: 'overview', label: 'Overview', icon: <House weight="fill" /> },
-      { value: 'analytics', label: 'Analytics', icon: <ChartBar weight="fill" />, disabled: true },
+      {
+        value: 'analytics',
+        label: 'Analytics',
+        icon: <ChartBar weight="fill" />,
+        disabled: true,
+      },
       { value: 'settings', label: 'Settings', icon: <Gear weight="fill" /> },
     ],
     value: 'overview',

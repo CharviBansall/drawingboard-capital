@@ -54,38 +54,40 @@ const NewServiceFeeStructureForm: React.FC = () => {
     additionalNotes: '',
   });
 
-  const handleInputChange = (field: keyof Omit<ServiceFeeFormData, 'paymentMethods' | 'services'>) => (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | any
-  ) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: event.target.value,
-    }));
-  };
+  const handleInputChange =
+    (field: keyof Omit<ServiceFeeFormData, 'paymentMethods' | 'services'>) =>
+    (
+      event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | any,
+    ) => {
+      setFormData((prev) => ({
+        ...prev,
+        [field]: event.target.value,
+      }));
+    };
 
-  const handlePaymentMethodChange = (method: keyof ServiceFeeFormData['paymentMethods']) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setFormData(prev => ({
-      ...prev,
-      paymentMethods: {
-        ...prev.paymentMethods,
-        [method]: event.target.checked,
-      },
-    }));
-  };
+  const handlePaymentMethodChange =
+    (method: keyof ServiceFeeFormData['paymentMethods']) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFormData((prev) => ({
+        ...prev,
+        paymentMethods: {
+          ...prev.paymentMethods,
+          [method]: event.target.checked,
+        },
+      }));
+    };
 
-  const handleServiceChange = (service: keyof ServiceFeeFormData['services']) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setFormData(prev => ({
-      ...prev,
-      services: {
-        ...prev.services,
-        [service]: event.target.checked,
-      },
-    }));
-  };
+  const handleServiceChange =
+    (service: keyof ServiceFeeFormData['services']) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFormData((prev) => ({
+        ...prev,
+        services: {
+          ...prev.services,
+          [service]: event.target.checked,
+        },
+      }));
+    };
 
   const handleSubmit = () => {
     console.log('Submitting service fee structure form:', formData);
@@ -137,9 +139,10 @@ const NewServiceFeeStructureForm: React.FC = () => {
       {/* Section 3 - Method of Fee Payment */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>3. Method of Fee Payment:</strong> (<em>Select all that apply</em>)
+          <strong>3. Method of Fee Payment:</strong> (
+          <em>Select all that apply</em>)
         </Typography>
-        
+
         <FormControlLabel
           control={
             <Checkbox
@@ -160,8 +163,13 @@ const NewServiceFeeStructureForm: React.FC = () => {
           }
           label={
             <span>
-              Invoiced and payable via cash, check, or wire [<em>Note: Credit card payment is <strong>not</strong> recommended because it is 
-              typically deemed <strong>custody</strong> of client assets.</em>]
+              Invoiced and payable via cash, check, or wire [
+              <em>
+                Note: Credit card payment is <strong>not</strong> recommended
+                because it is typically deemed <strong>custody</strong> of
+                client assets.
+              </em>
+              ]
             </span>
           }
           sx={{ display: 'block', mb: 1 }}
@@ -188,9 +196,12 @@ const NewServiceFeeStructureForm: React.FC = () => {
       {/* Section 5 - Services Included */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>5. Select all services that will be included as part of your firm's larger financial planning offering:</strong>
+          <strong>
+            5. Select all services that will be included as part of your firm's
+            larger financial planning offering:
+          </strong>
         </Typography>
-        
+
         <FormControlLabel
           control={
             <Checkbox
@@ -268,8 +279,13 @@ const NewServiceFeeStructureForm: React.FC = () => {
             placeholder="Please list all additional services you wish to include, each separated by a semi-colon ';')"
             sx={{ fontStyle: 'italic' }}
           />
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 1, fontStyle: 'italic' }}>
-            (Please list all additional services you wish to include, each separated by a semi-colon ';')
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ mt: 1, fontStyle: 'italic' }}
+          >
+            (Please list all additional services you wish to include, each
+            separated by a semi-colon ';')
           </Typography>
         </Box>
       </Box>
@@ -277,7 +293,8 @@ const NewServiceFeeStructureForm: React.FC = () => {
       {/* Section 6 - Additional Notes */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>6. Additional notes from firm to RIA in a Box:</strong> (optional)
+          <strong>6. Additional notes from firm to RIA in a Box:</strong>{' '}
+          (optional)
         </Typography>
         <TextField
           multiline
@@ -304,4 +321,4 @@ const NewServiceFeeStructureForm: React.FC = () => {
   );
 };
 
-export default NewServiceFeeStructureForm; 
+export default NewServiceFeeStructureForm;

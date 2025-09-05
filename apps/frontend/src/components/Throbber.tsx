@@ -13,14 +13,20 @@ interface ThrobberProps {
 /**
  * A loading indicator that can be customized with size and color
  */
-export default function Throbber({ size = 10, className = '', color = 'currentColor' }: ThrobberProps) {
+export default function Throbber({
+  size = 10,
+  className = '',
+  color = 'currentColor',
+}: ThrobberProps) {
   return (
     <div
       className={`custom-throbber ${className}`}
-      style={{
-        width: `${size}px`,
-        '--throbber-color': color
-      } as React.CSSProperties}
+      style={
+        {
+          width: `${size}px`,
+          '--throbber-color': color,
+        } as React.CSSProperties
+      }
     />
   );
 }

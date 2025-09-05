@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { ChartLineUp, Newspaper, Globe, BookOpen, MagnifyingGlass, Calendar } from '@phosphor-icons/react';
+import {
+  ChartLineUp,
+  Newspaper,
+  Globe,
+  BookOpen,
+  MagnifyingGlass,
+  Calendar,
+} from '@phosphor-icons/react';
 import PageTitle from '@/components/PageTitle';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
@@ -17,7 +24,8 @@ export default function MarketInsights() {
       source: 'McKinsey & Company',
       date: '2025-04-15',
       category: 'Market Analysis',
-      summary: 'Comprehensive analysis of private equity market trends, challenges, and opportunities for the coming year.',
+      summary:
+        'Comprehensive analysis of private equity market trends, challenges, and opportunities for the coming year.',
       tags: ['Private Equity', 'Market Trends', 'Forecast'],
     },
     {
@@ -26,7 +34,8 @@ export default function MarketInsights() {
       source: 'Sequoia Capital',
       date: '2025-03-22',
       category: 'Industry Report',
-      summary: 'Deep dive into emerging technologies attracting venture capital investment and their potential impact.',
+      summary:
+        'Deep dive into emerging technologies attracting venture capital investment and their potential impact.',
       tags: ['Venture Capital', 'Technology', 'Innovation'],
     },
     {
@@ -35,7 +44,8 @@ export default function MarketInsights() {
       source: 'BlackRock',
       date: '2025-02-10',
       category: 'ESG',
-      summary: 'Analysis of environmental, social, and governance factors in private market investments.',
+      summary:
+        'Analysis of environmental, social, and governance factors in private market investments.',
       tags: ['ESG', 'Sustainable Investing', 'Impact'],
     },
     {
@@ -44,7 +54,8 @@ export default function MarketInsights() {
       source: 'Bain & Company',
       date: '2025-01-05',
       category: 'Sector Analysis',
-      summary: 'Comprehensive review of private equity investments in the healthcare sector, highlighting key trends and opportunities.',
+      summary:
+        'Comprehensive review of private equity investments in the healthcare sector, highlighting key trends and opportunities.',
       tags: ['Healthcare', 'Private Equity', 'Sector Analysis'],
     },
     {
@@ -53,7 +64,8 @@ export default function MarketInsights() {
       source: 'Deloitte',
       date: '2024-12-18',
       category: 'Technology',
-      summary: 'How digital transformation is reshaping the financial services industry and creating new investment opportunities.',
+      summary:
+        'How digital transformation is reshaping the financial services industry and creating new investment opportunities.',
       tags: ['Fintech', 'Digital Transformation', 'Financial Services'],
     },
   ];
@@ -89,13 +101,13 @@ export default function MarketInsights() {
   // Filter reports based on search query
   const filteredReports = reports.filter((report) => {
     if (!searchQuery) return true;
-    
+
     const searchLower = searchQuery.toLowerCase();
     return (
       report.title.toLowerCase().includes(searchLower) ||
       report.source.toLowerCase().includes(searchLower) ||
       report.summary.toLowerCase().includes(searchLower) ||
-      report.tags.some(tag => tag.toLowerCase().includes(searchLower))
+      report.tags.some((tag) => tag.toLowerCase().includes(searchLower))
     );
   });
 
@@ -116,7 +128,9 @@ export default function MarketInsights() {
         {/* Summary Cards */}
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-medium text-gray-900">Latest Reports</h3>
+            <h3 className="text-lg font-medium text-gray-900">
+              Latest Reports
+            </h3>
             <Newspaper className="w-6 h-6 text-blue-600" />
           </div>
           <p className="text-3xl font-bold text-gray-900">25</p>
@@ -125,7 +139,9 @@ export default function MarketInsights() {
 
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-medium text-gray-900">Market Coverage</h3>
+            <h3 className="text-lg font-medium text-gray-900">
+              Market Coverage
+            </h3>
             <Globe className="w-6 h-6 text-purple-600" />
           </div>
           <p className="text-3xl font-bold text-gray-900">15</p>
@@ -134,18 +150,24 @@ export default function MarketInsights() {
 
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-medium text-gray-900">Upcoming Events</h3>
+            <h3 className="text-lg font-medium text-gray-900">
+              Upcoming Events
+            </h3>
             <Calendar className="w-6 h-6 text-green-600" />
           </div>
           <p className="text-3xl font-bold text-gray-900">8</p>
-          <p className="text-sm text-gray-500 mt-1">Industry events this quarter</p>
+          <p className="text-sm text-gray-500 mt-1">
+            Industry events this quarter
+          </p>
         </div>
       </div>
 
       {/* Market Trends Chart Placeholder */}
       <div className="bg-white rounded-lg shadow p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-medium text-gray-900">Market Performance Trends</h3>
+          <h3 className="text-lg font-medium text-gray-900">
+            Market Performance Trends
+          </h3>
           <div className="flex gap-2">
             <Button variant="secondary" size="small">
               <ChartLineUp className="w-4 h-4 mr-1" />
@@ -159,7 +181,9 @@ export default function MarketInsights() {
         <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
           <div className="text-center">
             <ChartLineUp className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-            <p className="text-gray-500">Interactive market performance chart will appear here</p>
+            <p className="text-gray-500">
+              Interactive market performance chart will appear here
+            </p>
             <Button variant="primary" size="small" className="mt-4">
               Enable Market Data
             </Button>
@@ -202,12 +226,21 @@ export default function MarketInsights() {
             <div className="space-y-4">
               {filteredReports.length > 0 ? (
                 filteredReports.map((report) => (
-                  <div key={report.id} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                  <div
+                    key={report.id}
+                    className="border rounded-lg p-4 hover:bg-gray-50 transition-colors"
+                  >
                     <div className="flex justify-between">
-                      <h4 className="text-lg font-medium text-gray-900">{report.title}</h4>
-                      <span className="text-sm text-gray-500">{formatDate(report.date)}</span>
+                      <h4 className="text-lg font-medium text-gray-900">
+                        {report.title}
+                      </h4>
+                      <span className="text-sm text-gray-500">
+                        {formatDate(report.date)}
+                      </span>
                     </div>
-                    <p className="text-sm text-gray-600 mt-1">{report.source}</p>
+                    <p className="text-sm text-gray-600 mt-1">
+                      {report.source}
+                    </p>
                     <p className="mt-2 text-gray-700">{report.summary}</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {report.tags.map((tag, index) => (
@@ -232,8 +265,14 @@ export default function MarketInsights() {
               ) : (
                 <div className="text-center py-12 bg-gray-50 rounded-md">
                   <BookOpen className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-                  <p className="text-gray-500 mb-2">No reports found matching your search.</p>
-                  <Button variant="ghost" size="small" onClick={() => setSearchQuery('')}>
+                  <p className="text-gray-500 mb-2">
+                    No reports found matching your search.
+                  </p>
+                  <Button
+                    variant="ghost"
+                    size="small"
+                    onClick={() => setSearchQuery('')}
+                  >
                     Clear Search
                   </Button>
                 </div>
@@ -245,7 +284,9 @@ export default function MarketInsights() {
         {activeTab === 'events' && (
           <div className="p-6">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-lg font-medium text-gray-900">Upcoming Industry Events</h3>
+              <h3 className="text-lg font-medium text-gray-900">
+                Upcoming Industry Events
+              </h3>
               <Button variant="secondary" size="small">
                 <Calendar className="w-4 h-4 mr-1" />
                 Add to Calendar
@@ -254,16 +295,23 @@ export default function MarketInsights() {
 
             <div className="space-y-4">
               {events.map((event) => (
-                <div key={event.id} className="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                <div
+                  key={event.id}
+                  className="border rounded-lg p-4 hover:bg-gray-50 transition-colors"
+                >
                   <div className="flex justify-between">
-                    <h4 className="text-lg font-medium text-gray-900">{event.title}</h4>
+                    <h4 className="text-lg font-medium text-gray-900">
+                      {event.title}
+                    </h4>
                     <span
                       className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${event.virtual ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}`}
                     >
                       {event.virtual ? 'Virtual' : 'In Person'}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-600 mt-1">Organized by {event.organizer}</p>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Organized by {event.organizer}
+                  </p>
                   <div className="mt-3 flex items-center justify-between">
                     <div>
                       <p className="text-sm font-medium text-gray-700">
@@ -291,10 +339,13 @@ export default function MarketInsights() {
               <div className="mx-auto w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center mb-4">
                 <Newspaper className="w-12 h-12 text-blue-600" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Industry News Coming Soon</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                Industry News Coming Soon
+              </h3>
               <p className="text-gray-500 max-w-md mx-auto mb-6">
-                We're working on integrating real-time industry news from trusted sources.
-                Check back soon for the latest updates and analysis.
+                We're working on integrating real-time industry news from
+                trusted sources. Check back soon for the latest updates and
+                analysis.
               </p>
               <Button variant="primary">Subscribe to Updates</Button>
             </div>

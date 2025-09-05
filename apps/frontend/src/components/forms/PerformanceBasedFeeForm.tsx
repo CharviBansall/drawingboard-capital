@@ -44,26 +44,28 @@ const PerformanceBasedFeeForm: React.FC = () => {
     additionalNotes: '',
   });
 
-  const handleInputChange = (field: keyof Omit<PerformanceBasedFeeFormData, 'paymentMethods'>) => (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | any
-  ) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: event.target.value,
-    }));
-  };
+  const handleInputChange =
+    (field: keyof Omit<PerformanceBasedFeeFormData, 'paymentMethods'>) =>
+    (
+      event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | any,
+    ) => {
+      setFormData((prev) => ({
+        ...prev,
+        [field]: event.target.value,
+      }));
+    };
 
-  const handlePaymentMethodChange = (method: keyof PerformanceBasedFeeFormData['paymentMethods']) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setFormData(prev => ({
-      ...prev,
-      paymentMethods: {
-        ...prev.paymentMethods,
-        [method]: event.target.checked,
-      },
-    }));
-  };
+  const handlePaymentMethodChange =
+    (method: keyof PerformanceBasedFeeFormData['paymentMethods']) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFormData((prev) => ({
+        ...prev,
+        paymentMethods: {
+          ...prev.paymentMethods,
+          [method]: event.target.checked,
+        },
+      }));
+    };
 
   const handleSubmit = () => {
     console.log('Submitting performance-based fee form:', formData);
@@ -79,7 +81,11 @@ const PerformanceBasedFeeForm: React.FC = () => {
       {/* Section 1 - Management Fee */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>1.</strong> Management Fee [<em>Note: This is the annual % of AUM that will be paid by the client.</em>]:
+          <strong>1.</strong> Management Fee [
+          <em>
+            Note: This is the annual % of AUM that will be paid by the client.
+          </em>
+          ]:
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <TextField
@@ -96,7 +102,12 @@ const PerformanceBasedFeeForm: React.FC = () => {
       {/* Section 2 - Performance Fee */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>2.</strong> Performance Fee [<em>Note: This is the % on capital appreciation that will be paid by the client.</em>]:
+          <strong>2.</strong> Performance Fee [
+          <em>
+            Note: This is the % on capital appreciation that will be paid by the
+            client.
+          </em>
+          ]:
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <TextField
@@ -113,9 +124,10 @@ const PerformanceBasedFeeForm: React.FC = () => {
       {/* Section 3 - Method of Fee Payment */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>3.</strong> Method of Fee Payment: (<em>Select all that apply</em>)
+          <strong>3.</strong> Method of Fee Payment: (
+          <em>Select all that apply</em>)
         </Typography>
-        
+
         <FormControlLabel
           control={
             <Checkbox
@@ -136,8 +148,13 @@ const PerformanceBasedFeeForm: React.FC = () => {
           }
           label={
             <span>
-              Invoiced and payable via cash, check, or wire [<em>Note: Credit card payment is <strong>not</strong> recommended because it is 
-              typically deemed <strong>custody</strong> of client assets.</em>]
+              Invoiced and payable via cash, check, or wire [
+              <em>
+                Note: Credit card payment is <strong>not</strong> recommended
+                because it is typically deemed <strong>custody</strong> of
+                client assets.
+              </em>
+              ]
             </span>
           }
           sx={{ display: 'block', mb: 1 }}
@@ -185,7 +202,11 @@ const PerformanceBasedFeeForm: React.FC = () => {
       {/* Section 6 - Frequency of Payment of Performance Fee */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>6.</strong> Frequency of Payment of Performance Fee [<em>Note: This fee is payable in arrears <u>only</u>.</em>]:
+          <strong>6.</strong> Frequency of Payment of Performance Fee [
+          <em>
+            Note: This fee is payable in arrears <u>only</u>.
+          </em>
+          ]:
         </Typography>
         <FormControl size="small">
           <Select
@@ -206,8 +227,10 @@ const PerformanceBasedFeeForm: React.FC = () => {
       {/* Section 7 - Portfolio Management Question */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>7.</strong> Does the firm also offer portfolio management to accounts that are <strong>not</strong> charged a Performance 
-          Fee, instead charging <strong>only</strong> the "Management Fee" specified above?
+          <strong>7.</strong> Does the firm also offer portfolio management to
+          accounts that are <strong>not</strong> charged a Performance Fee,
+          instead charging <strong>only</strong> the "Management Fee" specified
+          above?
         </Typography>
         <FormControl size="small">
           <Select
@@ -224,9 +247,11 @@ const PerformanceBasedFeeForm: React.FC = () => {
       {/* Section 8 - Additional Information */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>8.</strong> <strong>IT IS ASSUMED</strong> that a <u>high water mark</u> will be utilized - <strong>but not a hurdle rate</strong> - and that a 
-          Performance Fee will be charged to <strong>only</strong> <u>qualified clients</u>. Please advise if there is any additional 
-          relevant information.
+          <strong>8.</strong> <strong>IT IS ASSUMED</strong> that a{' '}
+          <u>high water mark</u> will be utilized -{' '}
+          <strong>but not a hurdle rate</strong> - and that a Performance Fee
+          will be charged to <strong>only</strong> <u>qualified clients</u>.
+          Please advise if there is any additional relevant information.
         </Typography>
         <TextField
           multiline
@@ -241,7 +266,8 @@ const PerformanceBasedFeeForm: React.FC = () => {
       {/* Section 9 - Additional Notes */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle1" gutterBottom>
-          <strong>9.</strong> Additional notes from firm to RIA in a Box: (optional)
+          <strong>9.</strong> Additional notes from firm to RIA in a Box:
+          (optional)
         </Typography>
         <TextField
           multiline
@@ -268,4 +294,4 @@ const PerformanceBasedFeeForm: React.FC = () => {
   );
 };
 
-export default PerformanceBasedFeeForm; 
+export default PerformanceBasedFeeForm;

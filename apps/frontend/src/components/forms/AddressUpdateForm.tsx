@@ -103,9 +103,21 @@ interface AddressFormData {
 
 // Mock data for existing offices - this would come from your backend in reality
 const EXISTING_OFFICES = [
-  { id: '1', name: 'Main Office - New York', address: '123 Wall Street, New York, NY' },
-  { id: '2', name: 'Branch Office - Los Angeles', address: '456 Hollywood Blvd, Los Angeles, CA' },
-  { id: '3', name: 'Secondary Office - Chicago', address: '789 Michigan Ave, Chicago, IL' },
+  {
+    id: '1',
+    name: 'Main Office - New York',
+    address: '123 Wall Street, New York, NY',
+  },
+  {
+    id: '2',
+    name: 'Branch Office - Los Angeles',
+    address: '456 Hollywood Blvd, Los Angeles, CA',
+  },
+  {
+    id: '3',
+    name: 'Secondary Office - Chicago',
+    address: '789 Michigan Ave, Chicago, IL',
+  },
 ];
 
 // Mock data for supervisors - in reality this would come from your backend
@@ -123,18 +135,24 @@ const CUSTODIANS = [
   { id: '7784', name: 'Fidelity Brokerage Services LLC, (CRD# 7784)' },
   { id: '36418', name: 'Interactive Brokers LLC (CRD# 36418)' },
   { id: '36671', name: 'Pershing Advisor Solutions LLC (CRD# 36671)' },
-  { id: '5393', name: 'Schwab Institutional, a division of Charles Schwab & Co., Inc., (CRD# 5393)' },
+  {
+    id: '5393',
+    name: 'Schwab Institutional, a division of Charles Schwab & Co., Inc., (CRD# 5393)',
+  },
   { id: '8206', name: 'Scottrade, Inc. (CRD# 8206)' },
   { id: '125226', name: 'Shareholders Service Group, Inc. (CRD# 125226)' },
-  { id: 'tdai', name: 'TD Ameritrade Institutional, a division of TD Ameritrade, Inc. Member FINRA/SIPC' },
+  {
+    id: 'tdai',
+    name: 'TD Ameritrade Institutional, a division of TD Ameritrade, Inc. Member FINRA/SIPC',
+  },
   { id: 'trade', name: 'Trade-PMR Inc., Member FINRA SIPC' },
-  { id: 'other', name: 'Other' }
+  { id: 'other', name: 'Other' },
 ];
 
 const formatPhoneNumber = (value: string) => {
   // Remove all non-numeric characters
   const numbers = value.replace(/\D/g, '');
-  
+
   // Format the number as (XXX) XXX-XXXX
   if (numbers.length >= 10) {
     return `(${numbers.slice(0, 3)}) ${numbers.slice(3, 6)}-${numbers.slice(6, 10)}`;
@@ -152,7 +170,9 @@ interface AddressFormProps {
   updateType?: string;
 }
 
-const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpdateType }) => {
+const AddressUpdateForm: React.FC<AddressFormProps> = ({
+  updateType: initialUpdateType,
+}) => {
   const [formData, setFormData] = useState<AddressFormData>({
     addressType: 'residential',
     updateType: initialUpdateType || '',
@@ -182,42 +202,48 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
     isTerminated: 'No',
   });
 
-  const handleChange = (field: keyof AddressFormData) => (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SelectChangeEvent
-  ) => {
-    let value = event.target.value;
+  const handleChange =
+    (field: keyof AddressFormData) =>
+    (
+      event:
+        | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+        | SelectChangeEvent,
+    ) => {
+      let value = event.target.value;
 
-    // Format phone and fax numbers
-    if (field === 'phone' || field === 'fax') {
-      value = formatPhoneNumber(value);
-    }
+      // Format phone and fax numbers
+      if (field === 'phone' || field === 'fax') {
+        value = formatPhoneNumber(value);
+      }
 
-    // Format ZIP code (allow only numbers and limit to 5 digits)
-    if (field === 'zip') {
-      value = value.replace(/\D/g, '').slice(0, 5);
-    }
+      // Format ZIP code (allow only numbers and limit to 5 digits)
+      if (field === 'zip') {
+        value = value.replace(/\D/g, '').slice(0, 5);
+      }
 
-    setFormData(prev => ({
-      ...prev,
-      [field]: value
-    }));
-  };
+      setFormData((prev) => ({
+        ...prev,
+        [field]: value,
+      }));
+    };
 
   const handleDateChange = (date: Date | null) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      startDate: date
+      startDate: date,
     }));
   };
 
   // Function to handle selecting an office to update
   const handleOfficeSelect = (event: SelectChangeEvent) => {
     const selectedId = event.target.value;
-    const selectedOffice = EXISTING_OFFICES.find(office => office.id === selectedId);
-    
+    const selectedOffice = EXISTING_OFFICES.find(
+      (office) => office.id === selectedId,
+    );
+
     if (selectedOffice) {
       // In reality, you would fetch the full office details from your backend here
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
         selectedOffice: selectedId,
         // Pre-fill the form with the selected office's current information
@@ -229,19 +255,21 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
     }
   };
 
-  const handleCheckboxChange = (field: keyof AddressFormData) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: event.target.checked
-    }));
-  };
+  const handleCheckboxChange =
+    (field: keyof AddressFormData) =>
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFormData((prev) => ({
+        ...prev,
+        [field]: event.target.checked,
+      }));
+    };
 
   const handleSubmit = () => {
     // Validate required fields
     const requiredFields = ['street1', 'city', 'state', 'zip', 'phone'];
-    const missingFields = requiredFields.filter(field => !formData[field as keyof AddressFormData]);
+    const missingFields = requiredFields.filter(
+      (field) => !formData[field as keyof AddressFormData],
+    );
 
     if (missingFields.length > 0) {
       alert('Please fill in all required fields: ' + missingFields.join(', '));
@@ -280,8 +308,12 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
               label="Type of Change"
               onChange={handleChange('updateType')}
             >
-              <MenuItem value="address">Add new / update existing / remove existing address</MenuItem>
-              <MenuItem value="custodian">Adding Additional Custodians</MenuItem>
+              <MenuItem value="address">
+                Add new / update existing / remove existing address
+              </MenuItem>
+              <MenuItem value="custodian">
+                Adding Additional Custodians
+              </MenuItem>
             </Select>
           </FormControl>
 
@@ -298,18 +330,18 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
                     MenuProps={{
                       PaperProps: {
                         style: {
-                          maxHeight: 300 // Make dropdown scrollable
-                        }
-                      }
+                          maxHeight: 300, // Make dropdown scrollable
+                        },
+                      },
                     }}
                   >
-                    {CUSTODIANS.map(custodian => (
-                      <MenuItem 
-                        key={custodian.id} 
+                    {CUSTODIANS.map((custodian) => (
+                      <MenuItem
+                        key={custodian.id}
                         value={custodian.name}
                         sx={{
                           whiteSpace: 'normal', // Allow text to wrap
-                          wordBreak: 'break-word'
+                          wordBreak: 'break-word',
                         }}
                       >
                         {custodian.name}
@@ -321,7 +353,8 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
                 {formData.custodianName === 'Other' && (
                   <>
                     <Typography variant="body2" sx={{ mt: 2, mb: 1 }}>
-                      If not listed above, name of custodian and CRD number (4 to 6 digits) of custodian.
+                      If not listed above, name of custodian and CRD number (4
+                      to 6 digits) of custodian.
                     </Typography>
                     <Box sx={{ mb: 2 }}>
                       <TextField
@@ -336,10 +369,10 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
                         label="CRD"
                         value={formData.customCustodianCRD}
                         onChange={handleChange('customCustodianCRD')}
-                        inputProps={{ 
+                        inputProps={{
                           maxLength: 6,
                           pattern: '[0-9]*',
-                          inputMode: 'numeric'
+                          inputMode: 'numeric',
                         }}
                         helperText="Enter a 4 to 6 digit number"
                       />
@@ -361,11 +394,13 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
                 </FormControl>
 
                 <Typography variant="subtitle1" gutterBottom sx={{ mt: 3 }}>
-                  Additional details are required for all custodians that hold ten percent (10%) or more of the RIA's
-                  regulatory assets under management (RAUM) attributable to separately managed accounts
-                  (SMAs). Does this custodian hold ten percent (10%) or more of your SMA RAUM? (If the answer is "No"
-                  then the custodian will appear in Part 2A of Form ADV but not Part 1A of Form ADV per the Form ADV
-                  instructions.)
+                  Additional details are required for all custodians that hold
+                  ten percent (10%) or more of the RIA's regulatory assets under
+                  management (RAUM) attributable to separately managed accounts
+                  (SMAs). Does this custodian hold ten percent (10%) or more of
+                  your SMA RAUM? (If the answer is "No" then the custodian will
+                  appear in Part 2A of Form ADV but not Part 1A of Form ADV per
+                  the Form ADV instructions.)
                 </Typography>
                 <FormControl fullWidth sx={{ mb: 2 }}>
                   <Select
@@ -378,7 +413,8 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
                 </FormControl>
 
                 <Typography variant="subtitle1" gutterBottom sx={{ mt: 3 }}>
-                  Are any custodial relationships being terminated as part of this request?
+                  Are any custodial relationships being terminated as part of
+                  this request?
                 </Typography>
                 <FormControl fullWidth sx={{ mb: 2 }}>
                   <Select
@@ -433,10 +469,18 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
                 label="Select Action"
                 onChange={handleChange('secondaryType')}
               >
-                <MenuItem value="update-office">Update existing office location</MenuItem>
-                <MenuItem value="remove-office">Remove existing office location</MenuItem>
-                <MenuItem value="add-branch">Add new branch/secondary office location</MenuItem>
-                <MenuItem value="update-iar">Update IAR residential address</MenuItem>
+                <MenuItem value="update-office">
+                  Update existing office location
+                </MenuItem>
+                <MenuItem value="remove-office">
+                  Remove existing office location
+                </MenuItem>
+                <MenuItem value="add-branch">
+                  Add new branch/secondary office location
+                </MenuItem>
+                <MenuItem value="update-iar">
+                  Update IAR residential address
+                </MenuItem>
               </Select>
             </FormControl>
           )}
@@ -444,9 +488,11 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
           {formData.secondaryType === 'update-iar' && (
             <>
               <Typography variant="body1" paragraph>
-                Please select the IAR(s) to whom this new residential address applies and provide the information
-                for the new address. If the location also serves as a branch office of the firm, please instead select
-                "Update existing office address" from the dropdown as additional information may be required.
+                Please select the IAR(s) to whom this new residential address
+                applies and provide the information for the new address. If the
+                location also serves as a branch office of the firm, please
+                instead select "Update existing office address" from the
+                dropdown as additional information may be required.
               </Typography>
 
               <Box sx={{ mb: 3 }}>
@@ -497,7 +543,7 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
                     label="State"
                     onChange={handleChange('state')}
                   >
-                    {US_STATES.map(state => (
+                    {US_STATES.map((state) => (
                       <MenuItem key={state.code} value={state.code}>
                         {state.name}
                       </MenuItem>
@@ -584,7 +630,8 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
           {formData.secondaryType === 'update-office' && (
             <>
               <Typography variant="body1" paragraph>
-                Please select the office location you would like to update and provide the updated information.
+                Please select the office location you would like to update and
+                provide the updated information.
               </Typography>
 
               <FormControl fullWidth sx={{ mb: 3 }}>
@@ -594,7 +641,7 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
                   label="Select Office Location"
                   onChange={handleOfficeSelect}
                 >
-                  {EXISTING_OFFICES.map(office => (
+                  {EXISTING_OFFICES.map((office) => (
                     <MenuItem key={office.id} value={office.id}>
                       {office.name}
                     </MenuItem>
@@ -652,7 +699,7 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
                         label="State"
                         onChange={handleChange('state')}
                       >
-                        {US_STATES.map(state => (
+                        {US_STATES.map((state) => (
                           <MenuItem key={state.code} value={state.code}>
                             {state.name}
                           </MenuItem>
@@ -741,7 +788,8 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
           {formData.secondaryType === 'remove-office' && (
             <>
               <Typography variant="body1" paragraph color="error">
-                Please select the office location you would like to remove. This action cannot be undone.
+                Please select the office location you would like to remove. This
+                action cannot be undone.
               </Typography>
 
               <FormControl fullWidth sx={{ mb: 3 }}>
@@ -751,7 +799,7 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
                   label="Select Office to Remove"
                   onChange={handleOfficeSelect}
                 >
-                  {EXISTING_OFFICES.map(office => (
+                  {EXISTING_OFFICES.map((office) => (
                     <MenuItem key={office.id} value={office.id}>
                       {office.name}
                     </MenuItem>
@@ -804,7 +852,8 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
           {formData.secondaryType === 'add-branch' && (
             <>
               <Typography variant="body1" paragraph>
-                Please provide the information for the new branch or secondary office location.
+                Please provide the information for the new branch or secondary
+                office location.
               </Typography>
 
               <Box sx={{ mb: 3 }}>
@@ -831,7 +880,7 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
                     onChange={handleChange('supervisingOffice')}
                     required
                   >
-                    {EXISTING_OFFICES.map(office => (
+                    {EXISTING_OFFICES.map((office) => (
                       <MenuItem key={office.id} value={office.id}>
                         {office.name}
                       </MenuItem>
@@ -847,7 +896,7 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
                     onChange={handleChange('primarySupervisor')}
                     required
                   >
-                    {SUPERVISORS.map(supervisor => (
+                    {SUPERVISORS.map((supervisor) => (
                       <MenuItem key={supervisor.id} value={supervisor.id}>
                         {supervisor.name} - {supervisor.title}
                       </MenuItem>
@@ -941,7 +990,7 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
                     label="State"
                     onChange={handleChange('state')}
                   >
-                    {US_STATES.map(state => (
+                    {US_STATES.map((state) => (
                       <MenuItem key={state.code} value={state.code}>
                         {state.name}
                       </MenuItem>
@@ -1033,7 +1082,7 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
             fontSize: '1.25rem',
             fontWeight: 500,
             color: '#1a1a1a',
-            mb: 2
+            mb: 2,
           }}
         >
           Pending Requests
@@ -1044,4 +1093,4 @@ const AddressUpdateForm: React.FC<AddressFormProps> = ({ updateType: initialUpda
   );
 };
 
-export default AddressUpdateForm; 
+export default AddressUpdateForm;

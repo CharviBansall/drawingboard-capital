@@ -14,12 +14,24 @@ const sampleFilterOptions: FilterOption[] = [
   {
     category: 'region',
     displayName: 'Region',
-    options: ['North America', 'Europe', 'Asia', 'Africa', 'South America', 'Australia'],
+    options: [
+      'North America',
+      'Europe',
+      'Asia',
+      'Africa',
+      'South America',
+      'Australia',
+    ],
   },
   {
     category: 'size',
     displayName: 'Fund Size',
-    options: ['Small (<$50M)', 'Medium ($50M-$250M)', 'Large ($250M-$1B)', 'Mega (>$1B)'],
+    options: [
+      'Small (<$50M)',
+      'Medium ($50M-$250M)',
+      'Large ($250M-$1B)',
+      'Mega (>$1B)',
+    ],
   },
 ];
 
@@ -89,7 +101,9 @@ type Story = StoryObj<typeof meta>;
  * Interactive wrapper component for demonstrating FilterDropdown with state management
  */
 function InteractiveFilterDropdown() {
-  const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({
+  const [selectedFilters, setSelectedFilters] = useState<
+    Record<string, string[]>
+  >({
     type: ['Venture'],
     region: ['North America'],
   });
@@ -97,7 +111,7 @@ function InteractiveFilterDropdown() {
   // Calculate filter count
   const filterCount = Object.values(selectedFilters).reduce(
     (count, options) => count + options.length,
-    0
+    0,
   );
 
   // Handle filter toggle
@@ -135,7 +149,7 @@ function InteractiveFilterDropdown() {
   return (
     <div className="p-6 border border-gray-200 rounded-md bg-white">
       <h3 className="mb-4 text-sm font-medium text-gray-500">
-        Selected filters: 
+        Selected filters:
         <span className="ml-2 px-2 py-1 bg-gray-100 rounded text-xs font-mono">
           {JSON.stringify(selectedFilters)}
         </span>
@@ -162,7 +176,8 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'An interactive example of the FilterDropdown component with state management. Try clicking on the filter options to see how the component behaves.',
+        story:
+          'An interactive example of the FilterDropdown component with state management. Try clicking on the filter options to see how the component behaves.',
       },
     },
   },
@@ -237,7 +252,15 @@ export const ManyOptions: Story = {
       {
         category: 'sector',
         displayName: 'Sector',
-        options: ['Technology', 'Healthcare', 'Finance', 'Consumer', 'Industrial', 'Energy', 'Real Estate'],
+        options: [
+          'Technology',
+          'Healthcare',
+          'Finance',
+          'Consumer',
+          'Industrial',
+          'Energy',
+          'Real Estate',
+        ],
       },
     ],
   },
@@ -247,7 +270,9 @@ export const ManyOptions: Story = {
  * FilterDropdown with horizontal layout demonstration
  */
 function HorizontalLayoutDemo() {
-  const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({
+  const [selectedFilters, setSelectedFilters] = useState<
+    Record<string, string[]>
+  >({
     type: ['Venture'],
     region: ['Europe'],
     size: ['Medium ($50M-$250M)'],
@@ -256,7 +281,7 @@ function HorizontalLayoutDemo() {
   // Calculate filter count
   const filterCount = Object.values(selectedFilters).reduce(
     (count, options) => count + options.length,
-    0
+    0,
   );
 
   // Handle filter toggle
@@ -309,7 +334,8 @@ export const HorizontalLayout: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'FilterDropdown with a horizontal layout where filter tags appear to the right of the dropdown button and wrap only when necessary.',
+        story:
+          'FilterDropdown with a horizontal layout where filter tags appear to the right of the dropdown button and wrap only when necessary.',
       },
     },
   },
@@ -330,7 +356,9 @@ export const WithoutFilterTags: Story = {
  * FilterDropdown with filter tags and clear all button
  */
 function WithClearAllDemo() {
-  const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({
+  const [selectedFilters, setSelectedFilters] = useState<
+    Record<string, string[]>
+  >({
     type: ['Venture', 'Growth'],
     region: ['Europe', 'Asia'],
     size: ['Large ($250M-$1B)'],
@@ -339,7 +367,7 @@ function WithClearAllDemo() {
   // Calculate filter count
   const filterCount = Object.values(selectedFilters).reduce(
     (count, options) => count + options.length,
-    0
+    0,
   );
 
   // Handle filter toggle
@@ -392,7 +420,8 @@ export const WithClearAll: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'FilterDropdown with filter tags and a clear all button. Try clicking on the X icons or the clear all button to see how they work.',
+        story:
+          'FilterDropdown with filter tags and a clear all button. Try clicking on the X icons or the clear all button to see how they work.',
       },
     },
   },

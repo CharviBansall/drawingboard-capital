@@ -41,7 +41,7 @@ type Story = StoryObj<typeof RadioGroup>;
  */
 function InteractiveRadioGroup(args: any) {
   const [selectedValue, setSelectedValue] = useState(args.value);
-  
+
   return (
     <RadioGroup
       {...args}

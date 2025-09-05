@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { FileText, Download, MagnifyingGlass, CalendarBlank, Funnel, ArrowsClockwise } from '@phosphor-icons/react';
+import {
+  FileText,
+  Download,
+  MagnifyingGlass,
+  CalendarBlank,
+  Funnel,
+  ArrowsClockwise,
+} from '@phosphor-icons/react';
 import PageTitle from '@/components/PageTitle';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
@@ -7,7 +14,9 @@ import FilterDropdown from '@/components/FilterDropdown';
 
 export default function FundReports() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({
+  const [selectedFilters, setSelectedFilters] = useState<
+    Record<string, string[]>
+  >({
     type: [],
     fund: [],
     year: [],
@@ -101,7 +110,7 @@ export default function FundReports() {
       const newFilters = { ...prev };
       if (newFilters[category]?.includes(option)) {
         newFilters[category] = newFilters[category].filter(
-          (item) => item !== option
+          (item) => item !== option,
         );
       } else {
         newFilters[category] = [...(newFilters[category] || []), option];
@@ -185,7 +194,9 @@ export default function FundReports() {
             <Button
               variant="ghost"
               size="small"
-              onClick={() => setSelectedFilters({ type: [], fund: [], year: [] })}
+              onClick={() =>
+                setSelectedFilters({ type: [], fund: [], year: [] })
+              }
             >
               <ArrowsClockwise className="w-4 h-4 mr-1" />
               Reset
@@ -227,7 +238,9 @@ export default function FundReports() {
                           <FileText className="h-6 w-6 text-blue-600" />
                         </div>
                         <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">{report.name}</div>
+                          <div className="text-sm font-medium text-gray-900">
+                            {report.name}
+                          </div>
                         </div>
                       </div>
                     </td>
@@ -240,8 +253,8 @@ export default function FundReports() {
                           report.type === 'Quarterly'
                             ? 'bg-blue-100 text-blue-800'
                             : report.type === 'Annual'
-                            ? 'bg-purple-100 text-purple-800'
-                            : 'bg-green-100 text-green-800'
+                              ? 'bg-purple-100 text-purple-800'
+                              : 'bg-green-100 text-green-800'
                         }`}
                       >
                         {report.type}
@@ -266,7 +279,10 @@ export default function FundReports() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={6} className="px-6 py-10 text-center text-sm text-gray-500">
+                  <td
+                    colSpan={6}
+                    className="px-6 py-10 text-center text-sm text-gray-500"
+                  >
                     <div className="flex flex-col items-center justify-center">
                       <FileText className="w-10 h-10 text-gray-400 mb-2" />
                       <p className="font-medium text-gray-900 mb-1">

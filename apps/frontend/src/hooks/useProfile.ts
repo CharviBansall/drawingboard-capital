@@ -16,10 +16,36 @@ export function useProfile() {
   const [loading, setLoading] = useState(true);
   const fetchingRef = useRef(false);
 
+  // Development mode: return mock profile
+  const isDevelopment = import.meta.env.DEV;
+
   // Memoize user ID to prevent unnecessary effect triggers
   const userId = useMemo(() => user?.id, [user?.id]);
 
   useEffect(() => {
+    // Development mode: set mock profile and return
+    if (isDevelopment) {
+      const mockProfile = {
+        id: 'mock-user-id',
+        company_id: 'mock-company-id',
+        first_name: 'John',
+        last_name: 'Doe',
+        email: 'john.doe@example.com',
+        phone_number: null,
+        profile_picture_url: null,
+        profile_type: 'fund_manager' as const,
+        stage: null,
+        eligibility: 'approved' as const,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        companies: { name: 'Mock Company' },
+      } as ProfileType;
+
+      setProfile(mockProfile);
+      setLoading(false);
+      return;
+    }
+
     // Skip if we're already fetching
     if (fetchingRef.current) return;
 
@@ -65,7 +91,7 @@ export function useProfile() {
     return () => {
       fetchingRef.current = false;
     };
-  }, [userId]);
+  }, [userId, isDevelopment]);
 
   // Memoize the return value to prevent unnecessary re-renders
   return useMemo(() => ({ profile, loading }), [profile, loading]);

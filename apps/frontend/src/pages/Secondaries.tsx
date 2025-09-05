@@ -1,5 +1,10 @@
 import { useState } from 'react';
-import { ArrowDown, MagnifyingGlass, Funnel, ArrowsClockwise } from '@phosphor-icons/react';
+import {
+  ArrowDown,
+  MagnifyingGlass,
+  Funnel,
+  ArrowsClockwise,
+} from '@phosphor-icons/react';
 import PageTitle from '@/components/PageTitle';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
@@ -7,7 +12,9 @@ import FilterDropdown from '@/components/FilterDropdown';
 
 export default function Secondaries() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedFilters, setSelectedFilters] = useState<Record<string, string[]>>({
+  const [selectedFilters, setSelectedFilters] = useState<
+    Record<string, string[]>
+  >({
     status: [],
     type: [],
     vintage: [],
@@ -97,7 +104,7 @@ export default function Secondaries() {
       const newFilters = { ...prev };
       if (newFilters[category]?.includes(option)) {
         newFilters[category] = newFilters[category].filter(
-          (item) => item !== option
+          (item) => item !== option,
         );
       } else {
         newFilters[category] = [...(newFilters[category] || []), option];
@@ -137,9 +144,12 @@ export default function Secondaries() {
     if (selectedFilters.vintage.length > 0) {
       const vintage = opportunity.vintage;
       if (
-        (selectedFilters.vintage.includes('2015-2017') && (vintage < 2015 || vintage > 2017)) &&
-        (selectedFilters.vintage.includes('2018-2020') && (vintage < 2018 || vintage > 2020)) &&
-        (selectedFilters.vintage.includes('2021+') && vintage < 2021)
+        selectedFilters.vintage.includes('2015-2017') &&
+        (vintage < 2015 || vintage > 2017) &&
+        selectedFilters.vintage.includes('2018-2020') &&
+        (vintage < 2018 || vintage > 2020) &&
+        selectedFilters.vintage.includes('2021+') &&
+        vintage < 2021
       ) {
         return false;
       }
@@ -194,7 +204,13 @@ export default function Secondaries() {
               triggerIcon={<Funnel className="w-4 h-4 mr-1" />}
               triggerText="Filter"
             />
-            <Button variant="ghost" size="small" onClick={() => setSelectedFilters({ status: [], type: [], vintage: [] })}>
+            <Button
+              variant="ghost"
+              size="small"
+              onClick={() =>
+                setSelectedFilters({ status: [], type: [], vintage: [] })
+              }
+            >
               <ArrowsClockwise className="w-4 h-4 mr-1" />
               Reset
             </Button>
@@ -265,7 +281,7 @@ export default function Secondaries() {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span
                         className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadgeClass(
-                          opportunity.status
+                          opportunity.status,
                         )}`}
                       >
                         {opportunity.status}
@@ -277,19 +293,25 @@ export default function Secondaries() {
                         size="small"
                         disabled={opportunity.status === 'Closed'}
                       >
-                        {opportunity.status === 'Available' ? 'Express Interest' : 'View Details'}
+                        {opportunity.status === 'Available'
+                          ? 'Express Interest'
+                          : 'View Details'}
                       </Button>
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan={9} className="px-6 py-10 text-center text-sm text-gray-500">
+                  <td
+                    colSpan={9}
+                    className="px-6 py-10 text-center text-sm text-gray-500"
+                  >
                     <p className="font-medium text-gray-900 mb-1">
                       No opportunities found
                     </p>
                     <p className="text-gray-500">
-                      Try adjusting your search or filters to find secondary opportunities.
+                      Try adjusting your search or filters to find secondary
+                      opportunities.
                     </p>
                   </td>
                 </tr>
@@ -300,9 +322,7 @@ export default function Secondaries() {
       </div>
 
       <div className="flex justify-end gap-3">
-        <Button variant="primary">
-          Create New Listing
-        </Button>
+        <Button variant="primary">Create New Listing</Button>
       </div>
     </div>
   );

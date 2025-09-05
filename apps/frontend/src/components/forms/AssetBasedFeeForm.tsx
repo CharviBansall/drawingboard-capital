@@ -46,7 +46,11 @@ const AssetBasedFeeForm: React.FC = () => {
     });
   };
 
-  const handleBreakpointChange = (index: number, field: 'amount' | 'percentage', value: string) => {
+  const handleBreakpointChange = (
+    index: number,
+    field: 'amount' | 'percentage',
+    value: string,
+  ) => {
     const newBreakpoints = [...feeStructure.breakpoints];
     newBreakpoints[index] = {
       ...newBreakpoints[index],
@@ -61,12 +65,17 @@ const AssetBasedFeeForm: React.FC = () => {
   const addBreakpoint = () => {
     setFeeStructure({
       ...feeStructure,
-      breakpoints: [...feeStructure.breakpoints, { amount: '', percentage: '' }],
+      breakpoints: [
+        ...feeStructure.breakpoints,
+        { amount: '', percentage: '' },
+      ],
     });
   };
 
   const removeBreakpoint = (index: number) => {
-    const newBreakpoints = feeStructure.breakpoints.filter((_, i) => i !== index);
+    const newBreakpoints = feeStructure.breakpoints.filter(
+      (_, i) => i !== index,
+    );
     setFeeStructure({
       ...feeStructure,
       breakpoints: newBreakpoints,
@@ -104,7 +113,9 @@ const AssetBasedFeeForm: React.FC = () => {
               fullWidth
               label="Minimum Fee (if applicable)"
               value={feeStructure.minFee}
-              onChange={(e) => setFeeStructure({ ...feeStructure, minFee: e.target.value })}
+              onChange={(e) =>
+                setFeeStructure({ ...feeStructure, minFee: e.target.value })
+              }
               placeholder="e.g., $1,000 annually"
               sx={{ mb: 2 }}
             />
@@ -112,7 +123,9 @@ const AssetBasedFeeForm: React.FC = () => {
               fullWidth
               label="Maximum Fee (if applicable)"
               value={feeStructure.maxFee}
-              onChange={(e) => setFeeStructure({ ...feeStructure, maxFee: e.target.value })}
+              onChange={(e) =>
+                setFeeStructure({ ...feeStructure, maxFee: e.target.value })
+              }
               placeholder="e.g., $100,000 annually"
             />
           </Box>
@@ -126,14 +139,18 @@ const AssetBasedFeeForm: React.FC = () => {
               <TextField
                 label="Asset Amount"
                 value={breakpoint.amount}
-                onChange={(e) => handleBreakpointChange(index, 'amount', e.target.value)}
+                onChange={(e) =>
+                  handleBreakpointChange(index, 'amount', e.target.value)
+                }
                 placeholder="e.g., $1,000,000"
                 sx={{ flex: 1 }}
               />
               <TextField
                 label="Fee Percentage"
                 value={breakpoint.percentage}
-                onChange={(e) => handleBreakpointChange(index, 'percentage', e.target.value)}
+                onChange={(e) =>
+                  handleBreakpointChange(index, 'percentage', e.target.value)
+                }
                 placeholder="e.g., 1.00%"
                 sx={{ flex: 1 }}
               />
@@ -149,11 +166,7 @@ const AssetBasedFeeForm: React.FC = () => {
             </Box>
           ))}
 
-          <Button
-            variant="outlined"
-            onClick={addBreakpoint}
-            sx={{ mb: 3 }}
-          >
+          <Button variant="outlined" onClick={addBreakpoint} sx={{ mb: 3 }}>
             Add Breakpoint
           </Button>
 
@@ -162,7 +175,12 @@ const AssetBasedFeeForm: React.FC = () => {
               control={
                 <Checkbox
                   checked={feeStructure.hasNegotiableFees}
-                  onChange={(e) => setFeeStructure({ ...feeStructure, hasNegotiableFees: e.target.checked })}
+                  onChange={(e) =>
+                    setFeeStructure({
+                      ...feeStructure,
+                      hasNegotiableFees: e.target.checked,
+                    })
+                  }
                 />
               }
               label="Fees are negotiable"
@@ -174,7 +192,12 @@ const AssetBasedFeeForm: React.FC = () => {
               control={
                 <Checkbox
                   checked={feeStructure.hasPerformanceFees}
-                  onChange={(e) => setFeeStructure({ ...feeStructure, hasPerformanceFees: e.target.checked })}
+                  onChange={(e) =>
+                    setFeeStructure({
+                      ...feeStructure,
+                      hasPerformanceFees: e.target.checked,
+                    })
+                  }
                 />
               }
               label="Performance fees are charged for certain accounts"
@@ -191,7 +214,12 @@ const AssetBasedFeeForm: React.FC = () => {
               fullWidth
               variant="outlined"
               value={feeStructure.additionalNotes}
-              onChange={(e) => setFeeStructure({ ...feeStructure, additionalNotes: e.target.value })}
+              onChange={(e) =>
+                setFeeStructure({
+                  ...feeStructure,
+                  additionalNotes: e.target.value,
+                })
+              }
               placeholder="Enter any additional details about the fee structure"
               sx={{ mb: 2 }}
             />
@@ -221,4 +249,4 @@ const AssetBasedFeeForm: React.FC = () => {
   );
 };
 
-export default AssetBasedFeeForm; 
+export default AssetBasedFeeForm;

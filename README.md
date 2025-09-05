@@ -51,6 +51,7 @@ DrawingBoard-App/
 ### Environment Setup
 
 1. Copy the example environment files:
+
    ```bash
    cp apps/api/.env.example apps/api/.env
    cp apps/frontend/.env.example apps/frontend/.env
@@ -63,6 +64,7 @@ DrawingBoard-App/
 The `transactional` package is a Cloudflare Worker that handles all system-generated emails:
 
 1. Configure Cloudflare Worker environment:
+
    ```bash
    cd packages/transactional
    cp .env.example .env
@@ -71,6 +73,7 @@ The `transactional` package is a Cloudflare Worker that handles all system-gener
 2. Update the environment variables with your Resend API key and other required settings.
 
 3. For local development:
+
    ```bash
    pnpm --filter transactional dev
    ```
@@ -155,6 +158,7 @@ This project uses [pnpm](https://pnpm.io/) as the package manager for several re
 ## Deployment
 
 Our CI/CD pipeline automatically deploys:
+
 - `develop` branch to the staging environment
 - `main` branch to the production environment
 

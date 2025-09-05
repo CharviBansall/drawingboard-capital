@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { Buildings, Users, Briefcase, ChartBar, Plus } from '@phosphor-icons/react';
+import {
+  Buildings,
+  Users,
+  Briefcase,
+  ChartBar,
+  Plus,
+} from '@phosphor-icons/react';
 import PageTitle from '@/components/PageTitle';
 import Button from '@/components/Button';
 import Tabs from '@/components/Tabs';
@@ -10,11 +16,11 @@ export default function CoInvestments() {
 
   // Dummy data for co-investment portfolio
   const sectorData = {
-    'Technology': 35,
-    'Healthcare': 25,
-    'Consumer': 15,
-    'Financial': 10,
-    'Industrial': 15,
+    Technology: 35,
+    Healthcare: 25,
+    Consumer: 15,
+    Financial: 10,
+    Industrial: 15,
   };
 
   // Dummy data for co-investments
@@ -74,11 +80,14 @@ export default function CoInvestments() {
   ];
 
   // Filter investments based on active tab
-  const filteredInvestments = investments.filter(investment => {
+  const filteredInvestments = investments.filter((investment) => {
     if (activeTab === 'active') {
       return investment.status === 'Active';
     } else if (activeTab === 'exit') {
-      return investment.status === 'Exit Process' || investment.status === 'Exit Complete';
+      return (
+        investment.status === 'Exit Process' ||
+        investment.status === 'Exit Complete'
+      );
     }
     return true; // 'all' tab
   });
@@ -114,7 +123,9 @@ export default function CoInvestments() {
         {/* Summary Cards */}
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-medium text-gray-900">Total Invested</h3>
+            <h3 className="text-lg font-medium text-gray-900">
+              Total Invested
+            </h3>
             <Briefcase className="w-6 h-6 text-blue-600" />
           </div>
           <p className="text-3xl font-bold text-gray-900">$15.3M</p>
@@ -123,16 +134,22 @@ export default function CoInvestments() {
 
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-medium text-gray-900">Sponsor Partners</h3>
+            <h3 className="text-lg font-medium text-gray-900">
+              Sponsor Partners
+            </h3>
             <Users className="w-6 h-6 text-purple-600" />
           </div>
           <p className="text-3xl font-bold text-gray-900">5</p>
-          <p className="text-sm text-gray-500 mt-1">Leading private equity firms</p>
+          <p className="text-sm text-gray-500 mt-1">
+            Leading private equity firms
+          </p>
         </div>
 
         <div className="bg-white rounded-lg shadow p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-medium text-gray-900">Realized Multiple</h3>
+            <h3 className="text-lg font-medium text-gray-900">
+              Realized Multiple
+            </h3>
             <ChartBar className="w-6 h-6 text-green-600" />
           </div>
           <p className="text-3xl font-bold text-gray-900">2.4x</p>
@@ -142,18 +159,19 @@ export default function CoInvestments() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white rounded-lg shadow p-6 md:col-span-1">
-          <h3 className="text-lg font-medium text-gray-900 mb-4">Sector Allocation</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-4">
+            Sector Allocation
+          </h3>
           <div className="h-64">
-            <DonutChart
-              title="Sector Allocation"
-              data={sectorData}
-            />
+            <DonutChart title="Sector Allocation" data={sectorData} />
           </div>
         </div>
 
         <div className="bg-white rounded-lg shadow p-6 md:col-span-2">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-medium text-gray-900">Investment Pipeline</h3>
+            <h3 className="text-lg font-medium text-gray-900">
+              Investment Pipeline
+            </h3>
             <Button variant="secondary" size="small">
               <Plus className="w-4 h-4 mr-1" />
               Add Opportunity
@@ -162,16 +180,23 @@ export default function CoInvestments() {
           <div className="space-y-3">
             <div className="bg-gray-50 p-4 rounded-lg">
               <div className="flex justify-between">
-                <h4 className="font-medium text-gray-900">Cloud Infrastructure Platform</h4>
+                <h4 className="font-medium text-gray-900">
+                  Cloud Infrastructure Platform
+                </h4>
                 <span className="text-sm text-gray-500">Technology</span>
               </div>
               <div className="mt-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Sponsor: Insight Partners</span>
+                  <span className="text-gray-600">
+                    Sponsor: Insight Partners
+                  </span>
                   <span className="text-gray-600">Target: $3-5M</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
-                  <div className="bg-blue-600 h-2.5 rounded-full" style={{ width: '75%' }}></div>
+                  <div
+                    className="bg-blue-600 h-2.5 rounded-full"
+                    style={{ width: '75%' }}
+                  ></div>
                 </div>
                 <div className="flex justify-between text-xs mt-1">
                   <span className="text-gray-500">Due Diligence</span>
@@ -181,7 +206,9 @@ export default function CoInvestments() {
             </div>
             <div className="bg-gray-50 p-4 rounded-lg">
               <div className="flex justify-between">
-                <h4 className="font-medium text-gray-900">Sustainable Packaging</h4>
+                <h4 className="font-medium text-gray-900">
+                  Sustainable Packaging
+                </h4>
                 <span className="text-sm text-gray-500">Industrial</span>
               </div>
               <div className="mt-2">
@@ -190,7 +217,10 @@ export default function CoInvestments() {
                   <span className="text-gray-600">Target: $2-4M</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
-                  <div className="bg-purple-600 h-2.5 rounded-full" style={{ width: '40%' }}></div>
+                  <div
+                    className="bg-purple-600 h-2.5 rounded-full"
+                    style={{ width: '40%' }}
+                  ></div>
                 </div>
                 <div className="flex justify-between text-xs mt-1">
                   <span className="text-gray-500">Initial Review</span>
@@ -252,8 +282,13 @@ export default function CoInvestments() {
                           <Buildings className="h-6 w-6 text-gray-600" />
                         </div>
                         <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">{investment.name}</div>
-                          <div className="text-sm text-gray-500">Invested: {new Date(investment.date).toLocaleDateString()}</div>
+                          <div className="text-sm font-medium text-gray-900">
+                            {investment.name}
+                          </div>
+                          <div className="text-sm text-gray-500">
+                            Invested:{' '}
+                            {new Date(investment.date).toLocaleDateString()}
+                          </div>
                         </div>
                       </div>
                     </td>
@@ -272,7 +307,7 @@ export default function CoInvestments() {
                     <td className="px-6 py-4 whitespace-nowrap">
                       <span
                         className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusBadgeClass(
-                          investment.status
+                          investment.status,
                         )}`}
                       >
                         {investment.status}
@@ -287,7 +322,10 @@ export default function CoInvestments() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={7} className="px-6 py-10 text-center text-sm text-gray-500">
+                  <td
+                    colSpan={7}
+                    className="px-6 py-10 text-center text-sm text-gray-500"
+                  >
                     <p className="font-medium text-gray-900 mb-1">
                       No investments found
                     </p>

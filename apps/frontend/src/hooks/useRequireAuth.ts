@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router";
-import { useAuth } from "@/hooks/useAuth";
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import { useAuth } from '@/hooks/useAuth';
 
 export function useRequireAuth() {
   const { user, loading } = useAuth();
@@ -11,7 +11,7 @@ export function useRequireAuth() {
 
   useEffect(() => {
     if (!isDevelopment && !loading && !user) {
-      navigate("/signup", { replace: true });
+      navigate('/signup', { replace: true });
     }
   }, [user, loading, navigate, isDevelopment]);
 

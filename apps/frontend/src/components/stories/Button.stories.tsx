@@ -150,7 +150,8 @@ export const AsLink: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Button can be rendered as different HTML elements using the `as` prop. This example shows a button rendered as an anchor (`<a>`) tag.',
+        story:
+          'Button can be rendered as different HTML elements using the `as` prop. This example shows a button rendered as an anchor (`<a>`) tag.',
       },
     },
   },
@@ -166,7 +167,8 @@ export const AsDiv: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Button can be rendered as a `<div>` element. This is useful when you need to avoid nested button elements, such as when placing a button inside another interactive element.',
+        story:
+          'Button can be rendered as a `<div>` element. This is useful when you need to avoid nested button elements, such as when placing a button inside another interactive element.',
       },
     },
   },

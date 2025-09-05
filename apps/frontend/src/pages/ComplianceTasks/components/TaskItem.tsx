@@ -79,7 +79,7 @@ function TaskItem({
           {!isCompleted ? (
             <div className="text-right flex justify-end space-x-2">
               {onMarkComplete && (
-                <Button 
+                <Button
                   as="div"
                   variant="primary"
                   size="small"
